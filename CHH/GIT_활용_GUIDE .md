@@ -1,0 +1,190 @@
+# GIT 활용 GUIDE
+
+# 1️⃣ GIT 목적
+
+- 소스코드 관리
+- 협업 개발
+
+# 2️⃣ GIT 기본 설정
+
+## ① GIT 커밋 정보
+
+- 소스 코드 변경 내용 + 작성자 이름 + 이메일 포함
+- 문제 상황이나 코드 리뷰 시 중요한 정보
+
+## ② GIT CONFIG
+
+- Git 사용 환경 설정 명령어
+- 이름, 이메일 주소를 설정할 수 있다
+    
+    ⇒ commit 정보에 포함되어 누가 커밋했는지 알 수 있도록 해준다
+    
+
+| 명령어 | 기능 |
+| --- | --- |
+| git config --list | 설정 전체 확인 |
+| git config user.name | 설정한 http://user.name 확인 |
+| git config user.email | 설정한 http://user.email 확인 |
+| git config http://user.name “이름” | 이름 설정하기 |
+| git config http://user.email 메일 | 메일 설정하기 |
+
+![Untitled](GIT%20%E1%84%92%E1%85%AA%E1%86%AF%E1%84%8B%E1%85%AD%E1%86%BC%20GUIDE%2063cca139123944de9eb799e54db2a9ad/Untitled.png)
+
+# 3️⃣ GIT 커밋 메시지 컨벤션
+
+## ① Git 커밋 메시지 사용 이유
+
+- 다른 개발자의 작업 내역 및 변경사항을 파악하는 데 이용
+- 변경 이력 추적 및 문제 해결에 도움
+- 코드 리뷰어에게 정보 제공
+    - 코드 리뷰 툴 : `Gerrit` (커밋 단위로 코드 리뷰)
+
+## ② Conventional Commits
+
+- [www.conventionalcommits.org](http://www.conventionalcommits.org)
+- 가벼운 컨벤션으로 명확한 히스토리를 생성하기 위한 간단한 규칙/템플릿 제공
+- 커밋 메시지에 신규 기능 추가, 문제 수정, 커다란 변화가 있음을 기술함
+
+## ③ 커밋 메시지 구조
+
+> 제목 - 본문 - 꼬리말
+> 
+
+![Untitled](GIT%20%E1%84%92%E1%85%AA%E1%86%AF%E1%84%8B%E1%85%AD%E1%86%BC%20GUIDE%2063cca139123944de9eb799e54db2a9ad/Untitled%201.png)
+
+```bash
+<타입> [적용 범위(선택 사항)]: <설명>
+		[빈줄]
+[본문(선택 사항)]
+		[빈줄]
+[꼬리말(선택 사항)]
+```
+
+- 제목만 적는 경우가 많음
+- **빈줄** → 깔끔한 레이아웃 유지
+
+### ❶ 제목
+
+> <**타입**> [적용 범위(선택 사항)]: <설명>
+> 
+
+**[ 타입 ]**
+
+- fix와 feat 이외의 타입 허용
+- 앵귤러 컨벤션 : build, chore, ci, docs, style, refactor, perf, test 등
+- 팀원과 상의 후 **README.md**에 기록
+
+| 타입 종류 | 설명 |
+| --- | --- |
+| feat | 새로운 기능 구현 |
+| fix | 문제 해결 |
+| docs |  |
+| build |  |
+| chore |  |
+| ci |  |
+| style |  |
+| refactor |  |
+| perf |  |
+| test |  |
+
+**[ 적용 범위 ]**
+
+- 규모가 큰 프로젝트에서 작성
+
+**[ 설명 ]**
+
+- 작업한 내용을 최대한 함축
+- 50자 내외
+
+### ❷ 본문
+
+- 선택 사항
+- 가급적 작성
+- 자유로운 형식, 필요 시 여러 단락으로 작성 가능
+- `what`이 아닌 `why`
+    - 무엇을 변경했는지 보다는 왜 수정했는지를 설명
+- - 코드 리뷰어에게 정보 제공
+- 나중에 왜 코드를 수정했는지 어떠한 코드를 수정했는지 기억이 나지 않을 가능성이 크기 때문에 본문을 작성해 보는 것을 추천
+- 생략하는 경우 : docs / style / fix(간단한 수정 )
+
+### ❸ 꼬리말
+
+- 필요 시 작성
+- 연관되어 있는 JIRA 이슈 번호 등록
+
+# 4️⃣ Git 브랜치 전략
+
+## ① Git 브랜치란
+
+- 독립적인 개발 공간
+- 아이디어를 쉽게 시험해볼 수 있음
+- 쉽고 빠르게 브랜치 생성 및 이동 가능
+
+## ② 브랜치 전략
+
+- 브랜치 남용 시, 복잡해짐
+    
+    ⇒ Git 이력 추적 및 파악이 힘들어짐
+    
+- 대표적인 전략 : `**gitflow**`
+    
+    ![Untitled](GIT%20%E1%84%92%E1%85%AA%E1%86%AF%E1%84%8B%E1%85%AD%E1%86%BC%20GUIDE%2063cca139123944de9eb799e54db2a9ad/Untitled%202.png)
+    
+- 그 외 전략 : `Github flow`, `Gitlab flow`
+    - Gitflow 보다 단순한 형태
+    - 배포가 매우 잦은 환경에 적합
+
+## ③ Gitflow 전략
+
+- 5가지 브랜치 : `master`, `develop`, `feature`, `release`, `hotfix`
+- 브랜치마다 목적이 명확
+- 브랜치 별 **생명 주기**에 따른 처리 주의
+
+![Untitled](GIT%20%E1%84%92%E1%85%AA%E1%86%AF%E1%84%8B%E1%85%AD%E1%86%BC%20GUIDE%2063cca139123944de9eb799e54db2a9ad/Untitled%203.png)
+
+# 5️⃣ Git 히스토리
+
+## ① Git 히스토리
+
+- Git은 소프트웨어 변경 사항을 커밋 단위로 기록한다
+- Git History = 이런 커밋 이력들의 모음
+- Git 그래프나 로그로 확인
+
+## ② Git 히스토리가 중요한 이유
+
+- 레거시 코드 유지 보수에 중요
+- 이전 프로젝트의 개발을 다시 찾아볼 때 유용
+- 프로젝트 인수인계 받을 시 유용
+- 버그 발생 시점 파악 및 문제 해결 실마리 제공
+    - 과거 커밋 시점으로 돌아가서 동작 확인
+    - `git checkout` 명령어 이용
+        
+        
+        1. 커밋 번호 확인
+        
+        ```bash
+        git log
+        ```
+        
+        ![Untitled](GIT%20%E1%84%92%E1%85%AA%E1%86%AF%E1%84%8B%E1%85%AD%E1%86%BC%20GUIDE%2063cca139123944de9eb799e54db2a9ad/Untitled%204.png)
+        
+        - HEAD : 지금 바라보고 있는 소스코드 위치
+        - 현재는 마지막 COMMIT을 바라보고 있음
+        
+        1. 과거 커밋 시점 이동
+        
+        ```bash
+        git checkout 커밋번호
+        ```
+        
+        ![Untitled](GIT%20%E1%84%92%E1%85%AA%E1%86%AF%E1%84%8B%E1%85%AD%E1%86%BC%20GUIDE%2063cca139123944de9eb799e54db2a9ad/Untitled%205.png)
+        
+        - 2개 이전 COMMIT으로 돌아감
+
+# 6️⃣ Git Stash
+
+![Untitled](GIT%20%E1%84%92%E1%85%AA%E1%86%AF%E1%84%8B%E1%85%AD%E1%86%BC%20GUIDE%2063cca139123944de9eb799e54db2a9ad/Untitled%206.png)
+
+- 현재 작업중인 내용을 모두 stash 공간에 차곡차곡 쌓아 줌
+    
+    ![Untitled](GIT%20%E1%84%92%E1%85%AA%E1%86%AF%E1%84%8B%E1%85%AD%E1%86%BC%20GUIDE%2063cca139123944de9eb799e54db2a9ad/Untitled%207.png)
