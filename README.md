@@ -1,6 +1,10 @@
 # README.md
 
-# 1️⃣ Commit Message Structure
+# 1️⃣ Team Introduction
+
+<img src="./team.png">
+
+# 2️⃣ Commit Message Structure
 
 ```bash
 **[타입]: 설명**
@@ -54,7 +58,7 @@ git commit -m "[fix]: 푸시알림 허용 여부 변경 API 로직 수정
               연관되어 있는 JIRA 이슈 번호"
 ```
 
-# 2️⃣ BRANCH 전략
+# 3️⃣ BRANCH 전략
 
 > GIT FLOW
 > 
