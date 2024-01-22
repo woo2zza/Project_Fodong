@@ -7,32 +7,7 @@
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
   color: white;
-}
-
-.IdInput {
-  cursor: pointer;
-  border: none;
-  border-radius: 5px;
-
-  padding: 10px 20px 10px 20px;
-
-  font-size: 10px;
-  white-space: nowrap;
-  font-family: "Nanum Pen Script";
-}
-
-.PasswordInput {
-  cursor: pointer;
-  border: none;
-  border-radius: 5px;
-
-  padding: 10px 20px 10px 20px;
-
-  font-size: 10px;
-  white-space: nowrap;
 }
