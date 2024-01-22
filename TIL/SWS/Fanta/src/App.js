@@ -1,17 +1,17 @@
 import "./App.css";
-import { Route, Routes, BrowserRouter } from "react-router-dom";
-import Login from "./Login.jsx";
-import Signup from "./Signup.jsx";
-
+import Home from "./pages/Home";
+import Signup from "./pages/Signup";
+import Mypage from "./pages/Mypage";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 function App() {
   return (
     <BrowserRouter>
       <div className="App">
         <header className="App-header">
-          <h1>Fantasy Tale</h1>
           <Routes>
-            <Route path="Login/" element={<Login />} />
-            <Route path="Signup/" element={<Signup />} />
+            <Route path="/" element={<Home />} />
+            <Route path="signup/" element={<Signup />} />
+            <Route path="mypage/" element={<Mypage />} />
           </Routes>
         </header>
       </div>
