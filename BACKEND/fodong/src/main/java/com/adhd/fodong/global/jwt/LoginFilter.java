@@ -54,6 +54,9 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter  {
         String accountEmail = customUserDetails.getUsername();
 
         String token = jwtUtil.createJwt(accountEmail, 60*60*10L);
+
+        System.out.println("accountEmail = " + accountEmail);
+        System.out.println("token = " + token);
         response.addHeader("Authorization", "Bearer " + token);
     }
 
