@@ -21,7 +21,7 @@ const WebRTC = () => {
       ></video>
       {/* WebRTC에 연결된 웹캠들이 추가되는 Div */}
       <div id="remoteStreamDiv"></div>
-      <script src="peerConfig.js"></script>
+      <script src="./peerConfig.js"></script>
     </>
   );
 };

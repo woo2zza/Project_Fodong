@@ -42,15 +42,13 @@ const connectSocket = async () => {
         const message = JSON.parse(candidate.body).body;
 
         // 해당 key에 해당되는 peer 에 받은 정보를 addIceCandidate 해준다.
-        pcListMap
-          .get(key)
-          .addIceCandidate(
-            new RTCIceCandidate({
-              candidate: message.candidate,
-              sdpMLineIndex: message.sdpMLineIndex,
-              sdpMid: message.sdpMid,
-            })
-          );
+        pcListMap.get(key).addIceCandidate(
+          new RTCIceCandidate({
+            candidate: message.candidate,
+            sdpMLineIndex: message.sdpMLineIndex,
+            sdpMid: message.sdpMid,
+          })
+        );
       }
     );
 
