@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class AccountEntity {
 
-    private int account_id;
-    private String account_email;
-    private String account_pwd;
+    private int accountId;
+    private String accountEmail;
+    private String accountPwd;
 }
