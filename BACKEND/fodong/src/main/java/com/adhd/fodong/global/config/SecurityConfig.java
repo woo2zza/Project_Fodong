@@ -1,4 +1,4 @@
-package com.adhd.fodong.global.security;
+package com.adhd.fodong.global.config;
 
 import com.adhd.fodong.global.jwt.JWTFilter;
 import com.adhd.fodong.global.jwt.JWTUtil;
@@ -21,6 +21,9 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import java.util.Arrays;
 import java.util.Collections;
 
+/**
+ * 인증(authentication) 와 인가(authorization) 처리를 위한 스프링 시큐리티 설정 정의.
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -61,7 +64,8 @@ public class SecurityConfig {
 
                         configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000",
                                 "http://192.168.100.159:3000",
-                                "http://192.168.100.158:3000"));
+                                "http://192.168.100.158:3000",
+                                "https://i10c109.p.ssafy.io"));
                         configuration.setAllowedMethods(Collections.singletonList("*"));
                         configuration.setAllowCredentials(true);
                         configuration.setAllowedHeaders(Collections.singletonList("*"));
@@ -83,20 +87,17 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((auth) -> auth
                         // 인가 없이도 허락하는 경로
-                        .requestMatchers(
-                                "/",
-                                "/login",
-                                "/account/join",
-                                "/topic",
-                                "/app",
-                                // OpenVidu인가 경로
-                                "/api/sessions",               // OpenVidu 세션 초기화 경로 허용
-                                "/api/sessions/*/connections"  // OpenVidu 커넥션 생성 경로 허용
-                        ).permitAll()
-
-                        // 특정 role 에 따라 허가하는 경로, 우리는 지금 안씀
-//                        .requestMatchers("/admin").hasRole("ADMIN")
-                        .anyRequest().authenticated());
+//                        .requestMatchers(
+//                                "/",
+//                                "/login",
+//                                "/account/join",
+//                                "/topic",
+//                                "/app",
+//                                // OpenVidu인가 경로
+//                                "/api/sessions",               // OpenVidu 세션 초기화 경로 허용
+//                                "/api/sessions/*/connections"  // OpenVidu 커넥션 생성 경로 허용
+//                        ).permitAll()
+                        .anyRequest().permitAll());
 
         // JWTFilter 등록
         http
