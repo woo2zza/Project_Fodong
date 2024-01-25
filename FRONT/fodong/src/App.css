@@ -1,55 +1,17 @@
-.App {
-  text-align: center;
-  font-family: "Nanum Pen Script";
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-}
-
-.All {
-  padding: 50px;
-  background-size: cover;
-}
-.Storytelling {
-  display: flex;
-  width: 90vw;
-  height: 100vh;
-  flex-direction: column;
-}
-
-.top {
-  display: flex;
-  align-items: center;
-  padding: 20px;
-  background-color: #f2f2f2;
-  border-radius: 10px;
-  margin-bottom: 20px;
-}
-
 .story_img img {
-  max-width: 90%;
-  border: solid 5px;
+  max-width: 100%;
+  border: solid;
   border-radius: 18px;
-}
-
-.story_content {
-  flex: 1;
+  margin: 2%;
 }
 
 .webcams {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px;
 }
 
 .webcam-feed-placeholder {
-  min-width: calc(50% - 6px);
   max-width: calc(50% - 6px);
   height: 200px;
   width: 300px;
@@ -91,9 +53,10 @@
   height: 100vh;
   width: 100%;
   margin: 0%;
+  padding: 0%;
   display: flex;
+  background-color: blue;
   flex-direction: column;
-  background: black;
   background-size: cover;
 }
 
@@ -101,9 +64,9 @@
   margin: 10% auto;
   padding: 3%;
   background: rgba(0, 0, 0, 0.8);
-  border-radius: 10px;
+  border-radius: 20px;
   background-size: cover;
-  width: 50%;
+  width: 30%;
 }
 
 .input-group {
@@ -115,8 +78,8 @@
 
 .input-group-text {
   font-weight: bold;
-  padding: 10px;
-  width: 30%;
+  padding: 30px;
+  width: 60%;
   background-color: rgba(0, 0, 0, 0.8);
   color: white;
   border: none;

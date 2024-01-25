@@ -1,15 +1,22 @@
 import { Button } from "../Common";
+import React, { useState } from "react";
+import "./StoryTelling.css";
 
 const Script = () => {
+  const [script, setScript] = useState("스크립트 시작");
+
+  const handleNextScript = () => {
+    setScript("다음 페이지의 스크립트 내용");
+  };
+
   return (
     <div className="main-content">
       <div className="script-container">
-        <h1>스크립트 가나다라마바사 아자차카타파하</h1>
+        <h1 className="script-text">{script}</h1>
         <div className="bottom">
-          <Button className="story_button">
-            다음 <br />
-            페이지
-          </Button>
+          <button className="story_button" onClick={handleNextScript}>
+            다음
+          </button>
         </div>
       </div>
     </div>

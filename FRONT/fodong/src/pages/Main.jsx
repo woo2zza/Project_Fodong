@@ -1,13 +1,10 @@
 import React from "react";
 import { Grid } from "@mui/material";
-import Button from "../components/main/buttons";
+import Buttons from "../components/main/buttons";
 import MainBook from "../components/main/MainBook";
 import Title from "../components/main/Title";
 
 const Main = () => {
-  const containerStyle = {
-    padding: "100px",
-  };
   return (
     <Grid
       container
@@ -16,17 +13,22 @@ const Main = () => {
       direction="column"
       style={containerStyle}
     >
-      <Grid>
+      <Grid item>
         <Title />
       </Grid>
       <Grid item>
         <MainBook />
       </Grid>
       <Grid item>
-        <Button />
+        <Buttons />
       </Grid>
     </Grid>
   );
+};
+
+const containerStyle = {
+  padding: "100px",
+  backgroundColor: "#f0e68c", // 밝은 배경색 추가
 };
 
 export default Main;

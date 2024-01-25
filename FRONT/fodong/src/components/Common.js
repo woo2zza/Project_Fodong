@@ -3,6 +3,8 @@ export const Title = styled.div`
   font-size: 50px;
   font-weight: 400;
   margin-bottom: 30px;
+  font-family: "Nanum Pen Script";
+  color: white;
 `;
 export const Input = styled.input`
   font-size: 25px;
