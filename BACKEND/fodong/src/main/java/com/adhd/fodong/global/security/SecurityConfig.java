@@ -18,6 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 @Configuration
@@ -58,7 +59,9 @@ public class SecurityConfig {
 
                         CorsConfiguration configuration = new CorsConfiguration();
 
-                        configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
+                        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000",
+                                "http://192.168.100.159:3000",
+                                "http://192.168.100.158:3000"));
                         configuration.setAllowedMethods(Collections.singletonList("*"));
                         configuration.setAllowCredentials(true);
                         configuration.setAllowedHeaders(Collections.singletonList("*"));
@@ -80,7 +83,16 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((auth) -> auth
                         // 인가 없이도 허락하는 경로
-                        .requestMatchers("/login","/account/login", "/", "/account/join").permitAll()
+                        .requestMatchers(
+                                "/",
+                                "/login",
+                                "/account/join",
+                                "/topic",
+                                "/app",
+                                // OpenVidu인가 경로
+                                "/api/sessions",               // OpenVidu 세션 초기화 경로 허용
+                                "/api/sessions/*/connections"  // OpenVidu 커넥션 생성 경로 허용
+                        ).permitAll()
 
                         // 특정 role 에 따라 허가하는 경로, 우리는 지금 안씀
 //                        .requestMatchers("/admin").hasRole("ADMIN")
