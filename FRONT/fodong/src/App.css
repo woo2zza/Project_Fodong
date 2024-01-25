@@ -1,0 +1,88 @@
+.App {
+  text-align: center;
+  font-family: "Nanum Pen Script";
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.All {
+  padding: 50px;
+  background-size: cover;
+}
+.Storytelling {
+  display: flex;
+  width: 90vw;
+  height: 100vh;
+  flex-direction: column;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  background-color: #f2f2f2;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.story_img img {
+  max-width: 90%;
+  border: solid 5px;
+  border-radius: 18px;
+}
+
+.story_content {
+  flex: 1;
+}
+
+.webcams {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.webcam-feed-placeholder {
+  min-width: calc(50% - 6px);
+  max-width: calc(50% - 6px);
+  height: 200px;
+  width: 300px;
+  background-color: #969393;
+  border-radius: 8px;
+}
+
+.script-container {
+  flex: 1;
+  background-color: #f2f2f2;
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: black;
+}
+
+.bottom {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.story_button {
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.story_button:hover {
+  background-color: #424343;
+}
