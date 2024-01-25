@@ -8,6 +8,7 @@ import Main from "./pages/Main";
 import Book from "./pages/Book";
 import WebRTC from "./webRTC_chh/testWebRTC.jsx";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import StroyReady from "./pages/StroyReady.jsx";
 function App() {
   return (
     <div className="App">
@@ -22,6 +23,7 @@ function App() {
             <Route path="booklist/" element={<BookList />} />
             <Route path="book/:id" element={<Book />} />
             <Route path="/webrtc" element={<WebRTC />} />
+            <Route path="/storyready/*" element={<StroyReady />} />
           </Routes>
         </BrowserRouter>
       </header>
