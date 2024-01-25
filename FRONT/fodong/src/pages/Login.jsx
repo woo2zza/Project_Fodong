@@ -48,7 +48,9 @@ const Home = () => {
                 onChange={onChangePassword}
               />
             </Inputs>
-            <Button type="submit">Login</Button>
+            <Button color="green" type="submit">
+              Login
+            </Button>
           </Form>
         </Wrapper>
       </div>

@@ -1,13 +1,13 @@
 const Title = () => {
-  return <div style={titleStyle}>Welcome to Kid's World!</div>; // 타이틀 변경
+  return <div style={titleStyle}>Welcome to Kid's World!</div>;
 };
 
 const titleStyle = {
-  fontSize: "36px", // 글꼴 크기 변경
+  fontSize: "36px",
   fontWeight: "bold",
-  color: "#ff6347", // 글자 색상 변경
+  color: "#ff6347",
   textAlign: "center",
-  marginBottom: "20px", // 여백 추가
+  marginBottom: "20px",
 };
 
 export default Title;

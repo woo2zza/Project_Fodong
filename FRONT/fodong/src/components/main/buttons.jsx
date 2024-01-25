@@ -20,9 +20,9 @@ const Buttons = () => {
 
 const Container = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
-  margin-top: 30px;
+  margin-top: 50px;
 `;
 
 const StyledLink = styled(Link)`

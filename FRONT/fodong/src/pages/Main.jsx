@@ -6,13 +6,7 @@ import Title from "../components/main/Title";
 
 const Main = () => {
   return (
-    <Grid
-      container
-      spacing={2}
-      justifyContent="center"
-      direction="column"
-      style={containerStyle}
-    >
+    <Grid container spacing={2} direction="column" style={containerStyle}>
       <Grid item>
         <Title />
       </Grid>
@@ -28,7 +22,11 @@ const Main = () => {
 
 const containerStyle = {
   padding: "100px",
-  backgroundColor: "#f0e68c", // 밝은 배경색 추가
+  backgroundColor: "#f0e68c",
+  display: "flex",
+  justifyContent: "center",
+  direction: "column",
+  height: "102vh",
 };
 
 export default Main;
