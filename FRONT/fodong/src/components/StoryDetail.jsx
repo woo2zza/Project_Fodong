@@ -1,5 +1,5 @@
 const StoryDetail = () => {
-  return <></>;
+  return <>하하</>;
 };
 
 export default StoryDetail;

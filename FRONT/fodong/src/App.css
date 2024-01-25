@@ -86,3 +86,61 @@
 .story_button:hover {
   background-color: #424343;
 }
+
+.container {
+  height: 100vh;
+  width: 100%;
+  margin: 0%;
+  display: flex;
+  flex-direction: column;
+  background: black;
+  background-size: cover;
+}
+
+.login-container {
+  margin: 10% auto;
+  padding: 3%;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 10px;
+  background-size: cover;
+  width: 50%;
+}
+
+.input-group {
+  width: 100%;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.input-group-text {
+  font-weight: bold;
+  padding: 10px;
+  width: 30%;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  border: none;
+}
+.form-control {
+  padding: 10px;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+.btn {
+  color: white;
+  width: 100%;
+  padding: 10px;
+  background-color: rgb(92, 18, 210);
+  border: none;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: rgb(56, 8, 124);
+}
+
+.form-control {
+  padding: 10px;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.8);
+}

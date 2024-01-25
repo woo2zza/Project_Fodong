@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { login } from "../api/login";
 import {
   Wrapper,
@@ -22,22 +21,18 @@ const Home = () => {
     console.log(event.target.value);
   };
 
-  const router = useNavigate();
-  const onClick = async () => {
+  const onClick = async (e) => {
+    e.preventDefault();
     const result = await login(id, pwd);
     console.log(result);
-    const { accessToken, refreshToken } = result;
-    localStorage.setItem("access", accessToken);
-    localStorage.setItem("refresh", refreshToken);
-    router("/mypage");
   };
   return (
     <Wrapper>
       <Title>로그인하기</Title>
-      <Form>
+      <Form onSubmit={onClick}>
         <Inputs>
           <Input
-            placeholder="Id"
+            placeholder="email"
             type="email"
             value={id}
             onChange={onChangeId}
@@ -49,7 +44,7 @@ const Home = () => {
             onChange={onChangePassword}
           />
         </Inputs>
-        <Button onClick={onClick}>Login</Button>
+        <Button type="submit">Login</Button>
       </Form>
     </Wrapper>
   );

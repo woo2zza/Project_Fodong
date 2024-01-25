@@ -33,7 +33,7 @@ export const Inputs = styled.div`
   margin-bottom: 10px;
 `;
 
-export const Form = styled.div`
+export const Form = styled.form`
   display: flex;
   height: 100%;
 `;
@@ -41,7 +41,7 @@ export const Form = styled.div`
 export const Button = styled.button`
   cursor: pointer;
   font-family: "Nanum Pen Script";
-  background-color: black;
+  background-color: ${(props) => props.color || "blue"};
   color: white;
   padding: 10px 20px 10px 20px;
   border-radius: 10px;
