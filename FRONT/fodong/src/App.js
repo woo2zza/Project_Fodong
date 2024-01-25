@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import WebRTC from "./webRTC_chh/testWebRTC";
 import Rtc from "./webrtc/Rtc";
 
-
 function App() {
   return (
     <div className="App">
@@ -14,7 +13,7 @@ function App() {
         </Routes>
       </Router>
 
-      <Rtc />
+      {/* <Rtc /> */}
     </div>
   );
 }
