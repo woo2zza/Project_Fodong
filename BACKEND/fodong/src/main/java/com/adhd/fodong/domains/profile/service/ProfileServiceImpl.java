@@ -1,6 +1,8 @@
 package com.adhd.fodong.domains.profile.service;
 
 
+import com.adhd.fodong.domains.account.entity.AccountEntity;
+import com.adhd.fodong.domains.account.repository.AccountRepository;
 import com.adhd.fodong.domains.profile.entity.ProfileEntity;
 import com.adhd.fodong.domains.profile.repository.ProfileRepository;
 import com.adhd.fodong.global.dto.MakeProfileDto;
@@ -16,6 +18,29 @@ import java.util.List;
 public class ProfileServiceImpl implements ProfileService{
 
     private final ProfileRepository profileRepository;
+    private final AccountRepository accountRepository;
+
+    @Override
+    public List<ProfileEntity> getProfiles(int accountId) {
+        // accountId로 모든 프로필 조회
+        if (accountId <= 0) {
+            throw new RuntimeException("error:프로필 조회 -> 유요하지 않은 accountId 값");
+        }
+
+        boolean existsAccount = accountRepository.existsByAccountId(accountId);
+        if (!existsAccount) {
+            throw new RuntimeException("error:프로필조회 -> 존재하지 않는 accountId");
+        }
+
+        List<ProfileEntity> allProfileByAccountId = profileRepository.findAllProfileByAccountId(accountId);
+        if (allProfileByAccountId == null) {
+            throw new RuntimeException("error:프로필조회 -> 프로필 조회 오류");
+        }
+
+        System.out.println(accountId + "의 모든 프로필 조회");
+        
+        return allProfileByAccountId;
+    }
 
     @Override
     public void makeProfile(@RequestBody MakeProfileDto makeProfileDto) {

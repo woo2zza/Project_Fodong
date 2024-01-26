@@ -30,6 +30,9 @@ public class CustomUserDetails implements UserDetails {
         return accountEntity.getAccountEmail();
     }
 
+    public int getAccountId() {
+        return accountEntity.getAccountId();
+    }
     @Override
     public boolean isAccountNonExpired() {
         return true;
