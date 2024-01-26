@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { login } from "../api/login";
+import { useNavigate } from "react-router-dom";
 import {
   Wrapper,
   Title,
@@ -8,7 +9,10 @@ import {
   Form,
   Button,
 } from "../components/Common";
+
 const Home = () => {
+  const navigate = useNavigate();
+
   const [id, setId] = useState("");
   const onChangeId = (event) => {
     setId(event.target.value);
@@ -25,6 +29,7 @@ const Home = () => {
     e.preventDefault();
     const result = await login(id, pwd);
     console.log(result);
+    navigate("/profile");
   };
   return (
     <div className="container">

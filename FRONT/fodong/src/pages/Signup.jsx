@@ -2,9 +2,10 @@ import React from "react";
 import { Wrapper, Title, Input, Inputs, Button } from "../components/Common";
 import { useForm } from "../hooks/useForm";
 import { signup } from "../api/signup";
+import { useNavigate } from "react-router-dom";
 // import { userStore } from "../store/userStore";
-
 const Signup = () => {
+  const navigate = useNavigate();
   const [pwd, onChangePwd] = useForm();
   const [email, onChangeEmail] = useForm();
   // const setToken = userStore((state) => state.setToken);
@@ -16,6 +17,7 @@ const Signup = () => {
       // if (response && response.token) {
       //   setToken(response.token);
       // }
+      navigate("/login");
     } catch (error) {
       console.error("회원가입 실패:", error);
     }

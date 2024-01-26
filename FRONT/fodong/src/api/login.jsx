@@ -18,29 +18,21 @@ export const login = async (accountEmail, accountPwd) => {
 
     const authToken =
       response.headers["authorization"] || response.headers["Authorization"];
+    const authId = response.data.accountId;
     if (authToken) {
-      localStorage.setItem("Token", authToken); // 'Authorization' 토큰을 localStorage에 저장합니다.
+      localStorage.setItem("Token", authToken); // 'Authorization' 토큰을 저장.
     } else {
       console.log("Authorization 토큰이 없습니다.");
+    }
+
+    if (authId) {
+      localStorage.setItem("accountId", authId);
+    } else {
+      console.log("id 토큰이 없습니다.");
     }
     return response.data;
   } catch (error) {
     console.error("Login error", error);
     throw error;
   }
-
-  //   const params = new FormData();
-  //   params.append("accountEmail", accountEmail);
-  //   params.append("accountPwd", accountPwd);
-
-  //   try {
-  //     const response = await axios.post(
-  //       "http://192.168.100.91:8080/login",
-  //       params
-  //     );
-  //     return response.data;
-  //   } catch (error) {
-  //     console.error("Login error", error);
-  //     throw error;
-  //   }
 };
