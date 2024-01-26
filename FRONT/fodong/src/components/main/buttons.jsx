@@ -1,67 +1,48 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 
-const buttons = () => {
+const Buttons = () => {
   const imagePaths = ["chick.png", "rabbit.png", "penguin.png"];
+  const linkPaths = ["/login", "/bookList", "/bookshelf"];
+  const alts = ["chick", "rabbit", "penguin"];
+
   return (
-    <div style={containerStyle}>
-      <div style={flexContainerStyle}>
-        {imagePaths.map((image, index) => (
-          <div key={index} style={buttonStyle}>
-            {index === 0 && (
-              <Link to="/login" style={linkStyle}>
-                <img
-                  src={require(`./image/${image}`)}
-                  style={imageStyle}
-                  alt="chick"
-                />
-              </Link>
-            )}
-            {index === 1 && (
-              <Link to="/bookList" style={linkStyle}>
-                <img
-                  src={require(`./image/${image}`)}
-                  style={imageStyle}
-                  alt="rabbit"
-                />
-              </Link>
-            )}
-            {index === 2 && (
-              <Link to="/bookself">
-                <img
-                  src={require(`./image/${image}`)}
-                  style={imageStyle}
-                  alt="penguin"
-                />
-              </Link>
-            )}
-          </div>
-        ))}
-      </div>
-    </div>
+    <Container>
+      {imagePaths.map((image, index) => (
+        <StyledLink to={linkPaths[index]} key={index}>
+          <ImageButton src={require(`./image/${image}`)} alt={alts[index]} />
+        </StyledLink>
+      ))}
+    </Container>
   );
 };
-const containerStyle = {
-  alignItems: "center",
-  display: "inline-flex",
-};
 
-const flexContainerStyle = {
-  ...containerStyle,
-  gap: 180,
-};
+const Container = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-top: 50px;
+`;
 
-const imageStyle = {
-  width: 172,
-  height: 172,
-};
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+  display: block;
+`;
 
-const buttonStyle = {
-  display: "inline-block",
-  cursor: "pointer",
-};
-const linkStyle = {
-  textDecoration: "none",
-  color: "inherit",
-};
-export default buttons;
+const ImageButton = styled.img`
+  width: 150px;
+  height: 150px;
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  &:active {
+    transform: scale(0.9);
+  }
+`;
+
+export default Buttons;

@@ -1,0 +1,31 @@
+.main-content {
+  background-color: #ffe4c4;
+}
+
+.script-container {
+  background-color: #add8e6;
+  padding: 20px;
+  border-radius: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #333;
+}
+
+.script-text {
+  font-size: 24px;
+}
+
+.story_button {
+  background-color: #ff69b4;
+  color: #fff;
+  font-size: 18px;
+  padding: 12px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.story_button:hover {
+  background-color: #ff1493;
+}

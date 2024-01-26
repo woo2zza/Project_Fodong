@@ -5,7 +5,7 @@ const StartButton = () => {
   return (
     <div>
       <Link to="/storytelling">
-        <img src={require(`./img/playbutton.png`)} alt="startbutton" style={{ height: '70%'}} />
+        <img src={require(`./img/startbutton.png`)} alt="startbutton" style={{ height: '70%'}} />
       </Link>
     </div>
   );

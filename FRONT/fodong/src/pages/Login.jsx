@@ -27,26 +27,34 @@ const Home = () => {
     console.log(result);
   };
   return (
-    <Wrapper>
-      <Title>로그인하기</Title>
-      <Form onSubmit={onClick}>
-        <Inputs>
-          <Input
-            placeholder="email"
-            type="email"
-            value={id}
-            onChange={onChangeId}
-          />
-          <Input
-            placeholder="Password"
-            type="password"
-            value={pwd}
-            onChange={onChangePassword}
-          />
-        </Inputs>
-        <Button type="submit">Login</Button>
-      </Form>
-    </Wrapper>
+    <div className="container">
+      <div className="login-container">
+        <Wrapper>
+          <Title>로그인하기</Title>
+          <Form onSubmit={onClick}>
+            <Inputs>
+              <Input
+                className="input-group-text"
+                placeholder="email"
+                type="email"
+                value={id}
+                onChange={onChangeId}
+              />
+              <Input
+                className="input-group-text"
+                placeholder="Password"
+                type="password"
+                value={pwd}
+                onChange={onChangePassword}
+              />
+            </Inputs>
+            <Button color="green" type="submit">
+              Login
+            </Button>
+          </Form>
+        </Wrapper>
+      </div>
+    </div>
   );
 };
 
