@@ -40,4 +40,14 @@
         WHERE account_email = #{accountEmail}
     </select>
 
+    <select id="existsByAccountId" parameterType="int" resultType="boolean">
+        SELECT CASE
+                   WHEN COUNT(*) > 0
+                       THEN true
+                   ELSE false
+                   END
+        FROM Account
+        WHERE account_id = #{accountId}
+    </select>
+
 </mapper>

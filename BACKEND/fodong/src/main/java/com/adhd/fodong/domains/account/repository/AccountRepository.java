@@ -24,5 +24,7 @@ public interface AccountRepository {
     // email로 존재하는 데이터인지 확인
     boolean existsByEmail(String accountEmail);
 
+    boolean existsByAccountId(int accountId);
+
 
 }

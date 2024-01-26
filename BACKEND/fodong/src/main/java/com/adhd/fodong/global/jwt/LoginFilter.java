@@ -1,10 +1,13 @@
 package com.adhd.fodong.global.jwt;
 
+import com.adhd.fodong.domains.account.repository.AccountRepository;
 import com.adhd.fodong.global.dto.CustomUserDetails;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,13 +17,15 @@ import org.springframework.stereotype.Component;
 import org.w3c.dom.ls.LSOutput;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
-public class LoginFilter extends UsernamePasswordAuthenticationFilter  {
+public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
     private final JWTUtil jwtUtil;
 
-    public LoginFilter(AuthenticationManager authenticationManager,JWTUtil jwtUtil) {
+
+    public LoginFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil) {
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
     }
@@ -52,12 +57,25 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter  {
         //UserDetails
         CustomUserDetails customUserDetails = (CustomUserDetails) authResult.getPrincipal();
         String accountEmail = customUserDetails.getUsername();
+        int accountId = customUserDetails.getAccountId();
 
-        String token = jwtUtil.createJwt(accountEmail, 60*60*10L);
+        String token = jwtUtil.createJwt(accountEmail, 60 * 60 * 10L);
 
+        System.out.println("-----------로그인 성공------------");
         System.out.println("accountEmail = " + accountEmail);
+        System.out.println("accountId = " + accountId);
         System.out.println("token = " + token);
+        System.out.println("---------------------------------");
         response.addHeader("Authorization", "Bearer " + token);
+
+        PrintWriter out = response.getWriter();
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        out.print("{\"accountId\": " + accountId + "}");
+        out.flush();
+
+//        String redirectUrl = "/profile/" + accountId;
+//        response.sendRedirect(redirectUrl);
     }
 
     @Override
@@ -65,7 +83,6 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter  {
         // 검증 실패시
         response.setStatus(401);
     }
-
 
 
 }
