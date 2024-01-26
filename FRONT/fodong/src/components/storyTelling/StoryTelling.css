@@ -12,8 +12,14 @@
   color: #333;
 }
 
+.script-text-container {
+  flex-grow: 1;
+  text-align: center;
+}
+
 .script-text {
   font-size: 24px;
+  display: inline-block;
 }
 
 .story_button {

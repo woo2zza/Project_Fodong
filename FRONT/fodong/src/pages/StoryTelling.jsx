@@ -1,5 +1,5 @@
 import React from "react";
-import Cams from "../components/storyTelling/Cams";
+// import Cams from "../components/storyTelling/Cams";
 import Script from "../components/storyTelling/Script";
 import Page1 from "../components/storyTelling/Page1";
 import { Route, Routes } from "react-router-dom";
@@ -11,14 +11,14 @@ const StoryTelling = () => {
       <main style={mainStyle}>
         <section>
           <Grid container spacing={2}>
-            <Grid item xs={12} md={8}>
+            <Grid item xs={12} >
               <Routes>
                 <Route path="/:page" element={<Page1 />} />
               </Routes>
             </Grid>
-            <Grid item xs={12} md={4}>
+            {/* <Grid item xs={12} md={4}>
               <Cams style={script} />
-            </Grid>
+            </Grid> */}
           </Grid>
         </section>
         <section>
