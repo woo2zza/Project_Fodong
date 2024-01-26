@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import dummy from "./dummy";
 
 const Character = () => {
   const [players, setPlayers] = useState(dummy);
 
-  useEffect(() => {setPlayers(dummy[0].player)});
+  // useEffect(() => {setPlayers(dummy[0].player)});
 
   const assignRole = (playerName, role) => {
     const updatePlayers = players.map((player) =>
