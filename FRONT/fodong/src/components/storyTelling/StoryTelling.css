@@ -29,3 +29,16 @@
 .story_button:hover {
   background-color: #ff1493;
 }
+.webcams {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.webcam-feed-placeholder {
+  max-width: calc(50% - 6px);
+  height: 200px;
+  width: 300px;
+  background-color: #969393;
+  border-radius: 8px;
+}

@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import MainBook from "./img/Mainbook.png";
+import "./StoryTelling.css";
 
 const Page = () => {
-  const [imageSrc, setImageSrc] = useState("");
+  const [imageSrc, setImageSrc] = useState(MainBook);
   const { page } = useParams();
 
-  useEffect(() => {
-    // 여기서 서버에서 이미지 URL을 가져옵니다.
-    fetch(`http://yourserver.com/api/image?page=${page}`)
-      .then((response) => response.json())
-      .then((data) => setImageSrc(data.imageUrl));
-  }, [page]);
+  // useEffect(() => {
+  //   fetch(`http://.com/api/image?page=${page}`)
+  //     .then((response) => response.json())
+  //     .then((data) => setImageSrc(data.imageUrl));
+  // }, [page]);
 
   return (
     <div className="story_img">
