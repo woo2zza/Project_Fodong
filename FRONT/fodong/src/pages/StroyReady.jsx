@@ -12,7 +12,7 @@ const StroyReady = () => {
       <Grid item xs={12} sm={6} md={4}>
         <Background style={{ display: "flex" }}></Background>
       </Grid>
-      <Grid style={{ display: "flex", width: "100%", height: "100%"}}>
+      <Grid style={{ display: "flex", width: "100%", height: "30vh", alignItems: "center", justifyContent: "space-between", padding: "0 15px" }}>
         <Character style={{ flex: 1, minWidth: "50%"}}></Character>
         <StartButton style={{ flex: 1, minWidth: "50%"}}></StartButton>
       </Grid>
