@@ -2,9 +2,13 @@ import cv2
 import mediapipe as mp
 
 # Mediapipe Face Mesh 인스턴스 생성
-mp_face_mesh = mp.solutions.face_mesh
-face_mesh = mp_face_mesh.FaceMesh()
-
+face_mesh = mp.solutions.face_mesh.FaceMesh(
+    static_image_mode=False,
+    max_num_faces=3,
+    refine_landmarks=False,
+    min_detection_confidence=0.5,
+    min_tracking_confidence=0.5
+)
 # 카메라 캡처 객체 생성
 cap = cv2.VideoCapture(0)  # 0은 기본 카메라
 
