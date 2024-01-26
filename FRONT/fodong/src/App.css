@@ -4,26 +4,13 @@
   font-family: "Nanum Pen Script";
   box-sizing: border-box;
 }
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap");
 
 .story_img img {
   max-width: 100%;
   border: solid;
   border-radius: 18px;
   margin: 2%;
-}
-
-.webcams {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.webcam-feed-placeholder {
-  max-width: calc(50% - 6px);
-  height: 200px;
-  width: 300px;
-  background-color: #969393;
-  border-radius: 8px;
 }
 
 .script-container {
@@ -59,16 +46,14 @@
 .container {
   height: 100vh;
   width: 100%;
-  margin: 0%;
-  padding: 0%;
   display: flex;
   flex-direction: column;
   background-size: cover;
-  background-image: url("img/image4.png");
+  background-image: url("img/image6.png");
 }
 
 .login-container {
-  margin: 22% auto;
+  margin: 15% auto;
   padding: 3%;
   background: rgba(0, 0, 0, 0.8);
   border-radius: 20px;
@@ -76,21 +61,15 @@
   width: 30%;
 }
 
-.input-group {
-  width: 100%;
-  margin-bottom: 15px;
-  display: flex;
-  align-items: center;
-}
-
 .input-group-text {
   font-weight: bold;
-  padding: 30px;
-  width: 60%;
+  width: 70%;
   background-color: rgba(0, 0, 0, 0.8);
-  color: white;
-  border: none;
 }
+.input-group-text:hover {
+  background-color: rgb(82, 83, 82);
+}
+
 .form-control {
   padding: 10px;
   border: none;
