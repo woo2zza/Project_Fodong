@@ -5,7 +5,7 @@ import "./StoryTelling.css";
 
 const Page = () => {
   const [imageSrc, setImageSrc] = useState(MainBook);
-  const { page } = useParams();
+  const { page } = useParams(1);
 
   // useEffect(() => {
   //   fetch(`http://.com/api/image?page=${page}`)
