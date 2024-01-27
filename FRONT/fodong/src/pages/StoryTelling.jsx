@@ -14,6 +14,7 @@ const StoryTelling = () => {
             <Grid item xs={12} >
               <Routes>
                 <Route path="/:page" element={<Page1 />} />
+                
               </Routes>
             </Grid>
             {/* <Grid item xs={12} md={4}>
