@@ -24,9 +24,9 @@ public class ProfileController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
-    public List<ProfileEntity> getProfiles(@RequestBody ProfileRequest profileRequest) {
-        int accountId = profileRequest.getAccountId();
+    public List<ProfileEntity> getProfiles(@RequestParam int accountId) {
         List<ProfileEntity> profiles = profileService.getProfiles(accountId);
+        System.out.println("프로필 전체조회 요청도달 accountId : " + accountId);
         return profiles;
     }
 

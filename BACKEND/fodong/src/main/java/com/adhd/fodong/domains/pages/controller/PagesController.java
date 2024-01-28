@@ -1,4 +1,4 @@
-package com.adhd.fodong.domains.mainpage.controller;
+package com.adhd.fodong.domains.pages.controller;
 
 
 import lombok.RequiredArgsConstructor;
@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/main")
 @RequiredArgsConstructor
-public class MainPageController {
+public class PagesController {
 
 }
