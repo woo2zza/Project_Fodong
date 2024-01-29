@@ -5,13 +5,14 @@ import "./StoryTelling.css";
 import DummyScript from "./DummyScript";
 
 
-const Page = () => {
+const Page = ({ onPageChange }) => {
   const [imageSrc, setImageSrc] = useState('');
   const  { page : pageParam }  = useParams();
-  const [page, setPage] = useState(parseInt(pageParam, 10) || 1);
+  const page = parseInt(pageParam, 10) || 1;
   const navigate = useNavigate();
   
   useEffect(() => {
+    console.log(15, pageParam);
     const imgeUrl = require(`./img/background${pageParam}.png`)
     // fetch(`http://.com/api/image?page=${page}`)
       // .then((response) => response.json())
@@ -20,32 +21,69 @@ const Page = () => {
       // const imgeUrl = require(`./img/background${page}.png`)
       setImageSrc(imgeUrl);
 
-  }, [page, pageParam]);
+  }, [pageParam]);
 
   const handleNextPage = () => {
     const nextPage = page + 1;
-    console.log(11, page)
+    console.log(28, page)
     if ( nextPage <= DummyScript.length ) {
       navigate(`/storytelling/${nextPage}`);
-      setPage(nextPage);
+      // setPage(nextPage);
+      onPageChange();
     }
-  //    else if (page < DummyScript.length) {
-  //     const nextpage = page + 1;
-  //     navigate(`/storytelling/${nextpage}`);
-  //     setPage(nextpage);
-  //     setScriptIndex(0);
-  //     setScript(DummyScript[nextpage -1][0].text);
+  }
+  const handleBeforePage = () => {
+    const BeforePage = page - 1;
+    console.log(36, page)
+    if ( BeforePage >= 1 ) {
+      navigate(`/storytelling/${BeforePage}`);
+      // setPage(BeforePage);
+      onPageChange();
+    }
   }
   // ;}
 
   return (
-    <div>
-      <button variant="filled" onClick={handleNextPage}>
-        {'>'}
+    <div style={{ 
+      display : 'flex',
+      alignItems : 'center',
+      justifyContent : 'center',
+    }}>
+      <button style={{
+        fontSize: '3rem',
+        padding : '10px 20px',
+        cursor : 'pointer',
+        outline : 'none',
+        order: '1',
+        background : 'none',
+        border : 'none',
+        color : '#ADD8E6',
+        fontWeight : '700',
+      }}
+       onClick={handleBeforePage}>
+        {'<'}
       </button>
-    <div className="story_img">
+    <div style={{
+        flexGrow: '1',
+        order : '2'
+      }}
+      className="story_img">
       <img src={imageSrc} alt={`page ${page}`} style={{width : '50vw', height: '50vh'}}/>
     </div>
+      <button style={{
+        fontSize: '3rem',
+        padding : '10px 20px',
+        cursor : 'pointer',
+        outline : 'none',
+        order: '3',
+        color : '#ADD8E6',
+        fontWeight : '700',
+        background : 'none',
+        border : 'none',
+      }}
+       onClick={handleNextPage}>
+        {'>'}
+      </button>
     </div>
   );
 };
