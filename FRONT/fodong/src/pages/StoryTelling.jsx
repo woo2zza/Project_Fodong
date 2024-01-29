@@ -16,7 +16,7 @@ const StoryTelling = () => {
   }
   return (
     <>
-      <main style={mainStyle}>
+
         <section>
           <Grid container spacing={2}>
             <Grid item xs={12} >
@@ -30,12 +30,12 @@ const StoryTelling = () => {
             </Grid> */}
           </Grid>
         </section>
-        <section>
+        <section className= "script-container" style={{ height: '15vh'}}>
           <Routes>
             <Route path="/:page" element={<Script scriptPage={ scriptPage } setScriptPage={ setScriptPage }/>} />
           </Routes>
         </section>
-      </main>
+
     </>
   );
 };

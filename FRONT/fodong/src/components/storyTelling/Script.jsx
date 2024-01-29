@@ -41,7 +41,7 @@ const Script = ({ scriptPage, setScriptPage }) => {
 , [scriptIndex, page]);
 
 
-  // idx+1 < maxlength-1 ? idx+1 : nextpage
+
   const handleNextScript = () => {
     const scriptLength = DummyScript[page - 1].length;
     console.log(scriptIndex)
@@ -61,7 +61,7 @@ const Script = ({ scriptPage, setScriptPage }) => {
 
   // console.log(script);
   return (
-    <div className="main-content">
+    // <div className="main-content" >
       <div className="script-container">
         <div className="script-text-container">
           <h1 className="script-text">{script}</h1>
@@ -72,7 +72,7 @@ const Script = ({ scriptPage, setScriptPage }) => {
           </button>
         </div>
       </div>
-    </div>
+    // </div>
   );
 };
 
