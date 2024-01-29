@@ -5,7 +5,7 @@ import numpy as np
 import faceBlendCommon as fbc
 import csv
 
-VISUALIZE_FACE_POINTS = False
+VISUALIZE_FACE_POINTS = True
 
 filters_config = {
     'bear':
@@ -59,7 +59,7 @@ def getLandmarks(img):
 
     height, width = img.shape[:-1]
 
-    with mp_face_mesh.FaceMesh(max_num_faces=2, static_image_mode=True, min_detection_confidence=0.5) as face_mesh:
+    with mp_face_mesh.FaceMesh(max_num_faces=1, static_image_mode=True, min_detection_confidence=0.5) as face_mesh:
 
         results = face_mesh.process(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
 
@@ -195,7 +195,7 @@ while cap.isOpened():
     ret, frame = cap.read()
     print(ret,frame)
     if frame is None:
-        print("Error:십알십알뒤질래?")
+        print("Error:No Camera")
         break
     if not ret:
         continue
