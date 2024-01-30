@@ -15,15 +15,15 @@ const Character = () => {
   };
   
   return (
-    <div>
+    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%"}}>
       <img
-        src={require("./img/pig3-work.png")}
-        style={{ maxWidth: "35%", height: "24vh" }}
+        src={require("./img/ant1.png")}
+        style={{ maxWidth: "35%", height: "24vh", marginLeft: "15px", marginRight: "15px" }}
         alt="일하는돼지"
         onClick={() => assignRole("", "일하는돼지")}
       />
       <img
-        src={require("./img/pig3.png")}
+        src={require("./img/베짱이3.png")}
         style={{ maxWidth: "35%", height: "24vh" }}
         alt="돼지"
         onClick={() => assignRole("person2", "돼지")}

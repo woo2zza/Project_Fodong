@@ -11,7 +11,7 @@ const Page = ({ onPageChange }) => {
 
   useEffect(() => {
     console.log(15, pageParam);
-    const imgeUrl = require(`./img/background${pageParam}.png`);
+    const imgeUrl = require(`./img/story${pageParam}.png`);
     setImageSrc(imgeUrl);
   }, [pageParam]);
 
