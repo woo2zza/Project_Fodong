@@ -1,6 +1,6 @@
 package com.adhd.fodong.global.dto;
 
-import com.adhd.fodong.domains.account.entity.AccountEntity;
+import com.adhd.fodong.domains.users.account.entity.AccountEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -30,6 +30,9 @@ public class CustomUserDetails implements UserDetails {
         return accountEntity.getAccountEmail();
     }
 
+    public int getAccountId() {
+        return accountEntity.getAccountId();
+    }
     @Override
     public boolean isAccountNonExpired() {
         return true;

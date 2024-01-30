@@ -1,0 +1,50 @@
+.main-content {
+  background-color: #ffe4c4;
+}
+
+.script-container {
+  background-color: #add8e6;
+  padding: 20px;
+  border-radius: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #333;
+}
+
+.script-text-container {
+  flex-grow: 1;
+  text-align: center;
+}
+
+.script-text {
+  font-size: 24px;
+  display: inline-block;
+}
+
+.story_button {
+  background-color: #ff69b4;
+  color: #fff;
+  font-size: 18px;
+  padding: 12px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.story_button:hover {
+  background-color: #ff1493;
+}
+.webcams {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.webcam-feed-placeholder {
+  max-width: calc(50% - 6px);
+  height: 200px;
+  width: 300px;
+  background-color: #969393;
+  border-radius: 8px;
+}
