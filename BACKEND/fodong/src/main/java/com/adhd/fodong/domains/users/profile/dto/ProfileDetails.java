@@ -5,7 +5,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class MakeProfile {
-    private int accountId;
+public class ProfileDetails {
     private String nickname;
 }

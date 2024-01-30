@@ -2,13 +2,11 @@ package com.adhd.fodong.domains.users.profile.service;
 
 
 import com.adhd.fodong.domains.users.account.repository.AccountRepository;
-import com.adhd.fodong.domains.users.profile.dto.UpdateProfile;
 import com.adhd.fodong.domains.users.profile.entity.ProfileEntity;
 import com.adhd.fodong.domains.users.profile.repository.ProfileRepository;
-import com.adhd.fodong.domains.users.profile.dto.MakeProfile;
+import com.adhd.fodong.domains.users.profile.dto.ProfileDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -42,11 +40,9 @@ public class ProfileServiceImpl implements ProfileService{
     }
 
     @Override
-    public void makeProfile(@RequestBody MakeProfile makeProfile) {
+    public void makeProfile(int accountId, ProfileDetails profileDetails) {
         // 프로필 생성
-
-        int accountId = makeProfile.getAccountId();
-        String nickname = makeProfile.getNickname();
+        String nickname = profileDetails.getNickname();
 
         if (nickname == null || nickname.isBlank()) {
             throw new RuntimeException("프로필 생성 : 비어있는 프로필 에러");
@@ -72,9 +68,13 @@ public class ProfileServiceImpl implements ProfileService{
     }
 
     @Override
-    public void updateProfile(UpdateProfile updateProfile) {
-        int profileId = updateProfile.getProfileId();
-        String newNickName = updateProfile.getNickname();
+    public void updateProfile(int profileId, ProfileDetails profileDetails) {
+        String newNickName = profileDetails.getNickname();
+
+        if (newNickName == null) {
+            throw new RuntimeException("ERROR : 빈 닉네임이 들어옴");
+        }
+
         profileRepository.updateNicknameByProfileId(profileId, newNickName);
         System.out.println("프로필 수정 성공 :" + newNickName);
     }
