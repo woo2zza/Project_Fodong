@@ -1,6 +1,6 @@
 package com.adhd.fodong.global.jwt;
 
-import com.adhd.fodong.domains.account.entity.AccountEntity;
+import com.adhd.fodong.domains.users.account.entity.AccountEntity;
 import com.adhd.fodong.global.dto.CustomUserDetails;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
