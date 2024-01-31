@@ -5,21 +5,17 @@ mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
 mp_face_mesh = mp.solutions.face_mesh
 
-
-#l_eye=[33,246,161,160,159,158,157,173,133,155,154,153,145,144,163,7]
-#r_eye=[362,398,384,385,386,387,388,466,263,249,390,373,374,380,381,382]
-#mouth_inner=[78,95,88,178,87,14,317,402,318,324,308,415,310,311,312,13,82,81,80,191]
-
-#keypnt_68 = l_eye+r_eye+mouth_inner
-
-keypnt_68=[151,108,69,104,68,71,139,34,227,137,177,215,138,135,169,170,140,171,175,396,369,395,394,364,367,435,401,366,447,264,368,301,298,333,299,337]
+keypnt_68 = [127, 93, 58, 136, 150, 149, 176, 148, 152, 377, 400, 378, 379, 365, 288, 323, 356, 70, 63, 105, 66, 55,
+             285, 296, 334, 293, 300, 168, 6, 195, 4, 64, 60, 94, 290, 439, 33, 160, 158, 173, 153, 144, 398, 385, 387,
+             466, 373, 380, 61, 40, 39, 0, 269, 270, 291, 321, 405, 17, 181, 91, 78, 81, 13, 311, 306, 402, 14, 178,
+             162, 54, 67, 10, 297, 284, 389]
 
 # For static images:
 IMAGE_FILES = []
 drawing_spec = mp_drawing.DrawingSpec(thickness=1, circle_radius=1)
 with mp_face_mesh.FaceMesh(
         static_image_mode=True,
-        max_num_faces=2,
+        max_num_faces=1,
         refine_landmarks=True,
         min_detection_confidence=0.5) as face_mesh:
     for idx, file in enumerate(IMAGE_FILES):
@@ -60,7 +56,7 @@ with mp_face_mesh.FaceMesh(
 drawing_spec = mp_drawing.DrawingSpec(thickness=1, circle_radius=1)
 cap = cv2.VideoCapture(0)
 with mp_face_mesh.FaceMesh(
-        max_num_faces=2,
+        max_num_faces=1,
         refine_landmarks=True,
         min_detection_confidence=0.5,
         min_tracking_confidence=0.5) as face_mesh:
@@ -94,7 +90,7 @@ with mp_face_mesh.FaceMesh(
                         height, width = image.shape[:2]
                         point = (int(landmark.x * width), int(landmark.y * height))
                         cv2.circle(image, point, 1, (255, 0, 0), -1)
-                        #cv2.putText(image, str(idx), point, cv2.FONT_HERSHEY_SIMPLEX, .3, (255, 255, 255), 1)
+                        cv2.putText(image, str(idx), point, cv2.FONT_HERSHEY_SIMPLEX, .3, (255, 255, 255), 1)
                         # if idx % 2 == 0:
                         #     cv2.circle(image2, point, 1, (255, 0, 0), -1)
                         #     cv2.putText(image2, str(idx), point, cv2.FONT_HERSHEY_SIMPLEX, .3, (255, 255, 255), 1)
