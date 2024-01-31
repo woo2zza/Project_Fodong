@@ -30,7 +30,7 @@ const containerStyle = {
   display: "flex",
   justifyContent: "center",
   direction: "column",
-  height: "102vh",
+  height: "100vh",
 };
 
 export default Main;

@@ -1,78 +1,72 @@
 const DummyScript = [
   [
     {
+      person: "naraition",
+      text: "뙤약볕 아래에서, 겨울을 대비하기 위해 개미들은 땀을 뻘뻘 흘리며 열심히 일하고 있습니다." 
+    },
+    {
       person: "naration",
-      text: "푸와 친구들은 새로운 모험을 찾아 숲속으로 발걸음을 옮겼어요.",
+      text:  "그러나, 저기 베짱이는 나무 그늘에서 노래를 부르며 놀고만 있네요!"
     },
     {
-      person: "pooh",
-      text: "오늘은 숲속에서 새로운 모험을 해보자, 친구들아!",
+      person: "ant",
+      text: "으으, 이 무거운 것을 어디다 둬야 할까?"
     },
     {
-      person: "piglet",
-      text: "그래요, 푸! 무슨 모험을 할까요?",
+      person: "ant",
+      text: "겨울이 오기 전에 우리 음식을 충분히 모아두어야 해."
     },
     {
-      person: "tiger",
-      text: "가보지 않은 길을 탐험해 보자",
+      person: "grasshopper",
+      text:  "하하, 너희들은 왜 그렇게 바쁘게 움직여? 여름은 즐길 시간이야, 일은 그만두고 놀자!"
+    },
+    {
+      person: "ant",
+      text:  "베짱이야, 겨울이 오면 먹을 것이 없을 걸. 지금 준비하지 않으면 후회할 거야."
+    },
+    {
+      person: "grasshopper",
+      text:  "걱정 마, 겨울까진 아직 멀었어. 지금은 즐길 시간이야!"
     },
   ],
   [
     {
-      person: "naration",
-      text: "신비로운 숲속, 친구들은 미지의 세계로 한 발짝 더 들어갔어요.",
+      person: "narition",
+      text:  "어느새 겨울이 찾아왔습니다. 눈이 내리고, 찬바람이 불어옵니다."
     },
     {
-      person: "pooh",
-      text: "이 고대 나무들은 정말 신비로워!",
+      person: "narition",
+      text:  "베짱이는 굶주리고 추위에 떨고 있네요."
     },
     {
-      person: "piglet",
-      text: "여기는 전에 본 적이 없는 곳이에요.",
-    },
-    {
-      person: "tiger",
-      text: "신나는 탐험이 시작되었네!",
+      person: "grasshopper",
+      text:  "이런, 정말 추워. 먹을 것도 하나도 없어! 나는 겨울을 전혀 준비하지 못했어…"
     },
   ],
   [
     {
-      person: "naration",
-      text: "오솔길 따라, 모험의 길은 계속되었어요.",
+      person: "grasshopper",
+      text:  "개미야, 너에게 부탁이 있어. 나는 굶주리고 있어. 조금만 음식을 나눠줄 수 있을까?"
     },
     {
-      person: "pooh",
-      text: "이 오솔길은 어디로 향하는 걸까?",
+      person: "ant",
+      text: "베짱이야, 너를 불쌍하게 생각해. 우리는 너와 음식을 나눌 수 있어. "
     },
     {
-      person: "piglet",
-      text: "점점 더 신비로운 곳으로 가는 것 같아요.",
+      person: "ant",
+      text:  "하지만 앞으로는 미리 준비하는 것이 중요하다는 걸 기억해야 해."
     },
     {
-      person: "tiger",
-      text: "모험은 항상 놀라움으로 가득해!",
-    },
-  ],
-  [
-    {
-      person: "naration",
-      text: "마침내, 친구들은 놀라운 발견을 했어요!",
+      person: "grasshopper",
+      text: "정말 고마워, 개미야. 너의 친절과 도움을 결코 잊지 않을 거야. 다음 여름에는 나도 열심히 준비할게!"
     },
     {
-      person: "piglet",
-      text: "여기 개울가가 있어요!",
+      person: "naraition",
+      text: "그렇게 베짱이는 개미의 도움으로 겨울을 지낼 수 있었습니다."
     },
     {
-      person: "pooh",
-      text: "와, 꿀단지도 있네! 이건 정말 놀라운 발견이야!",
-    },
-    {
-      person: "tiger",
-      text: "보세요, 모험은 항상 좋은 일을 가져다 준답니다!",
-    },
-    {
-      person: "naration",
-      text: "함께라면 모든 순간이 즐거운 모험, 그것이 친구들의 보물이에요.",
+      person: "naraition",
+      text: "무엇보다도 중요한 교훈을 얻었죠. 그 교훈은 '오늘 할 일을 내일로 미루지 말라'는 것입니다."
     },
   ],
 ];
