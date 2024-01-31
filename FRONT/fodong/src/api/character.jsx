@@ -6,7 +6,5 @@ export const character = async(imageUrl) => {
         return response.data;
     } catch (e) {
         throw e;
-    }
-
-  
+    }  
 }
