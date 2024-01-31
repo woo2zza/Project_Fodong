@@ -28,7 +28,12 @@ public class WebRtcController {
     @PostMapping("/api/sessions")
     public ResponseEntity<String> initializeSession(@RequestBody(required = false) Map<String, Object> params)
             throws OpenViduJavaClientException, OpenViduHttpException {
+
+        // 설정한 세션
         SessionProperties properties = SessionProperties.fromJson(params).build();
+
+
+        // 활성화된 세션 목록에 만든 세션 id를 올림
         Session session = openvidu.createSession(properties);
         return new ResponseEntity<>(session.getSessionId(), HttpStatus.OK);
     }

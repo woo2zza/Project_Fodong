@@ -82,5 +82,6 @@ public class ProfileServiceImpl implements ProfileService{
     @Override
     public void deleteProfile(int profileId) {
         profileRepository.delete(profileId);
+        System.out.println("프로필 삭제 성공");
     }
 }

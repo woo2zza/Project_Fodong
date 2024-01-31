@@ -35,10 +35,6 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         String accountPwd = request.getParameter("accountPwd");
 
 
-        //로그인 테스트
-        System.out.println("accountEmail = " + accountEmail);
-        System.out.println("accountPwd = " + accountPwd);
-
         //스프링 시큐리티에서 accountEmail과 accountPassword를 검증하기 위해서는 token에 담아야 함
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(accountEmail, accountPwd, null);
         //token에 담은 검증을 위한 AuthenticationManager로 전달
@@ -54,7 +50,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         String accountEmail = customUserDetails.getUsername();
         int accountId = customUserDetails.getAccountId();
 
-        String token = jwtUtil.createJwt(accountEmail, 60 * 60 * 10L);
+        String token = jwtUtil.createJwt(accountEmail, 600 * 600 * 10L);
 
         System.out.println("-----------로그인 성공------------");
         System.out.println("accountEmail = " + accountEmail);

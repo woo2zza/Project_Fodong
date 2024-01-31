@@ -87,18 +87,14 @@ public class SecurityConfig {
         // 경로별 인가작업
         http
                 .authorizeHttpRequests((auth) -> auth
-                        // 인가 없이도 허락하는 경로
-//                        .requestMatchers(
-//                                "/",
-//                                "/login",
-//                                "/account/join",
-//                                "/topic",
-//                                "/app",
-//                                // OpenVidu인가 경로
-//                                "/api/sessions",               // OpenVidu 세션 초기화 경로 허용
-//                                "/api/sessions/*/connections"  // OpenVidu 커넥션 생성 경로 허용
-//                        ).permitAll()
                         .anyRequest().permitAll());
+                        // 인가 없이도 허락하는 경로
+//                        .requestMatchers().
+////                                "/",
+////                                "/account/",
+////                                "/account/join"
+////                        ).permitAll()
+//                        .anyRequest().
 
         // JWTFilter 등록
         http
