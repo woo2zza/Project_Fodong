@@ -23,10 +23,10 @@ filters_config = {
     'dog':
         [{'path': "filters/dog-ears.png",
           'anno_path': "filters/dog-ears_annotations.csv",
-          'morph': False, 'animated': False, 'has_alpha': True},
+          'morph': True, 'animated': False, 'has_alpha': True},
          {'path': "filters/dog-nose.png",
           'anno_path': "filters/dog-nose_annotations.csv",
-          'morph': False, 'animated': False, 'has_alpha': True}],
+          'morph': True, 'animated': False, 'has_alpha': True}],
     'cat':
         [{'path': "filters/cat-ears.png",
           'anno_path': "filters/cat-ears_annotations.csv",
@@ -59,7 +59,7 @@ def getLandmarks(img):
 
     height, width = img.shape[:-1]
 
-    with mp_face_mesh.FaceMesh(max_num_faces=2, static_image_mode=True, min_detection_confidence=0.5) as face_mesh:
+    with mp_face_mesh.FaceMesh(max_num_faces=1, static_image_mode=True, min_detection_confidence=0.5) as face_mesh:
 
         results = face_mesh.process(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
 
@@ -115,6 +115,7 @@ def load_landmarks(annotation_file):
                 points[row[0]] = (x, y)
             except ValueError:
                 continue
+        print(type(points))
         return points
 
 
@@ -131,7 +132,7 @@ def find_convex_hull(points):
     hullIndex = np.concatenate((hullIndex, addPoints))
     for i in range(0, len(hullIndex)):
         hull.append(points[str(hullIndex[i][0])])
-
+    
     return hull, hullIndex
 
 
@@ -195,7 +196,7 @@ while cap.isOpened():
     ret, frame = cap.read()
     print(ret,frame)
     if frame is None:
-        print("Error:십알십알뒤질래?")
+        print("Error:No Camera")
         break
     if not ret:
         continue
