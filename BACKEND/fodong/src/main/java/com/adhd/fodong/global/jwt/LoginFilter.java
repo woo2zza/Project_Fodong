@@ -10,17 +10,17 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.stereotype.Component;
-import org.w3c.dom.ls.LSOutput;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
-public class LoginFilter extends UsernamePasswordAuthenticationFilter  {
+public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
     private final JWTUtil jwtUtil;
 
-    public LoginFilter(AuthenticationManager authenticationManager,JWTUtil jwtUtil) {
+
+    public LoginFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil) {
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
     }
@@ -35,10 +35,6 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter  {
         String accountPwd = request.getParameter("accountPwd");
 
 
-        //로그인 테스트
-        System.out.println("accountEmail = " + accountEmail);
-        System.out.println("accountPwd = " + accountPwd);
-
         //스프링 시큐리티에서 accountEmail과 accountPassword를 검증하기 위해서는 token에 담아야 함
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(accountEmail, accountPwd, null);
         //token에 담은 검증을 위한 AuthenticationManager로 전달
@@ -52,12 +48,25 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter  {
         //UserDetails
         CustomUserDetails customUserDetails = (CustomUserDetails) authResult.getPrincipal();
         String accountEmail = customUserDetails.getUsername();
+        int accountId = customUserDetails.getAccountId();
 
-        String token = jwtUtil.createJwt(accountEmail, 60*60*10L);
+        String token = jwtUtil.createJwt(accountEmail, 600 * 600 * 10L);
 
+        System.out.println("-----------로그인 성공------------");
         System.out.println("accountEmail = " + accountEmail);
+        System.out.println("accountId = " + accountId);
         System.out.println("token = " + token);
+        System.out.println("---------------------------------");
         response.addHeader("Authorization", "Bearer " + token);
+
+        PrintWriter out = response.getWriter();
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        out.print("{\"accountId\": " + accountId + "}");
+        out.flush();
+
+//        String redirectUrl = "/profile/" + accountId;
+//        response.sendRedirect(redirectUrl);
     }
 
     @Override
@@ -65,7 +74,6 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter  {
         // 검증 실패시
         response.setStatus(401);
     }
-
 
 
 }

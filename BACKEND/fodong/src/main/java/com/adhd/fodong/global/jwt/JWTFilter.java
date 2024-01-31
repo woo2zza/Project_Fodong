@@ -1,6 +1,6 @@
 package com.adhd.fodong.global.jwt;
 
-import com.adhd.fodong.domains.account.entity.AccountEntity;
+import com.adhd.fodong.domain.user.account.entity.AccountEntity;
 import com.adhd.fodong.global.dto.CustomUserDetails;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -29,7 +29,7 @@ public class JWTFilter extends OncePerRequestFilter {
         //Authorization 헤더 검증
         if (authorization == null || !authorization.startsWith("Bearer ")) {
 
-            System.out.println("token null");
+            System.out.println("authorizaion 헤더 못 찾음");
             filterChain.doFilter(request, response);
 
             //조건이 해당되면 메소드 종료 (필수)

@@ -45,4 +45,9 @@ export const Button = styled.button`
   padding: 10px 20px 10px 20px;
   border-radius: 10px;
   margin: 10px;
+
+  &:hover {
+    background-color: darkgreen;
+    color: black;
+  }
 `;

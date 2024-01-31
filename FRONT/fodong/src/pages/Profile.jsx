@@ -1,12 +1,16 @@
-import { Grid } from "@mui/material";
-
+import { Container, Grid } from "@mui/material";
+import ProfileComponent from "../components/profile/userProfile";
+import { useParams } from "react-router-dom";
+import "../components/profile/profileStyle.css";
 const Profile = () => {
+  const params = useParams().id;
+  console.log(params);
   return (
-    <Grid container spacing={2} direction="column">
-      <Grid item>grid1</Grid>
-      <Grid item>grid2</Grid>
-      <Grid item>grid3</Grid>
-    </Grid>
+    <Container className="profileContainer">
+      <Grid>
+        <ProfileComponent />
+      </Grid>
+    </Container>
   );
 };
 
