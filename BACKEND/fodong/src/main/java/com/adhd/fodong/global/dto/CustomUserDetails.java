@@ -1,6 +1,6 @@
 package com.adhd.fodong.global.dto;
 
-import com.adhd.fodong.domains.users.account.entity.AccountEntity;
+import com.adhd.fodong.domain.user.account.entity.AccountEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
