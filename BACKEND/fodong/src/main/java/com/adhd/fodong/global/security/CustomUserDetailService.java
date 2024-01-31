@@ -1,7 +1,7 @@
 package com.adhd.fodong.global.security;
 
-import com.adhd.fodong.domains.users.account.entity.AccountEntity;
-import com.adhd.fodong.domains.users.account.repository.AccountRepository;
+import com.adhd.fodong.domain.user.account.entity.AccountEntity;
+import com.adhd.fodong.domain.user.account.repository.AccountRepository;
 import com.adhd.fodong.global.dto.CustomUserDetails;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

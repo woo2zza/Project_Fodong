@@ -1,4 +1,5 @@
 import axios from "axios";
+const API_URL = process.env.REACT_APP_API_URL;
 
 export const login = async (accountEmail, accountPwd) => {
   const params = new URLSearchParams();
@@ -6,15 +7,11 @@ export const login = async (accountEmail, accountPwd) => {
   params.append("accountPwd", accountPwd);
 
   try {
-    const response = await axios.post(
-      "http://192.168.100.91:8080/login",
-      params,
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      }
-    );
+    const response = await axios.post(`${API_URL}/login`, params, {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    });
 
     const authToken =
       response.headers["authorization"] || response.headers["Authorization"];

@@ -44,9 +44,11 @@ const Signup = () => {
               onChange={onChangePwd}
             />
           </Inputs>
-          <Button color="green" onClick={onClick}>
-            회원가입
-          </Button>
+          <div>
+            <Button color="green" onClick={onClick}>
+              회원가입
+            </Button>
+          </div>
         </Wrapper>
       </div>
     </div>
