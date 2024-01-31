@@ -1,32 +1,120 @@
 .profileContainer {
-  display: flex;
-  flex-wrap: wrap;
+  max-width: 100% !important;
+  display: flex !important;
   justify-content: center;
+  align-items: center !important;
+  height: 100vh;
+  background-image: url("./img/background.png");
+  background-size: cover;
 }
 
 .card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   border: 1px solid #ddd;
   margin: 20px;
-  padding: 20px;
-  border-radius: 10px;
+  padding: 50px 20px;
+  border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
+  background-color: #fff;
 }
 
 .card:hover {
   transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .profileImage {
   width: 100px;
   height: 100px;
   border-radius: 50%;
+  border: 3px solid #f8d7da;
   margin-bottom: 10px;
+  font-family: "Nanum Pen Script";
 }
 
 .profileText {
   color: #333;
-  font-size: 16px;
+  font-size: 26px;
+  font-weight: bold;
 }
 
-/* 밝고 활기찬 색상과 큰 폰트 사이즈를 설정합니다. */
+.Top_box {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ddd;
+  margin: 20px;
+  padding: 50px 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  background-color: #fff;
+}
+
+.TopTop {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 1000px;
+  opacity: 0.9;
+}
+
+.profileStyle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  background-color: #f8d7da;
+  border: 2px solid #fff;
+  box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.25);
+  padding: 16px;
+  border-radius: 15px;
+  color: #000000;
+  text-align: center;
+  background: linear-gradient(135deg, #fceabb, #f8b500);
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.profileStyle button {
+  background-color: #e8a87c;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 4px #999;
+  font-family: "Nanum Pen Script";
+}
+
+.profileStyle button:hover {
+  background-color: #f76c6c;
+}
+
+.addButton {
+  background-color: #f76c6c;
+  color: white;
+  font-size: 50px;
+  border: none;
+  border-radius: 50%;
+  width: 40px !important;
+  height: 40px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px #999;
+  cursor: pointer;
+}
+
+.addButton:hover {
+  background-color: #e8a87c;
+}

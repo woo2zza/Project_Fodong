@@ -31,6 +31,10 @@ const Home = () => {
     console.log(result);
     navigate("/profile");
   };
+
+  const goToLogin = () => {
+    navigate("/signup");
+  };
   return (
     <div className="container">
       <div className="login-container">
@@ -57,6 +61,9 @@ const Home = () => {
               Login
             </Button>
           </Form>
+          <Button color="rgb(0, 100, 100)" onClick={goToLogin}>
+            회원가입
+          </Button>
         </Wrapper>
       </div>
     </div>
