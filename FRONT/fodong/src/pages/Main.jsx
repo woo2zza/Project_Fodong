@@ -7,7 +7,7 @@ import Title from "../components/main/Title";
 
 const Main = () => {
   return (
-    <Grid container spacing={2} direction="column" style={containerStyle}>
+    <Grid container spacing={1} direction="column" style={containerStyle}>
       <Grid item style={{ position: "absolute", top: 0, left: 0 }}>
         <DropdownButton />
       </Grid>

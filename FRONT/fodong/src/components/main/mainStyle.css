@@ -152,3 +152,28 @@
 .viewShadowLarge {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
+
+/* 공통 스타일 */
+
+.cardItem {
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+/* 리스트 뷰 스타일 */
+.listView .cardItem {
+  display: block;
+}
+
+/* 그리드 뷰 스타일 */
+.gridView {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 0.5fr));
+  gap: 10px;
+}
+
+.gridView .cardItem {
+  margin-bottom: 0; /* 그리드 뷰에서는 아이템 간의 바텀 마진 제거 */
+}
