@@ -114,19 +114,19 @@ function ProfileComponent() {
         >
           {profiles.map((profile) => (
             <Grid item xs={12} sm={12} md={3} lg={3} key={profile.profileId}>
-              <div className="card" onClick={goToMain}>
+              <div className="card">
                 <img
+                  onClick={goToMain}
                   className="profileImage"
                   src={profile.imageUrl || Chick}
                   alt={profile.nickname}
                 />
                 <div className="profileText">{profile.nickname}</div>
-                <Button
+                <button
+                  className="editButton"
                   variant="contained"
                   onClick={() => handleEditClick(profile)}
-                >
-                  수정
-                </Button>
+                ></button>
               </div>
             </Grid>
           ))}
