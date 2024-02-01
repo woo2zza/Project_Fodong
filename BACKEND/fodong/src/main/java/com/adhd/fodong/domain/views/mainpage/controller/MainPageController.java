@@ -1,4 +1,4 @@
-package com.adhd.fodong.domain.views.main.controller;
+package com.adhd.fodong.domain.views.mainpage.controller;
 
 
 import lombok.RequiredArgsConstructor;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/main")
 @RequiredArgsConstructor
-public class MainController {
+public class MainPageController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping({"/{profileId}"})

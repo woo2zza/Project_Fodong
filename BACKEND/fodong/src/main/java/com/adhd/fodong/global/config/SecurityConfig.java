@@ -66,7 +66,8 @@ public class SecurityConfig {
                                 "http://192.168.100.159:3000",
                                 "http://192.168.100.158:3000",
                                 "https://i10c109.p.ssafy.io",
-                                "http://192.168.0.12:3000"));
+                                "http://192.168.0.12:3000",
+                                "http://172.30.1.66:3000"));
                         configuration.setAllowedMethods(Collections.singletonList("*"));
                         configuration.setAllowCredentials(true);
                         configuration.setAllowedHeaders(Collections.singletonList("*"));
@@ -78,7 +79,7 @@ public class SecurityConfig {
                     }
                 })));
 
-        // 일반적인 보안 메커니즘 비활성화
+        // 일반적인 보안 메커니즘 비활성화``
         http
                 .csrf((auth) -> auth.disable())
                 .formLogin((auth) -> auth.disable())
