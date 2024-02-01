@@ -9,6 +9,9 @@ import Book from "./pages/Book";
 import Profile from "./pages/Profile";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import StroyReady from "./pages/StroyReady.jsx";
+
+// 이거 component라 자식으로 납둬야함
+import StoryDetail from "./components/StoryDetail";
 function App() {
   return (
     <BrowserRouter>
@@ -22,6 +25,7 @@ function App() {
         <Route path="booklist/" element={<BookList />} />
         <Route path="book/:id" element={<Book />} />
         <Route path="/storyready/*" element={<StroyReady />} />
+        <Route path="/storyDetail" element={<StoryDetail />} />
       </Routes>
     </BrowserRouter>
   );
