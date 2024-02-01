@@ -7,7 +7,6 @@ import StoryTelling from "./pages/StoryTelling";
 import Main from "./pages/Main";
 import Book from "./pages/Book";
 import Profile from "./pages/Profile";
-import WebRTC from "./webRTC_chh/testWebRTC.jsx";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import StroyReady from "./pages/StroyReady.jsx";
 function App() {
@@ -22,7 +21,6 @@ function App() {
         <Route path="bookshelf/" element={<Bookshelf />} />
         <Route path="booklist/" element={<BookList />} />
         <Route path="book/:id" element={<Book />} />
-        <Route path="/webrtc" element={<WebRTC />} />
         <Route path="/storyready/*" element={<StroyReady />} />
       </Routes>
     </BrowserRouter>
