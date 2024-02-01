@@ -40,7 +40,6 @@ public class ProfileController {
     @DeleteMapping("/{profileId}")
     public void deleteProfile(@PathVariable int profileId) {
         profileService.deleteProfile(profileId);
+        System.out.println("프로필 삭제요청");
     }
-
-
 }
