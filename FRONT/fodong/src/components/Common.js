@@ -5,17 +5,15 @@ export const Title = styled.div`
   margin-bottom: 30px;
   color: white;
 `;
-export const Input = styled.input`
+export const StyledInput = styled.input`
   font-size: 25px;
   height: 30px;
-  padding: 5px 10px 5px 10px;
+  padding: 5px 10px;
   border-radius: 10px;
   border: none;
-  &::placeholder {
-    color: darkgray;
-    font-size: 18px;
-    font-weight: 300;
-  }
+  background: transparent;
+  color: hsl(223, 90%, 90%);
+  margin-top: 8px; // 간격 추가
 `;
 
 export const Wrapper = styled.div`
@@ -47,7 +45,7 @@ export const Button = styled.button`
   margin: 10px;
 
   &:hover {
-    background-color: darkgreen;
+    background-color: Yellow;
     color: black;
   }
 `;

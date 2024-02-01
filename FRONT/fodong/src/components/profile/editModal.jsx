@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Modal, Box, Typography, Button, Input } from "@mui/material";
 import "./profileStyle.css";
+import { StyledInput } from "../Common";
 
 function EditModal({ open, setOpen, profile, onEditProfile }) {
   const [newNickname, setNewNickname] = useState(profile.nickname); // 수정할 닉네임 상태
@@ -18,9 +19,9 @@ function EditModal({ open, setOpen, profile, onEditProfile }) {
   return (
     <Modal open={open} onClose={handleClose}>
       <Box className="profileStyle">
-        <Typography>프로필 수정하기</Typography>
+        <h1>프로필 수정하기</h1>
         <Typography sx={{ mt: 5 }}>
-          <Input
+          <StyledInput
             value={newNickname}
             onChange={(e) => setNewNickname(e.target.value)}
             placeholder="닉네임"

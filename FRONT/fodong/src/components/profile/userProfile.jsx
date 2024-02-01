@@ -18,12 +18,6 @@ function ProfileComponent() {
   const [openEdit, setOpenEdit] = useState(false);
   const navigate = useNavigate();
 
-  //zustand
-  const { profileId } = userStore((state) => ({
-    profileId: state.profileId,
-  }));
-  console.log(profileId);
-
   useEffect(() => {
     fetchProfiles();
   }, []);
@@ -65,7 +59,6 @@ function ProfileComponent() {
       )
       .then((response) => {
         setProfiles([...profiles, response.data]);
-        alert(response.data);
         setOpen(false);
         window.location.reload();
       })
@@ -74,6 +67,7 @@ function ProfileComponent() {
       });
   };
 
+  // 프로필 수정
   const handleEditProfile = (profileId, updateNickName) => {
     axios
       .patch(
@@ -99,14 +93,14 @@ function ProfileComponent() {
     setOpenEdit(true); // 편집 모달 열기
   };
 
-  const goToMain = () => {
+  const handleClick = (profileId) => {
+    userStore.getState().setProfileId(profileId);
     navigate("/main");
   };
 
   return (
     <div className="TopTop">
       <div className="Top_box">
-        <h1>프로필 페이지</h1>
         <Grid
           container
           spacing={2}
@@ -116,7 +110,7 @@ function ProfileComponent() {
             <Grid item xs={12} sm={12} md={3} lg={3} key={profile.profileId}>
               <div className="card">
                 <img
-                  onClick={goToMain}
+                  onClick={() => handleClick(profile.profileId)}
                   className="profileImage"
                   src={profile.imageUrl || Chick}
                   alt={profile.nickname}

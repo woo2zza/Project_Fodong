@@ -1,5 +1,11 @@
 import React from "react";
-import { Wrapper, Title, Input, Inputs, Button } from "../components/Common";
+import {
+  Wrapper,
+  Title,
+  StyledInput,
+  Inputs,
+  Button,
+} from "../components/Common";
 import { useForm } from "../hooks/useForm";
 import { signup } from "../api/signup";
 import { useNavigate } from "react-router-dom";
@@ -29,14 +35,14 @@ const Signup = () => {
         <Wrapper>
           <Title>회원가입</Title>
           <Inputs>
-            <Input
+            <StyledInput
               className="input-group-text"
               placeholder="email"
               type="email"
               value={email}
               onChange={onChangeEmail}
             />
-            <Input
+            <StyledInput
               className="input-group-text"
               placeholder="password"
               type="password"

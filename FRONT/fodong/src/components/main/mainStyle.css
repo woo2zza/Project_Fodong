@@ -127,3 +127,28 @@
 .modal_style button:hover {
   background-color: #f76c6c;
 }
+
+.viewSwitcher {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.viewSwitcher label {
+  padding: 0.2rem;
+  margin-inline-end: 1rem;
+  cursor: pointer;
+  display: flex;
+  color: white;
+}
+
+.viewSwitcher input:checked + label {
+  color: black;
+}
+
+.viewPaper {
+  padding: 1rem;
+}
+
+.viewShadowLarge {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}

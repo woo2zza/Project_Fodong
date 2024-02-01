@@ -10,11 +10,12 @@ import Profile from "./pages/Profile";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import StroyReady from "./pages/StroyReady.jsx";
 function App() {
+  <Login />;
   return (
     <BrowserRouter>
       <Routes>
         <Route path="main/" element={<Main />} />
-        <Route path="login/" element={<Login />} />
+        <Route path="/" element={<Login />} />
         <Route path="storytelling/*" element={<StoryTelling />} />
         <Route path="signup/" element={<Signup />} />
         <Route path="profile/" element={<Profile />} />

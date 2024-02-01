@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Modal, Box, Typography, Button, Input } from "@mui/material";
+import { Modal, Box, Typography, Button } from "@mui/material";
 import "./profileStyle.css";
+import { StyledInput } from "../Common";
 
 function BasicModal({ open, setOpen, onCreateProfile }) {
   const [newNickname, setNewNickname] = useState("");
@@ -15,14 +16,14 @@ function BasicModal({ open, setOpen, onCreateProfile }) {
       <Modal open={open} onClose={handleClose}>
         <Box className="profileStyle">
           <div>
-            <Typography>프로필 생성하기</Typography>
+            <h1>프로필 생성하기</h1>
           </div>
           <Typography sx={{ mt: 5 }}>
-            <Input
+            <StyledInput
               value={newNickname}
               placeholder="닉네임"
               onChange={(e) => setNewNickname(e.target.value)}
-            ></Input>
+            ></StyledInput>
           </Typography>
           <Button
             sx={{ mt: 5 }}

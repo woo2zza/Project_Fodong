@@ -3,6 +3,8 @@ import axios from "axios";
 import DeleteModal from "./deleteModal";
 import { useNavigate } from "react-router-dom";
 import "./mainStyle.css";
+import { userStore } from "../../store/userStore";
+
 const API_URL = process.env.REACT_APP_API_URL;
 const API_BASE_URL = `${API_URL}/profiles`;
 const token = localStorage.getItem("Token");
@@ -11,12 +13,14 @@ const config = {
     Authorization: `${token}`,
   },
 };
+
 const DropdownButton = () => {
   const navigate = useNavigate();
   const [profiles, setProfiles] = useState([]);
   const [deleteProfile, setDeleteProfile] = useState(null);
   const [openDelete, setOpenDelete] = useState(false);
   const [showButtons, setShowButtons] = useState(false);
+  const useProfileId = userStore((state) => state.profileId);
 
   const handleToggleButtons = () => {
     setShowButtons(!showButtons);
@@ -33,9 +37,9 @@ const DropdownButton = () => {
 
   const handleDeleteProfile = (profileId) => {
     axios
-      .delete(`${API_BASE_URL}/{${profileId}`, config)
+      .delete(`${API_BASE_URL}/${useProfileId}`, config)
       .then(() => {
-        setProfiles(profiles.filter((p) => p.profileId !== profileId));
+        setOpenDelete(false);
       })
       .catch((error) => {
         console.error("프로필 삭제 실패:", error);
