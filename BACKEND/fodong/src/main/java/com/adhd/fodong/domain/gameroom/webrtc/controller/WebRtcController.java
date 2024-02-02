@@ -49,10 +49,16 @@ public class WebRtcController {
     public ResponseEntity<String> createConnection(@PathVariable("sessionId") String sessionId,
                                                    @RequestBody(required = false) Map<String, Object> params)
             throws OpenViduJavaClientException, OpenViduHttpException {
+
+        // 내가 연결한 openvidu 서버내에 활성화된 session을 sessionID를 찾는다
         Session session = openvidu.getActiveSession(sessionId);
+
+        // 세션 없는 경우 처리
         if (session == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+
+
         ConnectionProperties properties = ConnectionProperties.fromJson(params).build();
         Connection connection = session.createConnection(properties);
         return new ResponseEntity<>(connection.getToken(), HttpStatus.OK);
