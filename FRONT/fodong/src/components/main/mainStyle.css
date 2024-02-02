@@ -3,29 +3,10 @@
   margin: 20px 0;
 }
 
-.bookImageStyle {
-  width: 250px;
-  height: auto;
-  border-radius: 15px;
-  transition: transform 0.5s ease;
-}
-.bookImageStyle:hover {
-  transform: rotateY(20deg);
-}
-
-.title {
-  font-size: "36px";
-  font-weight: "bold";
-  color: "#ff6347";
-  text-align: "center";
-  margin-bottom: "20px";
-}
-
 .button_container {
   display: flex;
-  justify-content: space-evenly;
   align-items: center;
-  margin-top: 50px;
+  margin-top: 30px;
 }
 
 .styledLink {
@@ -35,11 +16,10 @@
 }
 
 .imageButton {
-  width: 150px;
-  height: 150px;
-  transition: transform 0.2s;
+  margin: 0 20px;
+  width: 100px;
+  height: 100px;
 }
-
 .imageButton:hover {
   transform: scale(1.1);
 }
@@ -54,15 +34,6 @@
   color: #ff6347;
   text-align: center;
   margin-bottom: 20px;
-}
-
-.bookDisplay {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.dropdown-container {
-  position: relative;
 }
 
 .toggle-button,
@@ -88,26 +59,11 @@
   transform: scale(1.2);
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 .additional-buttons {
   display: flex;
   flex-direction: column;
   align-items: center;
   position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 10px 0;
 }
 
 .modal_style {
@@ -126,23 +82,6 @@
 
 .modal_style button:hover {
   background-color: #f76c6c;
-}
-
-.viewSwitcher {
-  display: flex;
-  margin-bottom: 1rem;
-}
-
-.viewSwitcher label {
-  padding: 0.2rem;
-  margin-inline-end: 1rem;
-  cursor: pointer;
-  display: flex;
-  color: white;
-}
-
-.viewSwitcher input:checked + label {
-  color: black;
 }
 
 .cardItem {
@@ -167,5 +106,18 @@
 }
 
 .gridView .cardItem {
-  margin-bottom: 0; /* 그리드 뷰에서는 아이템 간의 바텀 마진 제거 */
+  margin-bottom: 0;
+}
+
+.scrollBook {
+  min-width: 100%;
+  height: 500px;
+  background-size: cover;
+}
+
+.slider-container {
+  height: 500px;
+  width: 400px;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }

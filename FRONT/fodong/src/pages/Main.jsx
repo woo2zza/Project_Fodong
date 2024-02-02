@@ -7,30 +7,44 @@ import Title from "../components/main/Title";
 
 const Main = () => {
   return (
-    <Grid container spacing={2} direction="column" style={containerStyle}>
-      <Grid item style={{ position: "absolute", top: 0, left: 0 }}>
-        <DropdownButton />
-      </Grid>
-      <Grid item>
+    <div style={containerStyle}>
+      <div style={fixedTopStyle}>
         <Title />
+      </div>
+      <div style={{ marginTop: "50px" }}>
+        <DropdownButton />
+      </div>
+
+      <Grid
+        container
+        spacing={1}
+        direction="column"
+        alignItems="center"
+        justifyContent="center"
+        style={{ flexGrow: 1 }}
+      >
+        <Grid item>
+          <ScrollBook />
+        </Grid>
+        <Grid item>
+          <Buttons />
+        </Grid>
       </Grid>
-      <Grid item>
-        <ScrollBook />
-      </Grid>
-      <Grid item>
-        <Buttons />
-      </Grid>
-    </Grid>
+    </div>
   );
 };
 
 const containerStyle = {
-  padding: "100px",
-  backgroundColor: "#f0e68c",
-  display: "flex",
-  justifyContent: "center",
-  direction: "column",
-  height: "100vh",
+  padding: "20px",
+  backgroundColor: "#f0e68c", // 밝고 친근한 배경색
 };
 
+const fixedTopStyle = {
+  position: "fixed",
+  top: 0,
+  left: 0,
+  right: 0,
+  textAlign: "center",
+  padding: "20px",
+};
 export default Main;
