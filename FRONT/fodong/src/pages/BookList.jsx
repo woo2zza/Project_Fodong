@@ -1,7 +1,12 @@
 import React from "react";
+import MainBook from "../components/booklist/MainBook";
 
 const BookList = () => {
-  return <h1>BookList</h1>;
+  return (
+    <>
+      <MainBook />;
+    </>
+  );
 };
 
 export default BookList;
