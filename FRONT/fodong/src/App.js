@@ -13,11 +13,12 @@ import StroyReady from "./pages/StroyReady.jsx";
 // 이거 component라 자식으로 납둬야함
 import StoryDetail from "./components/StoryDetail";
 function App() {
+  <Login />;
   return (
     <BrowserRouter>
       <Routes>
         <Route path="main/" element={<Main />} />
-        <Route path="login/" element={<Login />} />
+        <Route path="/" element={<Login />} />
         <Route path="storytelling/*" element={<StoryTelling />} />
         <Route path="signup/" element={<Signup />} />
         <Route path="profile/" element={<Profile />} />

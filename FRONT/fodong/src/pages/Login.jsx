@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import {
   Wrapper,
   Title,
-  Input,
+  StyledInput,
   Inputs,
   Form,
   Button,
@@ -42,14 +42,14 @@ const Home = () => {
           <Title>로그인하기</Title>
           <Form onSubmit={onClick}>
             <Inputs>
-              <Input
+              <StyledInput
                 className="input-group-text"
                 placeholder="email"
                 type="email"
                 value={id}
                 onChange={onChangeId}
               />
-              <Input
+              <StyledInput
                 className="input-group-text"
                 placeholder="Password"
                 type="password"
