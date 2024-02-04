@@ -47,43 +47,49 @@ const Page = ({ onPageChange }) => {
   // ;}
 
   return (
-    <div style={{ ...backgroundStyle, display: 'flex', flexDirection:'row', justifyContent:'space-between', alignItems: 'center'}}>
-    
-        <button
-          style={{
-            fontSize: "3rem",
-            padding: "10px 20px",
-            cursor: "pointer",
-            outline: "none",
-            order: "1",
-            background: "none",
-            border: "none",
-            color: "red",
-            fontWeight: "700",
-          }}
-          onClick={handleBeforePage}
-        >
-          {"<"}
-        </button>
+    <div
+      style={{
+        ...backgroundStyle,
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+      }}
+    >
+      <button
+        style={{
+          fontSize: "3rem",
+          padding: "10px 20px",
+          cursor: "pointer",
+          outline: "none",
+          order: "1",
+          background: "none",
+          border: "none",
+          color: "red",
+          fontWeight: "700",
+        }}
+        onClick={handleBeforePage}
+      >
+        {"<"}
+      </button>
 
-        <button
-          style={{
-            fontSize: "3rem",
-            padding: "10px 20px",
-            cursor: "pointer",
-            outline: "none",
-            order: "3",
-            color: "red",
-            fontWeight: "700",
-            background: "none",
-            border: "none",
-          }}
-          onClick={handleNextPage}
-        >
-          {">"}
-        </button>
-      </div>
-   
+      <button
+        style={{
+          fontSize: "3rem",
+          padding: "10px 20px",
+          cursor: "pointer",
+          outline: "none",
+          order: "3",
+          color: "red",
+          fontWeight: "700",
+          background: "none",
+          border: "none",
+        }}
+        onClick={handleNextPage}
+      >
+        {">"}
+      </button>
+    </div>
   );
 };
 
