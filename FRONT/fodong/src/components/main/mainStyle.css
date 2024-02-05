@@ -102,7 +102,6 @@
 
 /* 그리드 뷰 스타일 */
 .gridView {
-  display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 0.5fr));
   gap: 10px;
 }
@@ -111,7 +110,6 @@
   margin-bottom: 0;
 }
 
-/* scorllBook.jsx */
 /* scorllBook.jsx */
 
 .slider-container {
