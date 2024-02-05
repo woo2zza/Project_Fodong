@@ -23,7 +23,7 @@ const Signup = () => {
       // if (response && response.token) {
       //   setToken(response.token);
       // }
-      navigate("/login");
+      navigate("/");
     } catch (error) {
       console.error("회원가입 실패:", error);
     }
