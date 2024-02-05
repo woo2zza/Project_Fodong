@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -101,6 +102,27 @@ public class BookServiceImpl implements BookService {
 
         return characterDetails;
     }
+
+
+
+    // 책 생성 API
+    @Override
+    public void makeDummyBook(int numbers) {
+        Random random = new Random();
+
+        for (int i = 2; i <= numbers; i++) {
+            Book newBook = new Book();
+
+            newBook.setTitle("더미" + i);
+            newBook.setSummary(i + "번 더미의 요약");
+            newBook.setPlayCnt(1 + random.nextInt(200)); // 1부터 200 사이의 랜덤한 숫자
+            newBook.setCover("src/main/resources/images/dummy_cover/" + i + ".png");
+
+            bookRepository.saveBook(newBook);
+        }
+
+    }
+
 
 
 }

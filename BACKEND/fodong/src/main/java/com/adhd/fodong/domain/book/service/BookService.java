@@ -20,6 +20,7 @@ public interface BookService {
 
     List<CharacterDetail> getCharacters(int bookId);
 
+    void makeDummyBook(int numbers);
     // 동화별로
     // 모든
     // 등장인물 가져오기

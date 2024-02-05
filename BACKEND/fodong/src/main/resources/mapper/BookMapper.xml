@@ -33,4 +33,10 @@
         FROM CHARACTER_TB
         WHERE book_id = #{bookId}
     </select>
+
+    <insert id="saveBook" parameterType="com.adhd.fodong.domain.book.entity.Book">
+        INSERT INTO BOOK_TB (title, summary, play_cnt, cover)
+        VALUES (#{title}, #{summary}, #{playCnt}, #{cover})
+    </insert>
+
 </mapper>
