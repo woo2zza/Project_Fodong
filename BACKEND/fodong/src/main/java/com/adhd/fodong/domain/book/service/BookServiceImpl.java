@@ -5,6 +5,7 @@ import com.adhd.fodong.domain.book.dto.CharacterDetail;
 import com.adhd.fodong.domain.book.entity.Book;
 import com.adhd.fodong.domain.book.entity.Character;
 import com.adhd.fodong.domain.book.repository.BookRepository;
+import com.adhd.fodong.global.util.ConvertTool;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +32,7 @@ public class BookServiceImpl implements BookService {
         // 기본 책 정보 + 최대 페이지정보, 등장인물들 데이터를 반환한다
         List<Book> allBooks = getAllBook();
         List<BookDetail> bookDetails = new ArrayList<>();
+        ConvertTool convertTool = new ConvertTool();
 
         for (Book book : allBooks) {
             BookDetail bookDetail = new BookDetail();
@@ -38,7 +40,11 @@ public class BookServiceImpl implements BookService {
             bookDetail.setTitle(book.getTitle());
             bookDetail.setSummary(book.getSummary());
             bookDetail.setPlayCnt(book.getPlayCnt());
-            bookDetail.setCover(book.getCover());
+
+            // png 확장자 jpg로 변경 (DB수정 귀찬항서)
+            String ConvertedCover = convertTool.convertToJpg(book.getCover());
+            bookDetail.setCover(ConvertedCover);
+
             bookDetail.setMaxPageNo(getMaxPage(book.getBookId()));
             // 추후에 최대 페이지 정보
             bookDetails.add(bookDetail);
@@ -50,6 +56,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookDetail getBook(int bookId) {
         Optional<Book> bookOptional = bookRepository.findBookById(bookId);
+        ConvertTool convertTool = new ConvertTool();
 
         if (bookOptional.isPresent()) {
             Book book = bookOptional.get();
@@ -59,7 +66,10 @@ public class BookServiceImpl implements BookService {
             bookDetail.setTitle(book.getTitle());
             bookDetail.setSummary(book.getSummary());
             bookDetail.setPlayCnt(book.getPlayCnt());
-            bookDetail.setCover(book.getCover());
+            // png 확장자 jpg로 변경 (DB수정 귀찬항서)
+            String ConvertedCover = convertTool.convertToJpg(book.getCover());
+            bookDetail.setCover(ConvertedCover);
+
             bookDetail.setMaxPageNo(getMaxPage(bookId));
 
             return bookDetail;
