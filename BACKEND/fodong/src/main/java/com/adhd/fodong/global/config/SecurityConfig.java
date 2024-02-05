@@ -44,7 +44,7 @@ public class SecurityConfig {
         return configuration.getAuthenticationManager();
     }
 
-    // 패스워드 암호화
+    // 패스워드 암호화 1
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
