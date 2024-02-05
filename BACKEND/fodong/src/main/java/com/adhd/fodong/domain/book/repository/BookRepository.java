@@ -25,4 +25,6 @@ public interface BookRepository {
     // bookId의 모든 캐릭터 조회
     List<Character> findAllCharacters(int bookId);
 
+    void saveBook(Book book);
+
 }

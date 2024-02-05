@@ -64,8 +64,13 @@ public class SecurityConfig {
 
                         configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000",
                                 "http://192.168.100.159:3000",
+                                "https://192.168.100.159:3000",
                                 "http://192.168.100.158:3000",
+                                "https://192.168.100.158:3000",
                                 "https://i10c109.p.ssafy.io",
+                                "https://i10c109.p.ssafy.io:3000",
+                                "wss://i10c109.p.ssafy.io:3000",
+                                "ws://i10c109.p.ssafy.io:3000",
                                 "http://192.168.0.12:3000",
                                 "http://172.30.1.66:3000"));
                         configuration.setAllowedMethods(Collections.singletonList("*"));

@@ -38,4 +38,11 @@ public class BookController {
         // bookId 에 등장하는 등장인물 데이터응답
         return bookService.getCharacters(bookId);
     }
+
+    // 책 생성 API
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("/make/{numbers}")
+    public void makeDummyBook(@PathVariable int numbers) {
+        bookService.makeDummyBook(numbers);
+    }
 }
