@@ -16,11 +16,12 @@ const config = {
 
 const DropdownButton = () => {
   const navigate = useNavigate();
+  const [showButtons, setShowButtons] = useState(false);
+  const useProfileId = userStore((state) => state.profileId);
+
   const [profiles, setProfiles] = useState([]);
   const [deleteProfile, setDeleteProfile] = useState(null);
   const [openDelete, setOpenDelete] = useState(false);
-  const [showButtons, setShowButtons] = useState(false);
-  const useProfileId = userStore((state) => state.profileId);
 
   const handleToggleButtons = () => {
     setShowButtons(!showButtons);
