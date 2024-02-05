@@ -16,7 +16,7 @@ import StoryDetail from "./components/StoryDetail";
 function App() {
   <Login />;
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/fodong">
       <Routes>
         <Route path="main/" element={<Main />} />
         <Route path="/" element={<Login />} />
