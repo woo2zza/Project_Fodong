@@ -4,7 +4,6 @@ import DropdownButton from "../components/main/DropdownButton"; // Import the ne
 import Buttons from "../components/main/buttons";
 import ScrollBook from "../components/main/scrollBook";
 import Title from "../components/main/Title";
-
 const Main = () => {
   return (
     <div style={containerStyle}>
@@ -36,7 +35,7 @@ const Main = () => {
 
 const containerStyle = {
   padding: "20px",
-  backgroundColor: "#f0e68c", // 밝고 친근한 배경색
+  backgroundColor: "#f0e68c",
 };
 
 const fixedTopStyle = {
