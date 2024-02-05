@@ -4,47 +4,37 @@ import DropdownButton from "../components/main/DropdownButton"; // Import the ne
 import Buttons from "../components/main/buttons";
 import ScrollBook from "../components/main/scrollBook";
 import Title from "../components/main/Title";
+import "./pages.css";
+// Main 컴포넌트
 
 const Main = () => {
   return (
-    <div style={containerStyle}>
-      <div style={fixedTopStyle}>
+    <div className="main_container">
+      <div className="fixedTop">
         <Title />
       </div>
-      <div style={{ marginTop: "50px" }}>
+      <div className="dropdownMargin">
         <DropdownButton />
       </div>
-
-      <Grid
-        container
-        spacing={1}
-        direction="column"
-        alignItems="center"
-        justifyContent="center"
-        style={{ flexGrow: 1 }}
-      >
-        <Grid item>
-          <ScrollBook />
+      <div className="content">
+        <Grid
+          container
+          spacing={1}
+          direction="column"
+          alignItems="center"
+          justifyContent="center"
+          style={{ flexGrow: 1 }}
+        >
+          <Grid item>
+            <ScrollBook />
+          </Grid>
+          <Grid item>
+            <Buttons />
+          </Grid>
         </Grid>
-        <Grid item>
-          <Buttons />
-        </Grid>
-      </Grid>
+      </div>
     </div>
   );
 };
 
-const containerStyle = {
-  padding: "20px",
-  backgroundColor: "#f0e68c", // 밝고 친근한 배경색
-};
-
-const fixedTopStyle = {
-  position: "fixed",
-  top: 0,
-  left: 0,
-  right: 0,
-  textAlign: "center",
-  padding: "20px",
-};
 export default Main;
