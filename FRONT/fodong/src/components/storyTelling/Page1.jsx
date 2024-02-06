@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./StoryTelling.css";
 import DummyScript from "./DummyScript";
+import { Route, Routes } from "react-router-dom";
+import Face from "../face/Face"
+
 
 const Page = ({ onPageChange }) => {
   const [imageSrc, setImageSrc] = useState("");
@@ -73,6 +76,9 @@ const Page = ({ onPageChange }) => {
         {"<"}
       </button>
 
+      <Routes>
+        <Route path="/" element={<Face />} />
+        </Routes>
       <button
         style={{
           fontSize: "3rem",
