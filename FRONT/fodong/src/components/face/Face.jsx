@@ -7,9 +7,10 @@ function Face() {
   const [videoStream, setVideoStream] = useState(null);
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
-  const outputImageRef = useRef(null); // 출력 이미지 요소에 대한 ref
+  const outputImageRef = useRef([]); // 출력 이미지 요소에 대한 ref
+  const outputImageRef2 = useRef(null); // 출력 이미지 요소에 대한 ref
   const imgFilterRef = useRef(null); // 이미지 필터 요소에 대한
-
+  
   useEffect(() => { // Face API 모델을 로드
     const loadModels = async () => {
       console.log(33333333)
@@ -17,23 +18,21 @@ function Face() {
       await faceapi.nets.faceLandmark68Net.loadFromUri('../models');
       await faceapi.nets.faceRecognitionNet.loadFromUri('../models');
       await faceapi.nets.faceExpressionNet.loadFromUri('../models');
-      startVideo(); // 모델 로딩 후 비디오 시작
+      await startVideo(); // 모델 로딩 후 비디오 시작
     };
 
     loadModels();
   }, []);
 
-  const startVideo = () => { 
+  const startVideo = async () => { 
     // 웹캠 비디오 스트림을 가져와 비디오 요소에 할당하는 함수
-    console.log('카메라 시작')
-    navigator.getUserMedia(
-      { video: {} }, // 빈 객체를 사용하여 기본 비디오 설정을 요청
-      (stream) => {
-        videoRef.current.srcObject = stream;
-        setVideoStream(stream);
-      },
-      (err) => console.error(err)
-    );
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: {} });
+      videoRef.current.srcObject = stream;
+      setVideoStream(stream);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   useEffect(() => {
@@ -47,15 +46,16 @@ function Face() {
       setInterval(async () => {
         // 얼굴을 감지하고 얼굴 랜드마크 및 표정을 분석하는 함수
         const detection = await faceapi
-          .detectSingleFace(video, new faceapi.TinyFaceDetectorOptions()) // 얼굴 감지
+          .detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()) // 얼굴 감지
           .withFaceLandmarks()// 얼굴 랜드마크 감지
           .withFaceExpressions(); // 얼굴 표정 감지
 
         let happiness = 0; // 행복 표정 초기화
 
-        if (detection !== undefined) { // 얼굴이 감지된 경우
-          extractFaceFromBox(video, detection.detection.box); // 얼굴 이미지 추출
-          happiness = detection.expressions.happy; // 행복 표정 분석
+        if (detection && detection.length > 0) { // 얼굴이 감지된 경우
+          detection.forEach((detectedFace, index) => {
+            extractFaceFromBox(video, detectedFace.detection.box, index);}); // 얼굴 이미지 추출
+          // happiness = detection.expressions.happy; // 행복 표정 분석
         } else {
           console.log('인식된 얼굴이 없습니다.');
         }
@@ -72,7 +72,7 @@ function Face() {
     }
   }, [videoStream]);
 
-  async function extractFaceFromBox(inputImage, box) {
+  async function extractFaceFromBox(inputImage, box, index) {
     // 얼굴 이미지 추출 함수
     const regionsToExtract = [
       new faceapi.Rect(box.x, box.y, box.width, box.height), // 얼굴 영역 지정
@@ -80,15 +80,21 @@ function Face() {
 
     const faceImages = await faceapi.extractFaces(inputImage, regionsToExtract); // 얼굴 이미지 추출
 
-    if (faceImages.length === 0) {
-      console.log('Face not found'); // 얼굴이 감지 되지 않은 경우
-    } else {
+    if (faceImages.length > 0) {
+     
       const cnv = faceImages[0];
-      console.log('카메라 나와라잇')
-      outputImageRef.current.style.backgroundImage = `url(${cnv.toDataURL()})`; // 이미지 출력
-      outputImageRef.current.style.backgroundBlendMode = 'difference'; // 이미지 블렌딩 모드 설정
+      // console.log('카메라 나와라잇')
+      if (!outputImageRef.current[index]) {
+        outputImageRef.current[index] = React.createRef();
+      }
+      const ref = outputImageRef.current[index];
+      console.log('1111', index)
+      // console.log('23')
+      if (ref && ref.current) {
+        ref.current.style.backgroundImage = `url(${cnv.toDataURL()})`;
+        ref.current.style.backgroundBlendMode = 'difference';
     }
-  }
+  }}
 
   return (
     <div>
@@ -113,9 +119,25 @@ function Face() {
             bottom: '0px', // 이미지 필터 요소 위치
           }}
         ></div>
-        <div
-          id="outputImage"
-          ref={outputImageRef}
+        {outputImageRef.current.map((ref, index) => (
+          <div
+            key={index}
+            ref={ref}
+            style={{
+              position: 'absolute',
+              width: '200px',
+              height: '200px',
+              backgroundSize: 'cover',
+              backgroundPosition: '50% 50%',
+              borderRadius: '50%',
+              bottom: `${0 + index * 150}px`, // 출력 이미지 요소 위치 조정
+              left: `${0 + index * 150}px`, // 출력 이미지 요소 위치 조정
+              // ... 기타 스타일 ...
+            }}
+          ></div>))}
+        {/* <div
+          id="outputImage2"
+          ref={outputImageRef2}
           style={{
             position: 'absolute',
             width: '200px',
@@ -124,9 +146,9 @@ function Face() {
             backgroundPosition: '50% 50%',
             borderRadius: '50%',
             bottom: '350px', // 출력 이미지 요소 위치
-            left: '140px', // 출력 이미지 요소 위치
+            left: '440px', // 출력 이미지 요소 위치
           }}
-        ></div>
+        ></div> */}
       </div>
       <img src={ant} alt='개미' style={{zIndex :4}}></img>
     </div>
