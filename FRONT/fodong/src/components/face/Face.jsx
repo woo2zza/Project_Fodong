@@ -13,10 +13,10 @@ function Face() {
   useEffect(() => { // Face API 모델을 로드
     const loadModels = async () => {
       console.log(33333333)
-      await faceapi.nets.tinyFaceDetector.loadFromUri('/models');
-      await faceapi.nets.faceLandmark68Net.loadFromUri('/models');
-      await faceapi.nets.faceRecognitionNet.loadFromUri('/models');
-      await faceapi.nets.faceExpressionNet.loadFromUri('/models');
+      await faceapi.nets.tinyFaceDetector.loadFromUri('../models');
+      await faceapi.nets.faceLandmark68Net.loadFromUri('../models');
+      await faceapi.nets.faceRecognitionNet.loadFromUri('../models');
+      await faceapi.nets.faceExpressionNet.loadFromUri('../models');
       startVideo(); // 모델 로딩 후 비디오 시작
     };
 
