@@ -12,10 +12,8 @@ import com.adhd.fodong.global.util.ConvertTool;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -124,6 +122,22 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<BookPageDetail> getBackImgAtPage(int bookId, int pageNo) {
         // 페이지의 배경이미지 조회
+//        List<BookPage> backImages = bookRepository.getBackgroundByBookIdAndPageNo(bookId, pageNo);
+//
+//        if (backImages == null || backImages.isEmpty()) {
+//            return Collections.emptyList();
+//        }
+//
+//        return backImages.stream()
+//                .map(bookPage -> new BookPageDetail.Builder()
+//                        .bookId(bookPage.getBookId())
+//                        .pageNo(bookPage.getPageNo())
+//                        .backImg(bookPage.getBackImg())
+//                        .build())
+//                .collect(Collectors.toList());
+
+
+//         페이지의 배경이미지 조회
         ArrayList<BookPageDetail> bookPageDetails = new ArrayList<>();
         List<BookPage> backImages = bookRepository.getBackgroundByBookIdAndPageNo(bookId, pageNo);
 
@@ -142,6 +156,25 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookPageDetail> getCharImgAtPage(int bookId, int pageNo) {
+//        // 페이지의 등장 캐릭터 이미지 조회
+//        List<BookPageDetail> bookPageDetails = new ArrayList<>();
+//        List<Character> charImages = bookRepository.getCharactersByBookIdAndPageNo(bookId, pageNo);
+//
+//        for (Character character : charImages) {
+//            BookPageDetail bookPageDetail = new BookPageDetail.Builder()
+//                    .bookId(character.getBookId())
+//                    .pageNo(character.getPageNo())
+//                    .characterId(character.getCharacterId())
+//                    .characterName(character.getCharacterName())
+//                    .characterImg(character.getCharacterImg())
+//                    .build();
+//
+//            bookPageDetails.add(bookPageDetail);
+//        }
+//
+//        return bookPageDetails;
+
+
         // 페이지의 등장 캐릭터 이미지 조회
         ArrayList<BookPageDetail> bookPageDetails = new ArrayList<>();
         List<Character> charImages = bookRepository.getCharactersByBookIdAndPageNo(bookId, pageNo);
@@ -164,6 +197,22 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<BookPageDetail> getScriptAtPage(int bookId, int pageNo) {
         // 페이지의 스크립트 조회
+//        List<BookPageDetail> bookPageDetails = new ArrayList<>();
+//        List<Script> scripts = bookRepository.getScriptsByBookIdAndPageNo(bookId, pageNo);
+//
+//        for (Script script : scripts) {
+//            BookPageDetail bookPageDetail = new BookPageDetail.Builder()
+//                    .bookId(script.getBookId())
+//                    .pageNo(script.getPageNo())
+//                    .person(script.getPerson())
+//                    .context(script.getContext())
+//                    .build();
+//
+//            bookPageDetails.add(bookPageDetail);
+//        }
+//        return bookPageDetails;
+
+//        // 페이지의 스크립트 조회
         ArrayList<BookPageDetail> bookPageDetails = new ArrayList<>();
         List<Script> scripts = bookRepository.getScriptsByBookIdAndPageNo(bookId, pageNo);
 

@@ -38,7 +38,7 @@ public class BookController {
         return bookService.getCharacters(bookId);
     }
 
-    // bookId와 페이지번호를 이용해 해당 페에지에 존재하는 모든 데이터 정보 조회
+    // bookId와 페이지번호를 이용해 해당 페이지에 존재하는 모든 데이터 정보 조회
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{bookId}/pages/{pageNo}")
     public List<BookPageDetail> getAllDataAtPage(@PathVariable int bookId,
