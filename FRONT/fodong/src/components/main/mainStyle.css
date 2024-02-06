@@ -112,12 +112,18 @@
 
 /* scorllBook.jsx */
 
+.scroll_container {
+  margin: 20px 100px 50px 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .slider-container {
   height: 400px;
   width: 600px;
   overflow: hidden;
   position: relative;
-  margin: auto;
   border-radius: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -133,7 +139,7 @@
 }
 
 .slide.active {
-  opacity: 1; /* 현재 인덱스의 슬라이드만 보이도록 설정 */
+  position: relative;
 }
 
 .book-info {
@@ -203,20 +209,32 @@
   color: #333;
 }
 
-.modal-content button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
+/* 이전 다음 버튼 */
+.preButton,
+.goButton {
+  background-color: #ff9f1c;
+  color: white;
   border: none;
-  background-color: #ff6347;
-  color: #fff;
   border-radius: 50%;
-  width: 30px;
-  height: 30px;
+  padding: 0.5em;
+  font-size: 1.5em;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   cursor: pointer;
-  font-size: 16px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin: 10px;
 }
 
-.modal-content button:hover {
-  background-color: #f03e3e;
+.preButton:hover,
+.goButton:hover {
+  transform: scale(1.1); /* 마우스를 올렸을 때 크기가 커짐 */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5); /* 그림자 효과 강조 */
+}
+
+.preButton:active,
+.goButton:active {
+  transform: scale(0.9); /* 클릭할 때 버튼이 약간 축소 */
+}
+
+.slide.active {
+  opacity: 1;
 }
