@@ -7,7 +7,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class BookDetail {
+public class BookInfo {
 
     // 책 정보
     private int bookId;
