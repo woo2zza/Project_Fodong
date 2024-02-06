@@ -9,7 +9,7 @@ import Book from "./pages/Book";
 import Profile from "./pages/Profile";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import StroyReady from "./pages/StroyReady.jsx";
-import Face from "./components/face/Face.jsx";
+import Face from "./components/face/Face";
 
 // 이거 component라 자식으로 납둬야함
 import StoryDetail from "./components/StoryDetail";

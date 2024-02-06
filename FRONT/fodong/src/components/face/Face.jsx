@@ -1,124 +1,136 @@
-import React, { useRef, useState, useEffect } from "react";
-import * as faceapi from "face-api.js";
-import * as hull from "hull.js";
-import grass from "./img/베짱이1.png";
+import React, { useEffect, useRef, useState } from 'react';
+import * as faceapi from 'face-api.js';
+import ant from './img/ant2.png'
 
-function App() {
-  // React 컴포넌트 정의
-  const [modelsLoaded, setModelsLoaded] = useState(false); // 모델 로드 상태를 관리하는 상태 변수
-  const videoRef = useRef(); // 웹캠 비디오 요소를 참조하는 useRef
-  const canvasRef = useRef(); // 캔버스 요소를 참조하는 useRef
+function Face() {
+  console.log(123123123)
+  const [videoStream, setVideoStream] = useState(null);
+  const videoRef = useRef(null);
+  const canvasRef = useRef(null);
+  const outputImageRef = useRef(null); // 출력 이미지 요소에 대한 ref
+  const imgFilterRef = useRef(null); // 이미지 필터 요소에 대한
 
-  // 모델을 로드하는 함수
-  useEffect(() => {
+  useEffect(() => { // Face API 모델을 로드
     const loadModels = async () => {
-      const MODEL_URL = process.env.PUBLIC_URL + "/models";
-      await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
-      await faceapi.nets.faceLandmark68TinyNet.loadFromUri(MODEL_URL);
-      setModelsLoaded(true); // 모델 로딩이 완료되면 모델 로드 상태를 true로 설정
+      console.log(33333333)
+      await faceapi.nets.tinyFaceDetector.loadFromUri('../models');
+      await faceapi.nets.faceLandmark68Net.loadFromUri('../models');
+      await faceapi.nets.faceRecognitionNet.loadFromUri('../models');
+      await faceapi.nets.faceExpressionNet.loadFromUri('../models');
+      startVideo(); // 모델 로딩 후 비디오 시작
     };
-    loadModels(); // loadModels 함수 호출
-  }, []); // 컴포넌트가 마운트될 때 한 번만 실행
 
-  // 웹캠을 설정하는 함수
+    loadModels();
+  }, []);
+
+  const startVideo = () => { 
+    // 웹캠 비디오 스트림을 가져와 비디오 요소에 할당하는 함수
+    console.log('카메라 시작')
+    navigator.getUserMedia(
+      { video: {} }, // 빈 객체를 사용하여 기본 비디오 설정을 요청
+      (stream) => {
+        videoRef.current.srcObject = stream;
+        setVideoStream(stream);
+      },
+      (err) => console.error(err)
+    );
+  };
+
   useEffect(() => {
-    if (modelsLoaded) {
-      // 모델이 로딩되었을 때만 실행
-      const video = videoRef.current; // 웹캠 비디오 요소 참조
-      navigator.getUserMedia(
-        { video: {} },
-        (stream) => {
-          video.srcObject = stream; // 웹캠 스트림을 비디오 요소에 할당하여 웹캠 화면 표시
-        },
-        (err) => console.error(err)
-      );
-      video.play().then(() => {
-        detectFace(); // 웹캠 비디오 재생 시작 후 얼굴 감지 함수 호출
-      });
-    }
-  }, [modelsLoaded]); // modelsLoaded 상태가 변경될 때마다 실행
+    if (videoStream) {
+      const video = videoRef.current;
+      const canvas = canvasRef.current;
+      const displaySize = { width: video.width, height: video.height };
 
-  // 얼굴을 감지하고 윤곽선을 그리는 함수
-  const detectFace = async () => {
-    const video = videoRef.current;
-    const canvas = canvasRef.current;
-    const displaySize = { width: video.width, height: video.height };
+      faceapi.matchDimensions(canvas, displaySize);
 
-    faceapi.matchDimensions(canvas, displaySize); // 캔버스 크기를 비디오 크기와 일치시킴
+      setInterval(async () => {
+        // 얼굴을 감지하고 얼굴 랜드마크 및 표정을 분석하는 함수
+        const detection = await faceapi
+          .detectSingleFace(video, new faceapi.TinyFaceDetectorOptions()) // 얼굴 감지
+          .withFaceLandmarks()// 얼굴 랜드마크 감지
+          .withFaceExpressions(); // 얼굴 표정 감지
 
-    setInterval(async () => {
-      // 일정 시간 간격으로 얼굴 감지 실행
-      const detections = await faceapi
-        .detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()) // 얼굴 탐지 실행
-        .withFaceLandmarks(true); // 얼굴 랜드마크도 함께 감지
+        let happiness = 0; // 행복 표정 초기화
 
-      const resizedDetections = faceapi.resizeResults(detections, displaySize); // 감지 결과 크기 조정
-      const ctx = canvas.getContext("2d"); // 캔버스 2D 그래픽 컨텍스트 얻기
-      canvas.width = video.width;
-      canvas.height = video.height;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      resizedDetections.forEach((detection) => {
-        // 각 얼굴에 대해 반복
-        if (detection && detection.detection) {
-          ctx.save();
-          cropContour(ctx, [
-            ...detection.landmarks.getJawOutline(),
-            ...detection.landmarks.getLeftEyeBrow(),
-            ...detection.landmarks.getRightEyeBrow(),
-          ]); // 얼굴 윤곽을 찾아내고 클리핑
-          ctx.clip();
-          ctx.drawImage(video, 0, 0, video.width, video.height);
-          ctx.restore();
+        if (detection !== undefined) { // 얼굴이 감지된 경우
+          extractFaceFromBox(video, detection.detection.box); // 얼굴 이미지 추출
+          happiness = detection.expressions.happy; // 행복 표정 분석
+        } else {
+          console.log('인식된 얼굴이 없습니다.');
         }
-      });
-    }, 100); // 100ms마다 감지를 수행합니다.
-  };
 
-  // hull.js를 사용하여 얼굴 주변의 윤곽선을 찾아내고 캔버스에 그리는 함수
-  const cropContour = (ctx, points, isClosed = false) => {
-    const hullPoints = hull(points, 300, [".x", ".y"]);
-    ctx.beginPath();
-    hullPoints.slice(1).forEach(({ x, y }) => {
-      // 윤곽선을 찾아내는 hull 함수 호출
-      ctx.lineTo(x, y); // 윤곽선을 그리기 위해 점들을 연결
-    });
+        canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
 
-    if (isClosed) {
-      // 윤곽선이 닫혀 있는 경우
-      const from = hullPoints[hullPoints.length - 1];
-      const to = hullPoints[0];
-      if (from && to) {
-        ctx.moveTo(from.x, from.y);
-        ctx.lineTo(to.x, to.y); // 처음과 끝을 연결하여 윤곽선을 닫음
-      }
+        if (happiness > 0.1) {
+          console.log('웃다');
+          // 이 부분에서 이미지 위치 및 스타일을 업데이트할 수 있습니다.
+        } else {
+          // 이 부분에서 이미지 위치 및 스타일을 업데이트할 수 있습니다.
+        }
+      }, 100);
     }
+  }, [videoStream]);
 
-    ctx.closePath();
-    ctx.stroke();
-    ctx.clip();
-  };
+  async function extractFaceFromBox(inputImage, box) {
+    // 얼굴 이미지 추출 함수
+    const regionsToExtract = [
+      new faceapi.Rect(box.x, box.y, box.width, box.height), // 얼굴 영역 지정
+    ];
+
+    const faceImages = await faceapi.extractFaces(inputImage, regionsToExtract); // 얼굴 이미지 추출
+
+    if (faceImages.length === 0) {
+      console.log('Face not found'); // 얼굴이 감지 되지 않은 경우
+    } else {
+      const cnv = faceImages[0];
+      console.log('카메라 나와라잇')
+      outputImageRef.current.style.backgroundImage = `url(${cnv.toDataURL()})`; // 이미지 출력
+      outputImageRef.current.style.backgroundBlendMode = 'difference'; // 이미지 블렌딩 모드 설정
+    }
+  }
 
   return (
-    <div
-      style={{
-        background: `url(${grass})`,
-        height: "100vh",
-        width: "100vw",
-        backgroundSize: "cover",
-      }}
-    >
+    <div>
       <video
         ref={videoRef}
-        width="1366"
-        height="1024"
+        width="1"
+        height="1"
         autoPlay
         muted
-        style={{ display: "none" }}
-      ></video>
-      <canvas ref={canvasRef} width="1366" height="1024" />
+        src=""
+        style={{ position: 'absolute', top: '1px' }}
+      />
+      <canvas ref={canvasRef} style={{ position: 'absolute' }} />
+      <div className="fullmoon">
+        <div
+          className="imgFilter"
+          ref={imgFilterRef}
+          style={{
+            position: 'absolute',
+            width: '200px',
+            height: '200px',
+            bottom: '0px', // 이미지 필터 요소 위치
+          }}
+        ></div>
+        <div
+          id="outputImage"
+          ref={outputImageRef}
+          style={{
+            position: 'absolute',
+            width: '200px',
+            height: '200px',
+            backgroundSize: 'cover',
+            backgroundPosition: '50% 50%',
+            borderRadius: '50%',
+            bottom: '350px', // 출력 이미지 요소 위치
+            left: '140px', // 출력 이미지 요소 위치
+          }}
+        ></div>
+      </div>
+      <img src={ant} alt='개미' style={{zIndex :4}}></img>
     </div>
   );
 }
 
-export default App;
+export default Face;
