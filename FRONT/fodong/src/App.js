@@ -4,13 +4,13 @@ import Signup from "./pages/Signup";
 import Bookshelf from "./pages/bookshelf";
 import BookList from "./pages/BookList";
 import StoryTelling from "./pages/StoryTelling";
+import Album from "./pages/Album";
 import Main from "./pages/Main";
 import Book from "./pages/Book";
 import Profile from "./pages/Profile";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import StroyReady from "./pages/StroyReady.jsx";
 import Face from "./components/face/Face.jsx";
-
 // 이거 component라 자식으로 납둬야함
 import StoryDetail from "./components/StoryDetail";
 function App() {
@@ -29,6 +29,7 @@ function App() {
         <Route path="/storyready/*" element={<StroyReady />} />
         <Route path="/storyDetail" element={<StoryDetail />} />
         <Route path="/face/*" element={<Face />} />
+        <Route path="album/" element={<Album />} />
       </Routes>
     </BrowserRouter>
   );
