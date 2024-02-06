@@ -1,13 +1,20 @@
-import React from "react";
-import Character from "./image/3.png";
-import "./mainStyle.css";
-const CharacterGuide = () => {
+// 새로운 컴포넌트 InteractiveBackground.jsx 추가
+const InteractiveBackground = () => {
+  const playSound = (soundFile) => {
+    new Audio(soundFile).play();
+  };
+
   return (
-    <div>
-      <img src={Character} alt="characterGuide" className="CharImg" />
-      <p>안녕! 같이 동화읽자</p>
+    <div className="interactive-background">
+      <div
+        className="hot-air-balloon"
+        onClick={() => playSound("/path/to/sound.mp3")}
+      >
+        {/* 배경 요소 이미지 */}
+      </div>
+      {/* 기타 배경 요소 */}
     </div>
   );
 };
 
-export default CharacterGuide;
+export default InteractiveBackground;
