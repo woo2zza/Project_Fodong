@@ -1,0 +1,12 @@
+package com.adhd.fodong.domain.album.entity;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class RecordingEntity {
+    private int recordingID;
+    private String recordingUrl;
+    private int profileId;
+}
