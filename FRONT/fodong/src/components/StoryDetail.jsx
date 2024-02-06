@@ -44,6 +44,7 @@ const StoryDetail = () => {
     [mainStreamManager]
   );
 
+  // JOIN 세션
   const joinSession = useCallback(() => {
     const mySession = OV.current.initSession();
 
