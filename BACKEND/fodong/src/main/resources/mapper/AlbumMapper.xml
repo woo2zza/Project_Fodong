@@ -3,7 +3,7 @@
 <mapper namespace="com.adhd.fodong.domain.album.repository.AlbumRepository">
 
     <select id="findAllRecordingsByProfileId" parameterType="int" resultType="com.adhd.fodong.domain.album.entity.RecordingEntity">
-        SELECT * FROM Recordings WHERE profile_id = #{profileId}
+        SELECT a.recording_id, a.recording_url, a.profile_id, a.book_id, b.title, b.cover FROM Recordings a left join BOOK_TB b on a.book_id=b.book_id WHERE profile_id = #{profileId}
     </select>
 
 </mapper>
