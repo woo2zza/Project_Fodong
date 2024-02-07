@@ -2,19 +2,21 @@ import React, { useState, useEffect } from "react";
 // import dummy from "./dummy";
 import { character } from "../../api/character";
 
-const Character = ({ imageUrl }) => {
-  const [imageData, setImageData] = useState(null);
+const Character = ({ src }) => {
+  // 실행된는 index.html 기준 (아래 코드에서)
+  console.log(src);
+  const [imageData, setImageData] = useState(src);
   // const [players, setPlayers] = useState(dummy);
 
-  useEffect(() => {
-    character(imageUrl)
-    .then((data) => {
-      setImageData(data);
-    })
-    .catch((error) => {
-      console.log(error);
-    })
-}, [imageUrl]);
+  //   useEffect(() => {
+  //     character(imageUrl)
+  //     .then((data) => {
+  //       setImageData(data);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     })
+  // }, [imageUrl]);
 
   // const assignRole = (playerName, role) => {
   //   const updatePlayers = players.map((player) =>
@@ -23,7 +25,8 @@ const Character = ({ imageUrl }) => {
   //   setPlayers(updatePlayers);
   //   console.log(updatePlayers);
   // };
-  
+  console.log(imageData);
+
   return (
     // <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%"}}>
     //   <img
@@ -39,9 +42,9 @@ const Character = ({ imageUrl }) => {
     //     onClick={() => assignRole("person2", "돼지")}
     //   />
     // </div>
-    <div>
-      <img src={imageData} alt="이미지" />
-    </div>
+    <span style={{ margin: "0 0.5rem" }}>
+      <img width="100vh" height="100vh" src={imageData} alt="이미지" />
+    </span>
   );
 };
 
