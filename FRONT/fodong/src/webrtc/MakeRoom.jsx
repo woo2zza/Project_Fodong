@@ -4,23 +4,18 @@ import axios from "axios";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import UserVideoComponent from "./UserVideoComponent";
-//일단 video 없이
 
 //
 // const APPLICATION_SERVER_URL = "https://i10c109.p.ssafy.io/api/v1/";
 // const APPLICATION_SERVER_URL = "http://192.168.100.91:8080/api/v1/";
 const APPLICATION_SERVER_URL = "http://localhost:8080/api/v1/";
 // console.log(APPLICATION_SERVER_URL);
-const StoryDetail = () => {
+const MakeRoom = (profileId, bookId) => {
   // session ID 어케할 지 수정
   // 안겹쳐야 되고, 해당 방에 들어갈 때
   // 비번 있으면 비번 쳐야 들어갈 수 있게 해야함
-  const [sessionId, setSessionId] = useState(
-    `Story${Math.floor(Math.random() * 100)}`
-  );
-  const [myUserName, setmyUserName] = useState(
-    `Participant${Math.floor(Math.random() * 100)}`
-  );
+  const [sessionId, setSessionId] = useState(`${bookId}N${profileId}`);
+  const [myUserName, setmyUserName] = useState(`Participant${profileId}`);
   const [session, setSession] = useState(undefined);
   const [mainStreamManager, setMainStreamManager] = useState(undefined);
   const [publisher, setPublisher] = useState(undefined);
@@ -301,4 +296,4 @@ const StoryDetail = () => {
   );
 };
 
-export default StoryDetail;
+export default MakeRoom;

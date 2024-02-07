@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import CharModal from "./CharModal";
+
 import "./mainStyle.css";
 import Image1 from "./dummy_cover/2.jpg";
 import Image2 from "./dummy_cover/3.jpg";
@@ -72,7 +73,6 @@ function ScrollBook() {
       setIsModalOpen(true);
     }
   };
-  // ...
   const goToNextBook = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % books.length);
   };
@@ -82,12 +82,11 @@ function ScrollBook() {
       (prevIndex) => (prevIndex - 1 + books.length) % books.length
     );
   };
-  // ...
 
   return (
     <div className="scroll_container">
       <button onClick={goToPrevBook} className="preButton">
-        <i class="fa fa-arrow-left"></i>
+        <i className="fa fa-arrow-left"></i>
       </button>
 
       <div className="slider-container">
@@ -112,7 +111,7 @@ function ScrollBook() {
         )}
       </div>
       <button onClick={goToNextBook} className="goButton">
-        <i class="fa fa-arrow-right"></i>
+        <i className="fa fa-arrow-right"></i>
       </button>
     </div>
   );
