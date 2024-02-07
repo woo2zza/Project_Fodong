@@ -4,6 +4,7 @@ import DropdownButton from "../components/main/DropdownButton"; // Import the ne
 import Buttons from "../components/main/buttons";
 import ScrollBook from "../components/main/scrollBook";
 import Title from "../components/main/Title";
+import FreindsToggler from "../components/main/Friends";
 import "./pages.css";
 // Main 컴포넌트
 
@@ -32,6 +33,9 @@ const Main = () => {
             <Buttons />
           </Grid>
         </Grid>
+      </div>
+      <div className="friends-toggler">
+        <FreindsToggler />
       </div>
     </div>
   );
