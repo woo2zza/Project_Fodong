@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as faceapi from "face-api.js";
 import ant from "./img/ant2.png";
+import { useHistory } from 'react-router-dom';
 
 function Face() {
   const [videoStream, setVideoStream] = useState(null); // 비디오 스트림 상태를 관리하는 state를 선언
@@ -35,6 +36,7 @@ function Face() {
 
   useEffect(() => {
     if (videoStream) {
+      console.log('1')
       // videoStream이 설정되었는지 확인
       const video = videoRef.current;
       const canvas = canvasRef.current;
@@ -72,6 +74,7 @@ function Face() {
 
   async function extractFaceFromBox(inputImage, box, index) {
     // 얼굴 이미지를 추출하고 상태에 저장하는 함수
+    console.log('2')
     const regionsToExtract = [
       new faceapi.Rect(box.x, box.y, box.width, box.height),
     ];
@@ -94,6 +97,17 @@ function Face() {
     }
   }
 
+  const stopVideo = () => {
+    const stream = videoRef.current.srcObject;
+    if (stream && stream.getTracks) {
+      stream.getTracks().forEach((track) => {
+        track.stop();
+      });
+      videoRef.current.srcObject = null;
+      setVideoStream(null);
+    }
+  }
+
   return (
     <div>
       <video
@@ -105,8 +119,8 @@ function Face() {
         style={{ position: "absolute", top: "1px" }}
       />
       <canvas ref={canvasRef} style={{ position: "absolute" }} />
-      <div className="fullmoon">
-        {faceImages.map((src, index) => (
+      <div>
+        {videoStream && faceImages.map((src, index) => (
           <div
             key={index}
             style={{
@@ -117,13 +131,14 @@ function Face() {
               backgroundPosition: "50% 50%",
               borderRadius: "50%",
               backgroundImage: `url(${src})`,
-              bottom: `${0 + index * 150}px`,
-              left: `${0 + index * 150}px`,
+              bottom: `${370}px`,
+              left: `${150 + index * 100}px`,
             }}
           ></div>
         ))}
       </div>
       <img src={ant} alt="개미" style={{ zIndex: 4 }}></img>
+      <button onClick={stopVideo} style={{ width: '100px', height: '30px', fontSize: '20px'}}>카메라 종료</button>
     </div>
   );
 }
