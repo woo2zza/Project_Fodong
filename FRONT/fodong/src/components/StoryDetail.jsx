@@ -8,6 +8,7 @@ import UserVideoComponent from "./UserVideoComponent";
 
 //
 const APPLICATION_SERVER_URL = "https://i10c109.p.ssafy.io/api/v1/";
+// const APPLICATION_SERVER_URL = "http://192.168.100.91:8080/api/v1/";
 // console.log(APPLICATION_SERVER_URL);
 const StoryDetail = () => {
   // session ID 어케할 지 수정
@@ -190,7 +191,7 @@ const StoryDetail = () => {
 
   const createSession = async (sessionId) => {
     const response = await axios.post(
-      APPLICATION_SERVER_URL + "api/sessions",
+      APPLICATION_SERVER_URL + "sessions",
       { customSessionId: sessionId },
       {
         headers: { "Content-Type": "application/json" },
@@ -201,7 +202,7 @@ const StoryDetail = () => {
 
   const createToken = async (sessionId) => {
     const response = await axios.post(
-      APPLICATION_SERVER_URL + "api/sessions/" + sessionId + "/connections",
+      APPLICATION_SERVER_URL + "sessions/" + sessionId + "/connections",
       {},
       {
         headers: { "Content-Type": "application/json" },
