@@ -1,5 +1,6 @@
 package com.adhd.fodong.domain.book.service;
 
+import com.adhd.fodong.domain.book.dto.BookAllImgData;
 import com.adhd.fodong.domain.book.dto.BookInfo;
 import com.adhd.fodong.domain.book.dto.BookPageDetail;
 import com.adhd.fodong.domain.book.dto.CharacterDetail;
@@ -19,6 +20,10 @@ public interface BookService {
     Integer getMaxPage(int bookId);
 
     List<CharacterDetail> getCharacters(int bookId);
+
+    List<BookAllImgData> bookInitRender(int bookId);
+//    List<BookAllImgData> getBookAllImgData(int bookId);
+
 
     List<BookPageDetail> getAllDataAtPage(int bookId, int pageNo);
 

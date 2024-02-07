@@ -1,5 +1,6 @@
 package com.adhd.fodong.domain.book.service;
 
+import com.adhd.fodong.domain.book.dto.BookAllImgData;
 import com.adhd.fodong.domain.book.dto.BookInfo;
 import com.adhd.fodong.domain.book.dto.BookPageDetail;
 import com.adhd.fodong.domain.book.dto.CharacterDetail;
@@ -13,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -89,7 +89,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<CharacterDetail> getCharacters(int bookId) {
         // bookId에서 나오는 모든 캐릭터 정보 조회
-        List<Character> allCharacters = bookRepository.findAllCharacters(bookId);
+        List<Character> allCharacters = bookRepository.getAllCharactersByBookId(bookId);
         List<CharacterDetail> characterDetails = new ArrayList<>();
 
         for (Character character : allCharacters) {
@@ -105,9 +105,62 @@ public class BookServiceImpl implements BookService {
     }
 
 
+//    @Override
+//    public List<BookAllImgData> getBookAllImgData(int bookId) {
+//        // 해당 페이지 존재하는 모든 데이터 조회
+//         dataList = bookRepository.getAllImgDataByBookId(bookId);
+//
+//        // 데이터가 존재하는 경우, 조회된 데이터를 BookPageDetails 리스트에 추가
+//        if (dataList != null && !dataList.isEmpty()) {
+//            return dataList;
+//        } else {
+//            // 데이터가 없는 경우, 빈 리스트 반환
+//            return new ArrayList<BookAllImgData>();
+//        }
+//    }
+
+
+    @Override
+    public List<BookAllImgData> bookInitRender(int bookId) {
+        // 동화책 구연에 필요한 책의 고용량 데이터 모두 응답
+        ArrayList<BookAllImgData> bookAllImgData = new ArrayList<>();
+
+        List<Character> allCharactersByBookId = bookRepository.getAllCharactersByBookId(bookId);
+        List<BookPage> allBackImgByBookId = bookRepository.getAllBackImgByBookId(bookId);
+
+        // 캐릭터 이미지 저장
+        for (Character character : allCharactersByBookId) {
+            BookAllImgData charImages = new BookAllImgData();
+
+            charImages.setBookId(character.getBookId());
+            charImages.setPageNo(character.getPageNo());
+            charImages.setCharacterId(character.getCharacterId());
+            charImages.setCharacterName(character.getCharacterName());
+            charImages.setCharacterImg(character.getCharacterImg());
+
+            bookAllImgData.add(charImages);
+        }
+        
+        // 배경 이미지 저장
+        for (BookPage bookPage : allBackImgByBookId) {
+            BookAllImgData backImages = new BookAllImgData();
+
+            backImages.setBookId(bookPage.getBookId());
+            backImages.setPageNo(bookPage.getPageNo());
+            backImages.setBackImg(bookPage.getBackImg());
+
+            bookAllImgData.add(backImages);
+        }
+
+
+        return bookAllImgData;
+    }
+
+
+
     @Override
     public List<BookPageDetail> getAllDataAtPage(int bookId, int pageNo) {
-        // 해당 책에 존재하는 모든 이미지 데이터 조회
+        // 해당 페이지 존재하는 모든 데이터 조회
         List<BookPageDetail> dataList = bookRepository.getDataAtPageByBookIdAndPageNo(bookId, pageNo);
 
         // 데이터가 존재하는 경우, 조회된 데이터를 BookPageDetails 리스트에 추가
