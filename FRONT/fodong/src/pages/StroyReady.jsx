@@ -2,42 +2,33 @@ import React from "react";
 // import { Route, Routes } from "react-router-dom";
 import Background from "../components/storyReady/Background";
 import Character from "../components/storyReady/Character";
-import StartButton from "../components/storyReady/StartButton";
+// import StartButton from "../components/storyReady/StartButton";
 import BackButton from "../components/storyReady/BackButton";
 import { Grid } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import storyStore from "../store/storyStore";
+
 
 const StroyReady = () => {
+  const navigate = useNavigate();
+  const fetchData = storyStore((state) => state.fetchData)
   console.log(1111);
   const sources = [
     "./img/antstory/character/grasshopper/grasshoper2.png",
     "./img/antstory/character/ant/3.png",
   ];
+
+  
+
+    const handleClick = async () => {
+      
+      await fetchData();
+      navigate("/storytelling");
+    }
+  
+
   return (
-    // <Grid container spacing={2}>
-    //   <Grid item xs={12} sm={6} md={4}>
-    //     <Background style={{ display: "flex" }}></Background>
-    //   </Grid>
-    //   <Grid
-    //     style={{
-    //       display: "flex",
-    //       width: "100%",
-    //       height: "30vh",
-    //       alignItems: "center",
-    //       justifyContent: "space-between",
-    //       padding: "0 15px",
-    //     }}
-    //   >
-    //     {/* <BackButton style={{ flex: 1, minWidth: "50%" }} /> */}
-    //     <Character
-    //       style={{
-    //         flex: 1,
-    //         minWidth: "calc(100% - 100px)",
-    //         justifyContent: "center",
-    //       }}
-    //     />
-    //     <StartButton style={{ flex: 1, minWidth: "50%" }} />
-    //   </Grid>
-    // </Grid>
+    
     <Grid
       container
       direction="row"
@@ -74,7 +65,7 @@ const StroyReady = () => {
           </p>
         </Grid>
         <Grid item style={{ flexGrow: 1 }} columns={1}>
-          <StartButton />
+          <button onClick={handleClick}>동화 시작</button>
         </Grid>
       </Grid>
     </Grid>
