@@ -87,7 +87,7 @@ function ScrollBook() {
   return (
     <div className="scroll_container">
       <button onClick={goToPrevBook} className="preButton">
-        <i class="fa fa-arrow-left"></i>
+        <i className="fa fa-arrow-left"></i>
       </button>
 
       <div className="slider-container">
@@ -112,7 +112,7 @@ function ScrollBook() {
         )}
       </div>
       <button onClick={goToNextBook} className="goButton">
-        <i class="fa fa-arrow-right"></i>
+        <i className="fa fa-arrow-right"></i>
       </button>
     </div>
   );

@@ -1,10 +1,11 @@
 import React, { useRef } from "react";
 import FlipPage from "react-pageflip";
+import "./book.css";
 
 // A 컴포넌트 정의
 const A = () => {
   // 총 페이지 수와 FlipPage 컴포넌트를 조작하기 위한 ref
-  const totalPage = 10;
+  const totalPage = 15;
   const flipBookRef = useRef(null);
   const Image1 = `${process.env.PUBLIC_URL}/img/dummy_cover/2.jpg`;
   const Image2 = `${process.env.PUBLIC_URL}/img/dummy_cover/3.jpg`;
@@ -31,7 +32,7 @@ const A = () => {
   // 표지 페이지를 위한 컴포넌트
   // React.forwardRef를 사용해 ref를 내부 div로 전달
   const PageCover = React.forwardRef(({ title }, ref) => (
-    <div className="page page-cover" ref={ref} data-density="hard">
+    <div className="page page-cover" ref={ref}>
       <div className="page-content">
         <h2>{title}</h2>
       </div>
@@ -59,33 +60,38 @@ const A = () => {
         alignItems: "center",
       }}
     >
-      <FlipPage
-        ref={flipBookRef}
-        width={900} // 적절한 크기로 조정
-        height={800}
-        flippingTime={1000}
-        showCover={true}
-        onPageClick={handlePageClick}
-      >
-        <PageCover title="BOOK TITLE" />
-        {/* 중간 페이지들을 렌더링합니다. */}
-        {Array.from({ length: totalPage - 2 }).map((_, index) => (
-          <div key={index} className="page-content">
-            <h2>Page {index + 1}</h2>
-            {/* 페이지에 이미지 추가 */}
-            <div
-              className="page-image"
-              style={{
-                width: "100%",
-                height: "80%",
-                background: `url(${pageImages[index]}) no-repeat center center`,
-                backgroundSize: "cover",
-              }}
-            ></div>
-          </div>
-        ))}
-        <PageCover title="THE END" />
-      </FlipPage>
+      <div className="book-container" style={{ width: 900, height: 800 }}>
+        <FlipPage
+          width={900}
+          height={800}
+          drawShadow={true}
+          flippingTime={1000}
+          usePortrait={true}
+          startZIndex={0}
+          maxShadowOpacity={1}
+          mobileScrollSupport={true}
+          onPageClick={handlePageClick}
+          ref={flipBookRef}
+        >
+          <PageCover title="BOOK TITLE" />
+          {/* 중간 페이지들을 렌더링합니다. */}
+          {Array.from({ length: totalPage - 2 }).map((_, index) => (
+            <div key={index} className="page-content">
+              {/* 페이지에 이미지 추가 */}
+              <div
+                className="page-image"
+                style={{
+                  width: "100%",
+                  height: "80%",
+                  background: `url(${pageImages[index]}) no-repeat center center`,
+                  backgroundSize: "cover",
+                }}
+              ></div>
+            </div>
+          ))}
+          <PageCover title="THE END" />
+        </FlipPage>
+      </div>
     </div>
   );
 };
