@@ -1,12 +1,13 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import CharModal from "./CharModal";
 import "./mainStyle.css";
-import Image1 from "./dummy_cover/2.png";
-import Image2 from "./dummy_cover/3.png";
-import Image3 from "./dummy_cover/4.png";
-import Image4 from "./dummy_cover/5.png";
-import Image5 from "./dummy_cover/6.png";
-import Image6 from "./dummy_cover/7.png";
+import Image1 from "./dummy_cover/2.jpg";
+import Image2 from "./dummy_cover/3.jpg";
+import Image3 from "./dummy_cover/4.jpg";
+import Image4 from "./dummy_cover/5.jpg";
+import Image5 from "./dummy_cover/6.jpg";
+import Image6 from "./dummy_cover/7.jpg";
+
 const books = [
   {
     id: 1,
@@ -59,7 +60,7 @@ function ScrollBook() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % books.length);
-    }, 3000);
+    }, 4000);
     return () => clearTimeout(timer);
   }, [currentIndex]);
 
@@ -71,29 +72,48 @@ function ScrollBook() {
       setIsModalOpen(true);
     }
   };
+  // ...
+  const goToNextBook = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % books.length);
+  };
+
+  const goToPrevBook = () => {
+    setCurrentIndex(
+      (prevIndex) => (prevIndex - 1 + books.length) % books.length
+    );
+  };
+  // ...
 
   return (
-    <div className="slider-container">
-      {books.map((book, index) => (
-        <div
-          key={index}
-          className={`slide ${index === currentIndex ? "active" : ""}`}
-          style={{ backgroundImage: `url(${book.image})` }}
-          onClick={() => openModal(book.id)}
-        >
-          <div className="book-info">
-            <h3>{book.title}</h3>
-            <p>등장인물 : {book.characters}</p>
+    <div className="scroll_container">
+      <button onClick={goToPrevBook} className="preButton">
+        <i class="fa fa-arrow-left"></i>
+      </button>
+
+      <div className="slider-container">
+        {books.map((book, index) => (
+          <div
+            key={index}
+            className={`slide ${index === currentIndex ? "active" : ""}`}
+            style={{ backgroundImage: `url(${book.image})` }}
+            onClick={() => openModal(book.id)}
+          >
+            <div className="book-info">
+              <h3>{book.title}</h3>
+            </div>
           </div>
-        </div>
-      ))}
-      {isModalOpen && (
-        <CharModal
-          isOpen={isModalOpen}
-          closeModal={() => setIsModalOpen(false)}
-          book={selectedBook}
-        />
-      )}
+        ))}
+        {isModalOpen && (
+          <CharModal
+            isOpen={isModalOpen}
+            closeModal={() => setIsModalOpen(false)}
+            book={selectedBook}
+          />
+        )}
+      </div>
+      <button onClick={goToNextBook} className="goButton">
+        <i class="fa fa-arrow-right"></i>
+      </button>
     </div>
   );
 }
