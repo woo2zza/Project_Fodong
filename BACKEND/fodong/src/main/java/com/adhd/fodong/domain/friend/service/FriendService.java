@@ -1,6 +1,8 @@
 package com.adhd.fodong.domain.friend.service;
 
-import com.adhd.fodong.domain.friend.entity.FriendShip;
+import com.adhd.fodong.domain.friend.dto.FriendRequest;
+import com.adhd.fodong.domain.friend.entity.Friendship;
+import com.adhd.fodong.domain.user.profile.entity.ProfileEntity;
 import org.springframework.context.annotation.Profile;
 
 import java.util.List;
@@ -8,15 +10,15 @@ import java.util.List;
 public interface FriendService {
 
     // 친구 요청하는 기능
-    void sendFriendRequest(int fromProfileId, int toProfileId);
+    Friendship sendFriendRequest(FriendRequest friendRequest);
 
     // 친구 수락하는 기능
-    void acceptFriendRequest(int friendshipId);
+    void acceptFriendRequest(FriendRequest friendRequest);
 
     // 친구 거절하는 기능
-    void rejectFriendRequest(int friendshipId);
+    void rejectFriendRequest(FriendRequest friendRequest);
 
     // 친구 조회하는 기능
-    List<Profile> getFriends(int profileId);
+    List<ProfileEntity> getRelations(int profileId);
 
 }

@@ -71,8 +71,16 @@ public class BookServiceImpl implements BookService {
             // png 확장자 jpg로 변경 (DB수정 귀찬항서)
             String ConvertedCover = convertTool.convertToJpg(book.getCover());
             bookInfo.setCover(ConvertedCover);
-
             bookInfo.setMaxPageNo(getMaxPage(bookId));
+
+            // 등장인물 넣기
+            List<CharacterDetail> characters = getCharacters(bookId);
+            // 캐릭터 이름만 중복 없이 저장하기 위한 Set
+            Set<String> characterNames = new HashSet<>();
+            for (CharacterDetail characterDetail : characters) {
+                characterNames.add(characterDetail.getCharacterName());
+            }
+            bookInfo.setCharacters(new ArrayList<>(characterNames));
 
             return bookInfo;
         } else {
