@@ -13,6 +13,8 @@ import StroyReady from "./pages/StroyReady.jsx";
 import Face from "./components/face/Face.jsx";
 // 이거 component라 자식으로 납둬야함
 import StoryDetail from "./components/StoryDetail";
+
+import Test from "./webrtc/TestRecording.jsx";
 function App() {
   <Login />;
   return (
@@ -30,6 +32,8 @@ function App() {
         <Route path="/storyDetail" element={<StoryDetail />} />
         <Route path="/face/*" element={<Face />} />
         <Route path="album/" element={<Album />} />
+        {/* test용 */}
+        <Route path="/test/" element={<Test />} />
       </Routes>
     </BrowserRouter>
   );
