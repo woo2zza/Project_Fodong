@@ -19,6 +19,7 @@ public class FriendController {
     private final FriendService friendService;
 
 
+
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{profileId}")
     public List<ProfileEntity> getRelations(@PathVariable int profileId) {
