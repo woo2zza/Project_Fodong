@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import * as faceapi from "face-api.js";
 import ant from "./img/ant2.png";
 
+
 function Face() {
   console.log(123123123);
   const [videoStream, setVideoStream] = useState(null);
@@ -15,6 +16,7 @@ function Face() {
     const loadModels = async () => {
       console.log(33333333);
       await faceapi.nets.tinyFaceDetector.loadFromUri("../models");
+      console.log('해줘')
       await faceapi.nets.faceLandmark68Net.loadFromUri("../models");
       await faceapi.nets.faceRecognitionNet.loadFromUri("../models");
       await faceapi.nets.faceExpressionNet.loadFromUri("../models");
@@ -104,6 +106,23 @@ function Face() {
         style={{ position: "absolute", top: "1px" }}
       />
       <canvas ref={canvasRef} style={{ position: "absolute" }} />
+      <div>
+        {videoStream && faceImages.map((src, index) => (
+          <div
+            key={index}
+            style={{
+              position: "absolute",
+              width: "200px",
+              height: "200px",
+              backgroundSize: "cover",
+              backgroundPosition: "50% 50%",
+              borderRadius: "50%",
+              backgroundImage: `url(${src})`,
+              bottom: `${370}px`,
+              left: `${150 + index * 200}px`,
+            }}
+          ></div>
+        ))}
       <div className="fullmoon">
         <div
           className="imgFilter"
@@ -130,6 +149,8 @@ function Face() {
           }}
         ></div>
       </div>
+      {/* <img src={ant} alt="개미" style={{ zIndex: 4 }}></img> */}
+      <button onClick={stopVideo} style={{ width: '100px', height: '30px', fontSize: '20px'}}>카메라 종료</button>
       <img src={ant} alt="개미" style={{ zIndex: 4 }}></img>
     </div>
   );

@@ -7,6 +7,7 @@ import StoryTelling from "./pages/StoryTelling";
 import Album from "./pages/Album";
 import Main from "./pages/Main";
 import Book from "./pages/Book";
+import ReadBook from "./pages/ReadBook";
 import Profile from "./pages/Profile";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import StroyReady from "./pages/StroyReady.jsx";
@@ -32,8 +33,12 @@ function App() {
         <Route path="/storyDetail" element={<StoryDetail />} />
         <Route path="/face/*" element={<Face />} />
         <Route path="album/" element={<Album />} />
+<<<<<<< HEAD
+        <Route path="readBook/" element={<ReadBook />} />
+=======
         {/* test용 */}
         <Route path="/test/" element={<Test />} />
+>>>>>>> 3aaad6d0374d8af9600cfce6989d81de2471268f
       </Routes>
     </BrowserRouter>
   );

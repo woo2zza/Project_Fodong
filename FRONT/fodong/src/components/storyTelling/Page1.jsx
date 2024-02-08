@@ -4,8 +4,11 @@ import "./StoryTelling.css";
 import DummyScript from "./DummyScript";
 import { Route, Routes } from "react-router-dom";
 import Face from "../face/Face";
+<<<<<<< HEAD
 
 import RecordRTC from "recordrtc";
+=======
+>>>>>>> 71596d020e7aadd79edb495d6a9039ac85c11382
 
 const Page = ({ onPageChange }) => {
   const [recorder, setRecorder] = useState(null);
@@ -17,8 +20,6 @@ const Page = ({ onPageChange }) => {
 
   useEffect(() => {
     console.log(15, pageParam);
-    const imgeUrl = require(`./img/story${pageParam}.png`);
-    setImageSrc(imgeUrl);
   }, [pageParam]);
 
   const backgroundStyle = {
@@ -117,8 +118,11 @@ const Page = ({ onPageChange }) => {
       <Routes>
         <Route path="/" element={<Face />} />
       </Routes>
+<<<<<<< HEAD
       <button onClick={startRecording}>녹화 시작</button>
       <button onClick={stopRecording}>녹화 중지</button>
+=======
+>>>>>>> 71596d020e7aadd79edb495d6a9039ac85c11382
       <button
         style={{
           fontSize: "3rem",

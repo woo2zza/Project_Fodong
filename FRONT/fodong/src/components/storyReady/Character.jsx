@@ -4,7 +4,7 @@ import { character } from "../../api/character";
 
 const Character = ({ src }) => {
   // 실행된는 index.html 기준 (아래 코드에서)
-  console.log(src);
+  // console.log(src);
   const [imageData, setImageData] = useState(src);
   // const [players, setPlayers] = useState(dummy);
 
@@ -25,7 +25,7 @@ const Character = ({ src }) => {
   //   setPlayers(updatePlayers);
   //   console.log(updatePlayers);
   // };
-  console.log(imageData);
+  // console.log(imageData);
 
   return (
     // <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%"}}>

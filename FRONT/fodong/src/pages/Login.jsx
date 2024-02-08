@@ -7,7 +7,6 @@ import {
   StyledInput,
   Inputs,
   Form,
-  Button,
 } from "../components/Common";
 
 const Home = () => {
@@ -57,13 +56,23 @@ const Home = () => {
                 onChange={onChangePassword}
               />
             </Inputs>
-            <Button color="green" type="submit">
-              Login
-            </Button>
+            <div className="glowButtonWrapper">
+              <button color="green" type="submit" className="glowButton">
+                <span className="buttonText">로그인</span>
+              </button>
+            </div>
           </Form>
-          <Button color="rgb(0, 100, 100)" onClick={goToLogin}>
-            회원가입
-          </Button>
+
+          <div className="glowButtonWrapper">
+            <button
+              color="green"
+              type="submit"
+              onClick={goToLogin}
+              className="glowButton"
+            >
+              <span className="buttonText">회원가입</span>
+            </button>
+          </div>
         </Wrapper>
       </div>
     </div>

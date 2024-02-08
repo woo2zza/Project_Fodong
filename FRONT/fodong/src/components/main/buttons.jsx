@@ -5,9 +5,15 @@ import "./mainStyle.css";
 
 const Buttons = () => {
   const [activeAnimation, setActiveAnimation] = useState(null);
-  const imagePaths = ["chick.png", "rabbit.png", "penguin.png"];
-  const linkPaths = ["/bookList", "/login", "/storyReady"];
-  const alts = ["chick", "rabbit", "penguin"];
+  const imagePaths = [
+    "chick.png",
+    "rabbit.png",
+    "penguin.png",
+    "chick.png",
+    "rabbit.png",
+  ];
+  const linkPaths = ["/bookList", "/", "/album", "/readbook", "/storydetail"];
+  const alts = ["chick", "rabbit", "penguin", "chick"];
 
   const handleButtonClick = (index) => {
     setActiveAnimation(index); // 애니메이션 활성화
