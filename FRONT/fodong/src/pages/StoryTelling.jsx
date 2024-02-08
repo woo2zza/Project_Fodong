@@ -7,6 +7,7 @@ import Script from "../components/storyTelling/Script";
 import Page1 from "../components/storyTelling/Page1";
 import { Route, Routes } from "react-router-dom";
 import Grid from "@mui/material/Grid";
+import Face from "../components/face/Face"
 
 const StoryTelling = () => {
   const [scriptPage, setScriptPage] = useState(0);
@@ -56,11 +57,10 @@ const StoryTelling = () => {
                 path="/:page"
                 element={<Page1 onPageChange={handlePageChange} />}
               />
-            </Routes>
+              {/* <Route path="/:page" element={Charatecr} */}
+             </Routes>
           </Grid>
-          {/* <Grid item xs={12} md={4}>
-              <Cams style={script} />
-            </Grid> */}
+          
         </Grid>
       </section>
       <section className="script-container" style={{ height: "15vh" }}>
