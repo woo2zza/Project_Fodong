@@ -1,6 +1,6 @@
 import React from "react";
-import AlbumTitle from "../components/album/albumTitle";
 import AlbumButton from "../components/album/albumButton";
+import AlbumTitle from "../components/album/albumTitle";
 
 const Album = () => {
   return (
