@@ -48,7 +48,16 @@ public class BookServiceImpl implements BookService {
             bookInfo.setCover(ConvertedCover);
 
             bookInfo.setMaxPageNo(getMaxPage(book.getBookId()));
-            // 추후에 최대 페이지 정보
+
+            // 등장인물 넣기
+            List<CharacterDetail> characters = getCharacters(book.getBookId());
+            // 캐릭터 이름만 중복 없이 저장하기 위한 Set
+            Set<String> characterNames = new HashSet<>();
+            for (CharacterDetail characterDetail : characters) {
+                characterNames.add(characterDetail.getCharacterName());
+            }
+            bookInfo.setCharacters(new ArrayList<>(characterNames));
+
             bookInfos.add(bookInfo);
         }
 
@@ -128,9 +137,10 @@ public class BookServiceImpl implements BookService {
 //    }
 
 
+
     @Override
     public List<BookAllImgData> bookInitRender(int bookId) {
-        // 동화책 구연에 필요한 책의 고용량 데이터 모두 응답
+
         ArrayList<BookAllImgData> bookAllImgData = new ArrayList<>();
 
         List<Character> allCharactersByBookId = bookRepository.getAllCharactersByBookId(bookId);
@@ -148,7 +158,7 @@ public class BookServiceImpl implements BookService {
 
             bookAllImgData.add(charImages);
         }
-        
+
         // 배경 이미지 저장
         for (BookPage bookPage : allBackImgByBookId) {
             BookAllImgData backImages = new BookAllImgData();
@@ -305,9 +315,5 @@ public class BookServiceImpl implements BookService {
 
             bookRepository.saveBook(newBook);
         }
-
     }
-
-
-
 }
