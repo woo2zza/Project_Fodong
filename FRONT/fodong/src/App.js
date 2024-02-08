@@ -7,12 +7,15 @@ import StoryTelling from "./pages/StoryTelling";
 import Album from "./pages/Album";
 import Main from "./pages/Main";
 import Book from "./pages/Book";
+import ReadBook from "./pages/ReadBook";
 import Profile from "./pages/Profile";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import StroyReady from "./pages/StroyReady.jsx";
 import Face from "./components/face/Face.jsx";
 // 이거 component라 자식으로 납둬야함
 import StoryDetail from "./components/StoryDetail";
+
+import Test from "./webrtc/TestRecording.jsx";
 function App() {
   <Login />;
   return (
@@ -30,6 +33,12 @@ function App() {
         <Route path="/storyDetail" element={<StoryDetail />} />
         <Route path="/face/*" element={<Face />} />
         <Route path="album/" element={<Album />} />
+<<<<<<< HEAD
+        <Route path="readBook/" element={<ReadBook />} />
+=======
+        {/* test용 */}
+        <Route path="/test/" element={<Test />} />
+>>>>>>> 3aaad6d0374d8af9600cfce6989d81de2471268f
       </Routes>
     </BrowserRouter>
   );

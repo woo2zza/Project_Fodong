@@ -3,8 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import "./StoryTelling.css";
 import DummyScript from "./DummyScript";
 import { Route, Routes } from "react-router-dom";
-import Face from "../face/Face"
-
+import Face from "../face/Face";
 
 const Page = ({ onPageChange }) => {
   const [imageSrc, setImageSrc] = useState("");
@@ -14,8 +13,6 @@ const Page = ({ onPageChange }) => {
 
   useEffect(() => {
     console.log(15, pageParam);
-    const imgeUrl = require(`./img/story${pageParam}.png`);
-    setImageSrc(imgeUrl);
   }, [pageParam]);
 
   const backgroundStyle = {
@@ -78,7 +75,7 @@ const Page = ({ onPageChange }) => {
 
       <Routes>
         <Route path="/" element={<Face />} />
-        </Routes>
+      </Routes>
       <button
         style={{
           fontSize: "3rem",

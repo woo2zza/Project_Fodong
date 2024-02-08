@@ -50,7 +50,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         String accountEmail = customUserDetails.getUsername();
         int accountId = customUserDetails.getAccountId();
 
-        String token = jwtUtil.createJwt(accountEmail, 600 * 600 * 10L);
+        String token = jwtUtil.createJwt(accountEmail, 60000 * 60 * 10L);
 
         System.out.println("-----------로그인 성공------------");
         System.out.println("accountEmail = " + accountEmail);
