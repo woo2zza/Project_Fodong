@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { searchNickname } from "../../api/friends";
+import { userStore } from "../..//store/userStore";
 import {
   Fab,
   Paper,
@@ -18,17 +20,31 @@ import {
 
 function Friends() {
   const [open, setOpen] = useState(false);
+  const [nickname, setNickname] = useState("");
   const [friends, setFriends] = useState([]);
-  const [newFriend, setNewFriend] = useState("");
+  const [searchResults, setSearchResults] = useState([]); // 검색 결과를 저장할 상태 추가
+
+  const token = userStore((state) => state.token);
+  const handleSearch = async (event) => {
+    setNickname((prev) => event.target.value);
+    console.log(nickname);
+    if (event.target.value.trim() !== "") {
+      const res = await searchNickname(event.target.value, token);
+      setSearchResults(res); // 검색 결과를 상태에 저장
+    } else {
+      setSearchResults([]); // 입력값이 없을 경우 검색 결과를 비움
+    }
+  };
 
   const handleToggle = () => {
     setOpen(!open);
   };
 
-  const handleAddFriend = () => {
-    if (newFriend) {
-      setFriends([...friends, newFriend]);
-      setNewFriend("");
+  const handleAddFriend = (friend) => {
+    if (friend) {
+      setFriends([...friends, friend]);
+      setSearchResults([]); // 친구 추가 후 검색 결과를 비움
+      setNickname(""); // 입력 필드를 초기화
     }
   };
 
@@ -90,13 +106,27 @@ function Friends() {
           </List>
           <TextField
             label="친구 추가"
-            value={newFriend}
-            onChange={(e) => setNewFriend(e.target.value)}
+            value={nickname}
+            onChange={(e) => handleSearch(e)}
             fullWidth
           />
-          <Button onClick={handleAddFriend} style={{ marginTop: 8 }}>
+          <Button
+            onClick={() => handleAddFriend(nickname)}
+            style={{ marginTop: 8 }}
+          >
             추가
           </Button>
+          <List>
+            {searchResults.map((result, index) => (
+              <ListItem
+                button
+                key={index}
+                onClick={() => handleAddFriend(result)}
+              >
+                <ListItemText primary={result} />
+              </ListItem>
+            ))}
+          </List>
         </Paper>
       </Slide>
     </div>
