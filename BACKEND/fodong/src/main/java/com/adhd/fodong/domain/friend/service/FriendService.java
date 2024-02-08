@@ -9,6 +9,10 @@ import java.util.List;
 
 public interface FriendService {
 
+    // 닉네임을 입력하면 해당 닉네임을 포함하고 있는 모든 profileId 필드 조회하는 기능
+    List<ProfileEntity> findProfilesByNickname(String nickname);
+
+
     // 친구 요청하는 기능
     Friendship sendFriendRequest(FriendRequest friendRequest);
 

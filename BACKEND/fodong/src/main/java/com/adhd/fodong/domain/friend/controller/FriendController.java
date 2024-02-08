@@ -5,7 +5,6 @@ import com.adhd.fodong.domain.friend.entity.Friendship;
 import com.adhd.fodong.domain.friend.service.FriendService;
 import com.adhd.fodong.domain.user.profile.entity.ProfileEntity;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +18,10 @@ public class FriendController {
     private final FriendService friendService;
 
 
+    @GetMapping("/search")
+    public List<ProfileEntity> findProfileByNickname(@RequestParam String nickname) {
+        return friendService.findProfilesByNickname(nickname);
+    }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{profileId}")

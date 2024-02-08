@@ -31,4 +31,11 @@
         AND FRIENDSHIP_TB.status != 'blocked'
     </select>
 
+    <select id="findProfilesByNickname" resultType="com.adhd.fodong.domain.user.profile.entity.ProfileEntity">
+        SELECT *
+        FROM Profile
+        WHERE nickname LIKE CONCAT(#{nickname}, '%')
+    </select>
+
+
 </mapper>

@@ -11,6 +11,8 @@ import java.util.List;
 @Mapper
 public interface FriendRepository {
 
+    List<ProfileEntity> findProfilesByNickname(String nickname);
+
     void sendFriendRequest(Friendship friendship);
 
     Integer findFriendshipIdByFromIdWithToId(Friendship friendship);

@@ -20,6 +20,17 @@ public class FriendServiceImpl implements FriendService {
     private final FriendRepository friendRepository;
 
     @Override
+    public List<ProfileEntity> findProfilesByNickname(String nickname) {
+        // 입력한 닉네임이 없는 경우 빈 배열 리턴
+        if (nickname == null || nickname.trim().isEmpty()) {
+            return new ArrayList<>();
+        } else {
+            List<ProfileEntity> profilesByNickname = friendRepository.findProfilesByNickname(nickname);
+            return profilesByNickname;
+        }
+    }
+
+    @Override
     public List<ProfileEntity> getRelations(int profileId) {
         // 친구관계를 모두 조회하는데
         // 거절한 애들은 필요 없으니 필터링하고 전달
