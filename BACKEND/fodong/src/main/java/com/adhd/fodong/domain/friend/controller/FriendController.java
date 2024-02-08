@@ -20,6 +20,7 @@ public class FriendController {
 
     @GetMapping("/search")
     public List<ProfileEntity> findProfileByNickname(@RequestParam String nickname) {
+        //머지용
         return friendService.findProfilesByNickname(nickname);
     }
 
