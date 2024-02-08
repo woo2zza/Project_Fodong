@@ -1,9 +1,9 @@
 package com.adhd.fodong.domain.book.controller;
 
-import com.adhd.fodong.domain.book.dto.BookDetail;
+import com.adhd.fodong.domain.book.dto.BookAllImgData;
+import com.adhd.fodong.domain.book.dto.BookInfo;
+import com.adhd.fodong.domain.book.dto.BookPageDetail;
 import com.adhd.fodong.domain.book.dto.CharacterDetail;
-import com.adhd.fodong.domain.book.entity.Book;
-import com.adhd.fodong.domain.book.entity.Character;
 import com.adhd.fodong.domain.book.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,24 +20,74 @@ public class BookController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping()
-    public List<BookDetail> getAllbook() {
+    public List<BookInfo> getAllbook() {
         // 보유하고 있는 모든 책들의 데이터 가져오기
         return bookService.getAllBookDetails();
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{bookId}")
-    public BookDetail getBook(@PathVariable int bookId) {
-        // 특정 책의 정보를 조회
+    public BookInfo getBook(@PathVariable int bookId) {
+        // 특정 책의 요약 정보를 조회
         return bookService.getBook(bookId);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{bookId}/chars")
-    public List<CharacterDetail> getCharactersByBookId(@PathVariable int bookId) {
+    public List<CharacterDetail> getCharacters(@PathVariable int bookId) {
         // bookId 에 등장하는 등장인물 데이터응답
         return bookService.getCharacters(bookId);
     }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/{bookId}/init")
+    public List<BookAllImgData> initRender(@PathVariable int bookId) {
+        // bookId에 존재하는 고용량 데이터 응답
+        return bookService.bookInitRender(bookId);
+    }
+
+//    @ResponseStatus(HttpStatus.OK)
+//    @GetMapping("/{bookId}/data")
+//    public List<BookAllImgData> getBookAllImgData(@PathVariable int bookId) {
+//       // bookId가 가지고 있는 모든 데이터 조회(이미지 등) !스크립트 제외
+//        return bookService.getBookAllImgData(bookId);
+//    }
+
+
+    // bookId와 페이지번호를 이용해 해당 페이지에 존재하는 모든 데이터 정보 조회
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/{bookId}/pages/{pageNo}")
+    public List<BookPageDetail> getAllDataAtPage(@PathVariable int bookId,
+                                                 @PathVariable int pageNo) {
+        return bookService.getAllDataAtPage(bookId, pageNo);
+    }
+
+
+    // bookId와 페이지번호를 이용해 해당 책의 존재하는 페이지의 배경이미지 조회
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/{bookId}/pages/{pageNo}/backgrounds")
+    public List<BookPageDetail> getBackImgAtPage(@PathVariable int bookId,
+                                                 @PathVariable int pageNo) {
+        return bookService.getBackImgAtPage(bookId, pageNo);
+    }
+
+    // bookId와 페이지번호를 이용해 페이지에 존재하는 등장인물 조회
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/{bookId}/pages/{pageNo}/characters")
+    public List<BookPageDetail> getCharImgAtPage(@PathVariable int bookId,
+                                                 @PathVariable int pageNo) {
+        return bookService.getCharImgAtPage(bookId, pageNo);
+    }
+
+
+    // bookId와 페이지번호를 이용해 페이지에 존재하는 모든 스크립트 조회
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/{bookId}/pages/{pageNo}/scripts")
+    public List<BookPageDetail> getScriptsAtPage(@PathVariable int bookId,
+                                                 @PathVariable int pageNo) {
+        return bookService.getScriptAtPage(bookId, pageNo);
+    }
+
 
     // 책 생성 API
     @ResponseStatus(HttpStatus.CREATED)

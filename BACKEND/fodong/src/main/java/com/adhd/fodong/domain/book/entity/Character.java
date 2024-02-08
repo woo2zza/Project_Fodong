@@ -1,10 +1,10 @@
 package com.adhd.fodong.domain.book.entity;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 public class Character {
     private int bookId;
     private int pageNo;

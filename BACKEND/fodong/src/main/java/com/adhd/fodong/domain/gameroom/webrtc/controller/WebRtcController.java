@@ -25,14 +25,15 @@ public class WebRtcController {
     @PostConstruct
     public void init() {
         this.openvidu = new OpenVidu(OPENVIDU_URL, OPENVIDU_SECRET);
-        System.out.println("openvidu 객체 생성 : " + openvidu);
+        System.out.println("-----------------OPENVIDU 객체 생성------------------");
+        System.out.println("openvidu 객체 : " + openvidu);
+        System.out.println("----------------------------------------------------");
     }
 
-    @PostMapping("/api/sessions")
+    @PostMapping("/api/v1/sessions")
     public ResponseEntity<String> initializeSession(@RequestBody(required = false) Map<String, Object> params)
             throws OpenViduJavaClientException, OpenViduHttpException {
         System.out.println("---------------신규 세션 생성-----------------");
-
         // 설정한 세션
         SessionProperties properties = SessionProperties.fromJson(params).build();
         System.out.println("세션 설정 정보 : " + properties);
@@ -45,7 +46,7 @@ public class WebRtcController {
     }
 
 
-    @PostMapping("/api/sessions/{sessionId}/connections")
+    @PostMapping("/api/v1/sessions/{sessionId}/connections")
     public ResponseEntity<String> createConnection(@PathVariable("sessionId") String sessionId,
                                                    @RequestBody(required = false) Map<String, Object> params)
             throws OpenViduJavaClientException, OpenViduHttpException {
@@ -58,9 +59,13 @@ public class WebRtcController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-
+        System.out.println("----------------- 신규 Connetction 생성-----------------------");
         ConnectionProperties properties = ConnectionProperties.fromJson(params).build();
         Connection connection = session.createConnection(properties);
+        System.out.println("connection = " + connection);
+        System.out.println("properties = " + properties);
+        System.out.println("Token = " + connection.getToken());
+        System.out.println("-----------------------------------------------------------");
         return new ResponseEntity<>(connection.getToken(), HttpStatus.OK);
     }
 

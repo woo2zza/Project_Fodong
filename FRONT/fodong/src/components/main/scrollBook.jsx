@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import CharModal from "./CharModal";
+
 import "./mainStyle.css";
 import axios from "axios";
 
@@ -51,7 +52,10 @@ const ScrollBook = () => {
       setIsModalOpen(true);
     }
   };
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3aaad6d0374d8af9600cfce6989d81de2471268f
   const goToNextBook = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % books.length);
   };
@@ -61,7 +65,6 @@ const ScrollBook = () => {
       (prevIndex) => (prevIndex - 1 + books.length) % books.length
     );
   };
-  // ...
 
   return (
     <div className="scroll_container">

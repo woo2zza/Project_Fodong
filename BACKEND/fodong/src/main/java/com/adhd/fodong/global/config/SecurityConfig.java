@@ -63,6 +63,7 @@ public class SecurityConfig {
                         CorsConfiguration configuration = new CorsConfiguration();
 
                         configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000",
+                                "http://192.168.100.91:3000",
                                 "http://192.168.100.159:3000",
                                 "https://192.168.100.159:3000",
                                 "http://192.168.100.158:3000",
@@ -72,6 +73,7 @@ public class SecurityConfig {
                                 "wss://i10c109.p.ssafy.io:3000",
                                 "ws://i10c109.p.ssafy.io:3000",
                                 "http://192.168.0.12:3000",
+                                "http://192.168.100.163:3000",
                                 "http://172.30.1.66:3000"));
                         configuration.setAllowedMethods(Collections.singletonList("*"));
                         configuration.setAllowCredentials(true);
@@ -106,8 +108,13 @@ public class SecurityConfig {
         http
                 .addFilterBefore(new JWTFilter(jwtUtil), LoginFilter.class);
 
+
+        // Login Filter 경로 변경
+        LoginFilter loginFilter = new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil);
+        loginFilter.setFilterProcessesUrl("/api/v1/login");
+
         http
-                .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil), UsernamePasswordAuthenticationFilter.class);
+                .addFilterAt(loginFilter, UsernamePasswordAuthenticationFilter.class);
 
         //세션 설정
         http

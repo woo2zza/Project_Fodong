@@ -22,21 +22,89 @@
         WHERE book_id = #{bookId}
     </select>
 
-    <select id="getAllCharacters" resultType="com.adhd.fodong.domain.book.entity.Character">
+    <select id="getAllCharactersByBookId" resultType="com.adhd.fodong.domain.book.entity.Character">
         SELECT *
         FROM CHARACTER_TB
         WHERE book_id = #{bookId};
     </select>
 
-    <select id="findAllCharacters" resultType="com.adhd.fodong.domain.book.entity.Character">
+    <select id="getAllBackImgByBookId" resultType="com.adhd.fodong.domain.book.entity.BookPage">
         SELECT *
-        FROM CHARACTER_TB
-        WHERE book_id = #{bookId}
+        FROM BOOK_PAGE_TB
+        WHERE book_id = #{bookId};
     </select>
+
+
+
+
 
     <insert id="saveBook" parameterType="com.adhd.fodong.domain.book.entity.Book">
         INSERT INTO BOOK_TB (title, summary, play_cnt, cover)
         VALUES (#{title}, #{summary}, #{playCnt}, #{cover})
     </insert>
+
+    <select id="getBackgroundByBookIdAndPageNo" resultType="com.adhd.fodong.domain.book.entity.BookPage">
+        SELECT *
+        FROM BOOK_PAGE_TB
+        WHERE book_id = #{bookId}
+          AND page_no = #{pageNo}
+    </select>
+
+    <select id="getCharactersByBookIdAndPageNo" resultType="com.adhd.fodong.domain.book.entity.Character">
+        SELECT *
+        FROM CHARACTER_TB
+        WHERE book_id = #{bookId}
+          AND page_no = #{pageNo}
+    </select>
+
+    <select id="getScriptsByBookIdAndPageNo" resultType="com.adhd.fodong.domain.book.entity.Script">
+        SELECT *
+        FROM SCRIPT_TB
+        WHERE book_id = #{bookId}
+          AND page_no = #{pageNo}
+    </select>
+
+    <select id="getAllImgDataByBookId" resultType="com.adhd.fodong.domain.book.dto.BookAllImgData">
+        SELECT
+            BP.book_id,
+            BP.page_no,
+            BP.back_img,
+            C.character_id,
+            C.character_name,
+            C.character_img,
+            S.script_no,
+            S.person,
+            S.context
+        FROM
+            BOOK_PAGE_TB AS BP
+                JOIN
+            CHARACTER_TB AS C ON BP.book_id = C.book_id
+                JOIN
+            SCRIPT_TB AS S ON BP.book_id = S.book_id
+        WHERE
+            BP.book_id = #{bookId};
+    </select>
+
+
+    <select id="getDataAtPageByBookIdAndPageNo" resultType="com.adhd.fodong.domain.book.dto.BookPageDetail">
+        SELECT
+            BP.book_id,
+            BP.page_no,
+            BP.back_img,
+            C.character_id,
+            C.character_name,
+            C.character_img,
+            S.script_no,
+            S.person,
+            S.context
+        FROM
+            BOOK_PAGE_TB AS BP
+                JOIN
+            CHARACTER_TB AS C ON BP.book_id = C.book_id AND BP.page_no = C.page_no
+                JOIN
+            SCRIPT_TB AS S ON BP.book_id = S.book_id AND BP.page_no = S.page_no
+        WHERE
+            BP.book_id = #{bookId} AND BP.page_no = #{pageNo};
+    </select>
 
 </mapper>

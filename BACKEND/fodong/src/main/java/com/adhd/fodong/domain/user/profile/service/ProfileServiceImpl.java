@@ -21,7 +21,7 @@ public class ProfileServiceImpl implements ProfileService{
     public List<ProfileEntity> getProfiles(int accountId) {
         // accountId로 모든 프로필 조회
         if (accountId <= 0) {
-            throw new RuntimeException("error:프로필 조회 -> 유요하지 않은 accountId 값");
+            throw new RuntimeException("error:프로필 조회 -> 유효하지 않은 accountId 값");
         }
 
         boolean existsAccount = accountRepository.existsByAccountId(accountId);
