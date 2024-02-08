@@ -1,4 +1,5 @@
 import axios from "axios";
+import { userStore } from "../store/userStore";
 const API_URL = process.env.REACT_APP_API_URL;
 
 export const login = async (accountEmail, accountPwd) => {
@@ -18,6 +19,7 @@ export const login = async (accountEmail, accountPwd) => {
     const authId = response.data.accountId;
     if (authToken) {
       localStorage.setItem("Token", authToken); // 'Authorization' 토큰을 저장.
+      userStore.getState().setToken(authToken);
     } else {
       console.log("Authorization 토큰이 없습니다.");
     }

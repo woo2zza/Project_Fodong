@@ -4,108 +4,93 @@ import ant from "./img/ant2.png";
 
 
 function Face() {
-  const [videoStream, setVideoStream] = useState(null); // 비디오 스트림 상태를 관리하는 state를 선언
+  console.log(123123123);
+  const [videoStream, setVideoStream] = useState(null);
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
-  const [faceImages, setFaceImages] = useState([]); // 각 얼굴의 이미지 데이터 URL을 저장
+  const outputImageRef = useRef(null); // 출력 이미지 요소에 대한 ref
+  const imgFilterRef = useRef(null); // 이미지 필터 요소에 대한
 
   useEffect(() => {
-    // face-api 모델을 비동기적으로 로드하는 함수
+    // Face API 모델을 로드
     const loadModels = async () => {
+      console.log(33333333);
       await faceapi.nets.tinyFaceDetector.loadFromUri("../models");
       console.log('해줘')
       await faceapi.nets.faceLandmark68Net.loadFromUri("../models");
       await faceapi.nets.faceRecognitionNet.loadFromUri("../models");
       await faceapi.nets.faceExpressionNet.loadFromUri("../models");
-      startVideo(); // 모델 로딩 후 비디오 스트림을 시작
+      startVideo(); // 모델 로딩 후 비디오 시작
     };
-    // 모델 로딩 함수를 실행
+
     loadModels();
   }, []);
 
-  const startVideo = async () => {
-    // 비디오 스트림을 시작하는 함수
-    try {
-      // 브라우저의 웹캠을 통해 비디오 스트림을 가져온다.
-      const stream = await navigator.mediaDevices.getUserMedia({ video: {} });
-      videoRef.current.srcObject = stream; // 비디오 스트림을 videoRef에 연결
-      setVideoStream(stream); // 비디오 스트림 상태를 업데이트
-    } catch (err) {
-      console.error(err);
-    }
+  const startVideo = () => {
+    // 웹캠 비디오 스트림을 가져와 비디오 요소에 할당하는 함수
+    console.log("카메라 시작");
+    navigator.getUserMedia(
+      { video: {} }, // 빈 객체를 사용하여 기본 비디오 설정을 요청
+      (stream) => {
+        videoRef.current.srcObject = stream;
+        setVideoStream(stream);
+      },
+      (err) => console.error(err)
+    );
   };
 
   useEffect(() => {
     if (videoStream) {
-      console.log('1')
-      // videoStream이 설정되었는지 확인
       const video = videoRef.current;
       const canvas = canvasRef.current;
-      const displaySize = { width: video.width, height: video.height }; // 비디오의 크기를 가져온다.
-      faceapi.matchDimensions(canvas, displaySize); // 캔버스의 크기를 비디오의 크기에 맞춘다.
+      const displaySize = { width: video.width, height: video.height };
 
-      // 일정 시간마다 얼굴 감지를 반복
+      faceapi.matchDimensions(canvas, displaySize);
+
       setInterval(async () => {
-        let detections = await faceapi // face-api.js를 사용하여 비디오에서 얼굴을 감지
-          .detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
-          .withFaceLandmarks()
-          .withFaceExpressions();
+        // 얼굴을 감지하고 얼굴 랜드마크 및 표정을 분석하는 함수
+        const detection = await faceapi
+          .detectSingleFace(video, new faceapi.TinyFaceDetectorOptions()) // 얼굴 감지
+          .withFaceLandmarks() // 얼굴 랜드마크 감지
+          .withFaceExpressions(); // 얼굴 표정 감지
 
-        // 감지된 얼굴을 x좌표 기준으로 정렬합니다.
-        detections = detections.sort(
-          (a, b) => a.detection.box.x - b.detection.box.x
-        );
+        let happiness = 0; // 행복 표정 초기화
 
-        // 감지된 얼굴이 있으면, 각 얼굴에 대해 이미지 추출 함수를 호출
-        if (detections && detections.length > 0) {
-          // 처음 2개의 감지된 얼굴만 처리
-          detections.slice(0, 2).forEach((detectedFace, index) => {
-            extractFaceFromBox(video, detectedFace.detection.box, index);
-          });
+        if (detection !== undefined) {
+          // 얼굴이 감지된 경우
+          extractFaceFromBox(video, detection.detection.box); // 얼굴 이미지 추출
+          happiness = detection.expressions.happy; // 행복 표정 분석
         } else {
-          // 얼굴이 감지되지 않았다면 콘솔에 메시지를 출력
           console.log("인식된 얼굴이 없습니다.");
         }
 
-        // 캔버스를 초기화
         canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
+
+        if (happiness > 0.1) {
+          console.log("웃다");
+          // 이 부분에서 이미지 위치 및 스타일을 업데이트할 수 있습니다.
+        } else {
+          // 이 부분에서 이미지 위치 및 스타일을 업데이트할 수 있습니다.
+        }
       }, 100);
     }
   }, [videoStream]);
 
-  async function extractFaceFromBox(inputImage, box, index) {
-    // 얼굴 이미지를 추출하고 상태에 저장하는 함수
-    console.log('2')
+  async function extractFaceFromBox(inputImage, box) {
+    // 얼굴 이미지 추출 함수
     const regionsToExtract = [
-      new faceapi.Rect(box.x, box.y, box.width, box.height),
+      new faceapi.Rect(box.x, box.y, box.width, box.height), // 얼굴 영역 지정
     ];
-    // face-api.js를 사용하여 입력 이미지에서 지정된 영역의 얼굴 이미지를 추출
-    const extractedImages = await faceapi.extractFaces(
-      inputImage,
-      regionsToExtract
-    );
 
-    if (extractedImages.length > 0) {
-      // 첫 번째 이미지를 가져와 데이터 URL을 생성
-      const cnv = extractedImages[0];
-      const dataUrl = cnv.toDataURL();
-      // faceImages 상태를 업데이트
-      setFaceImages((prevImages) => {
-        const newImages = [...prevImages];
-        newImages[index] = dataUrl; // 인덱스 위치에 이미지 데이터 URL을 저장합니다.
-        return newImages;
-      });
-    }
-  }
+    const faceImages = await faceapi.extractFaces(inputImage, regionsToExtract); // 얼굴 이미지 추출
 
-  const stopVideo = () => {
-    const stream = videoRef.current.srcObject;
-    if (stream && stream.getTracks) {
-      stream.getTracks().forEach((track) => {
-        track.stop();
-      });
-      videoRef.current.srcObject = null;
-      setVideoStream(null);
+    if (faceImages.length === 0) {
+      console.log("Face not found"); // 얼굴이 감지 되지 않은 경우
+    } else {
+      const cnv = faceImages[0];
+      console.log("카메라 나와라잇");
+      outputImageRef.current.style.backgroundImage = `url(${cnv.toDataURL()})`; // 이미지 출력
+      outputImageRef.current.style.backgroundBlendMode = "difference"; // 이미지 블렌딩 모드 설정
     }
   }
 
@@ -117,6 +102,7 @@ function Face() {
         height="1"
         autoPlay
         muted
+        src=""
         style={{ position: "absolute", top: "1px" }}
       />
       <canvas ref={canvasRef} style={{ position: "absolute" }} />
@@ -137,9 +123,35 @@ function Face() {
             }}
           ></div>
         ))}
+      <div className="fullmoon">
+        <div
+          className="imgFilter"
+          ref={imgFilterRef}
+          style={{
+            position: "absolute",
+            width: "200px",
+            height: "200px",
+            bottom: "0px", // 이미지 필터 요소 위치
+          }}
+        ></div>
+        <div
+          id="outputImage"
+          ref={outputImageRef}
+          style={{
+            position: "absolute",
+            width: "200px",
+            height: "200px",
+            backgroundSize: "cover",
+            backgroundPosition: "50% 50%",
+            borderRadius: "50%",
+            bottom: "350px", // 출력 이미지 요소 위치
+            left: "140px", // 출력 이미지 요소 위치
+          }}
+        ></div>
       </div>
       {/* <img src={ant} alt="개미" style={{ zIndex: 4 }}></img> */}
       <button onClick={stopVideo} style={{ width: '100px', height: '30px', fontSize: '20px'}}>카메라 종료</button>
+      <img src={ant} alt="개미" style={{ zIndex: 4 }}></img>
     </div>
   );
 }

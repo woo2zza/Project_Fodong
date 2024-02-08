@@ -21,31 +21,31 @@ const StoryTelling = () => {
     setScriptPage(0);
   };
 
-  const startRecording = async () => {
-    const canvasElement = await html2canvas(
-      document.querySelector("#container")
-    );
-    const stream = canvasElement.captureStream(); // canvas에서 스트림 캡처
-    const mediaRecorder = new MediaRecorder(stream, { mimeType: "video/webm" });
+  // const startRecording = async () => {
+  //   const canvasElement = await html2canvas(
+  //     document.querySelector("#container")
+  //   );
+  //   const stream = canvasElement.captureStream(); // canvas에서 스트림 캡처
+  //   const mediaRecorder = new MediaRecorder(stream, { mimeType: "video/webm" });
 
-    let chunks = [];
-    mediaRecorder.ondataavailable = (e) => chunks.push(e.data);
-    mediaRecorder.onstop = () => {
-      const blob = new Blob(chunks, { type: "video/webm" });
-      videoRef.current.src = URL.createObjectURL(blob);
-    };
+  //   let chunks = [];
+  //   mediaRecorder.ondataavailable = (e) => chunks.push(e.data);
+  //   mediaRecorder.onstop = () => {
+  //     const blob = new Blob(chunks, { type: "video/webm" });
+  //     videoRef.current.src = URL.createObjectURL(blob);
+  //   };
 
-    mediaRecorder.start();
-    mediaRecorderRef.current = mediaRecorder;
-    setRecording(true);
-  };
+  //   mediaRecorder.start();
+  //   mediaRecorderRef.current = mediaRecorder;
+  //   setRecording(true);
+  // };
 
-  const stopRecording = () => {
-    if (mediaRecorderRef.current) {
-      mediaRecorderRef.current.stop();
-      setRecording(false);
-    }
-  };
+  // const stopRecording = () => {
+  //   if (mediaRecorderRef.current) {
+  //     mediaRecorderRef.current.stop();
+  //     setRecording(false);
+  //   }
+  // };
 
   return (
     <>
@@ -73,13 +73,13 @@ const StoryTelling = () => {
           />
         </Routes>
       </section>
-      <button onClick={startRecording} disabled={recording}>
+      {/* <button onClick={startRecording} disabled={recording}>
         Start Recording
       </button>
       <button onClick={stopRecording} disabled={!recording}>
         Stop Recording
       </button>
-      <video ref={videoRef} controls style={{ width: "100%" }}></video>
+      <video ref={videoRef} controls style={{ width: "100%" }}></video> */}
     </>
   );
 };
