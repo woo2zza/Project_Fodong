@@ -63,3 +63,8 @@
     width: 90%;
   }
 }
+
+.book-script {
+  border: 1px solid white;
+  background-color: yellow;
+}

@@ -15,15 +15,35 @@
   flex-direction: column;
   text-align: center;
 }
-
+.page-content {
+  justify-content: flex-start; /* 내용을 위로 정렬 */
+  text-align: center;
+}
+.page-cover h2 {
+  font-size: 100px;
+  color: #876203;
+  margin-top: 260px;
+  justify-content: center;
+}
+.page-content h2 {
+  font-size: 40px;
+  color: #333;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+}
 .page-image {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 이미지에 그림자 추가 */
-  border-radius: 8px; /* 이미지 모서리 둥글게 처리 */
+  width: 100%;
+  height: 70%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
   background-size: cover;
   background-position: center;
 }
 
-/* 선택적으로 페이지 번호 스타일링 */
 .page-content h2 {
   font-size: 18px; /* 페이지 번호 크기 조정 */
   color: #666; /* 페이지 번호 색상 조정 */
@@ -33,6 +53,17 @@
 .book-container {
   background-image: url("cover.jpg");
   background-size: cover;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1); /* 책에 그림자 추가 */
-  border-radius: 12px; /* 책의 모서리를 둥글게 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+}
+
+.script-text {
+  border-radius: 12px;
+  width: 100%;
+  height: 20%; /* 이미지 아래 20% 높이의 텍스트 영역을 설정 */
+  background-color: #e6dab6;
+  padding: 50px;
+  font-size: 35px;
+  color: #333;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* 상단에 그림자 효과를 주어 입체감 추가 */
 }
