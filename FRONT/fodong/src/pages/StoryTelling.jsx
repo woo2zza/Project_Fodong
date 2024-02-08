@@ -4,48 +4,41 @@ import Script from "../components/storyTelling/Script";
 import Page1 from "../components/storyTelling/Page1";
 import { Route, Routes } from "react-router-dom";
 import Grid from "@mui/material/Grid";
-import storyStore from "../store/storyStore";
+import Face from "../components/face/Face"
 
 const StoryTelling = () => {
-  const data = storyStore((state) => state.data);
-  console.log(data);
-  const [currentPage, setCurrentPage] = useState(1);
-  const minPage = 1;
-  const maxPage = Math.max(...data.map((item) => item.pageNo));
-  const currentPageData = data.filter((item) => item.pageNo === currentPage);
+  const [scriptPage, setScriptPage] = useState(0);
 
-  const prevPage = () => {
-    setCurrentPage((current) => Math.max(current - 1, minPage));
+  const handlePageChange = () => {
+    setScriptPage(0);
   };
-
-  const nextPage = () => {
-    setCurrentPage((current) => Math.min(current + 1, maxPage));
-  };
-
-  
-
   return (
-    <div>
-      <div>
-        {currentPageData.map((item, index) => (
-          <div key={item.characterId + "-" + item.pageNo}>
-            <p>Character Name: {item.characterName}</p>
-            {item.backImg && <img src={item.backImg} alt={`Background for page ${item.pageNo}`} />}
-            {/* 여기에 더 많은 정보를 출력할 수 있습니다 */}
-          </div>
-        ))}
-      </div>
-      <div>
-        {/* 이전 페이지 버튼 */}
-        <button onClick={prevPage} disabled={currentPage === minPage}>
-          Previous Page
-        </button>
-        {/* 다음 페이지 버튼 */}
-        <button onClick={nextPage} disabled={currentPage === maxPage}>
-          Next Page
-        </button>
-      </div>
-    </div>
+    <>
+      <section>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Routes>
+              <Route
+                path="/:page"
+                element={<Page1 onPageChange={handlePageChange} />}
+              />
+              {/* <Route path="/:page" element={Charatecr} */}
+             </Routes>
+          </Grid>
+          
+        </Grid>
+      </section>
+      <section className="script-container" style={{ height: "15vh" }}>
+        <Routes>
+          <Route
+            path="/:page"
+            element={
+              <Script scriptPage={scriptPage} setScriptPage={setScriptPage} />
+            }
+          />
+        </Routes>
+      </section>
+    </>
   );
 };
 

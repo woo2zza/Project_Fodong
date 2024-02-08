@@ -13,6 +13,7 @@ function Face() {
     // face-api 모델을 비동기적으로 로드하는 함수
     const loadModels = async () => {
       await faceapi.nets.tinyFaceDetector.loadFromUri("../models");
+      console.log('해줘')
       await faceapi.nets.faceLandmark68Net.loadFromUri("../models");
       await faceapi.nets.faceRecognitionNet.loadFromUri("../models");
       await faceapi.nets.faceExpressionNet.loadFromUri("../models");
@@ -132,12 +133,12 @@ function Face() {
               borderRadius: "50%",
               backgroundImage: `url(${src})`,
               bottom: `${370}px`,
-              left: `${150 + index * 100}px`,
+              left: `${150 + index * 200}px`,
             }}
           ></div>
         ))}
       </div>
-      <img src={ant} alt="개미" style={{ zIndex: 4 }}></img>
+      {/* <img src={ant} alt="개미" style={{ zIndex: 4 }}></img> */}
       <button onClick={stopVideo} style={{ width: '100px', height: '30px', fontSize: '20px'}}>카메라 종료</button>
     </div>
   );
