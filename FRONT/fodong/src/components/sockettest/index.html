@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Test</title>
+    <link rel="stylesheet" href="style.css"> <!-- CSS 스타일시트 연결 -->
+</head>
+<body>
+<div class="container">
+    <h2>WebSocket Test</h2>
+    <button id="connect">Connect</button> <!-- 연결 버튼 -->
+    <button id="disconnect" disabled>Disconnect</button> <!-- 연결 해제 버튼 -->
+    <input type="text" id="name" placeholder="Enter your name..."> <!-- 이름 입력 필드 -->
+    <button id="send">Send</button> <!-- 메시지 전송 버튼 -->
+    <div id="greetings"></div> <!-- 서버로부터 받은 메시지를 표시할 영역 -->
+</div>
+
+<!-- 웹소켓 및 STOMP 클라이언트 라이브러리 -->
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/stompjs/lib/stomp.min.js"></script>
+<script src="script.js"></script> <!-- 자바스크립트 파일 연결 -->
+</body>
+</html>
