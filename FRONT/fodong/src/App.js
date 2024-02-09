@@ -11,6 +11,7 @@ import Profile from "./pages/Profile";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import StroyReady from "./pages/StroyReady.jsx";
 import Face from "./components/face/Face.jsx";
+import WebSocketTest from "./components/sockettest/WebSocketTest";
 // 이거 component라 자식으로 납둬야함
 import StoryDetail from "./components/StoryDetail";
 
@@ -34,6 +35,7 @@ function App() {
         <Route path="album/" element={<Album />} />
         {/* test용 */}
         <Route path="/test/" element={<Test />} />
+        <Route path="/sockettest" element={<WebSocketTest />} />
       </Routes>
     </BrowserRouter>
   );
