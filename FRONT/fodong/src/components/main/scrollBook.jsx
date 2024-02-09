@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import CharModal from "./CharModal";
-
 import "./mainStyle.css";
 import axios from "axios";
 
@@ -23,7 +22,7 @@ const ScrollBook = () => {
 
   useEffect(() => {
     if (!accountId) {
-      console.log("No accountId available");
+      console.log("로컬에 Id저장 x");
       return;
     }
 
@@ -45,8 +44,9 @@ const ScrollBook = () => {
     return () => clearTimeout(timer);
   }, [currentIndex, books.length]);
 
-  const openModal = (bookId) => {
-    const bookData = books.find((book) => book.id === bookId);
+  const openModal = (Id) => {
+    const bookData = books.find((book, idx) => book.bookId === Id);
+    console.log(bookData, "sfwfwfw");
     if (bookData) {
       setSelectedBook(bookData);
       setIsModalOpen(true);
@@ -75,10 +75,11 @@ const ScrollBook = () => {
             key={index}
             className={`slide ${index === currentIndex ? "active" : ""}`}
             style={{ backgroundImage: `url(${book.cover})` }}
-            onClick={() => openModal(book.id)}
+            onClick={() => openModal(book.bookId)}
           >
             <div className="book-info">
               <h3>{book.title}</h3>
+              <h1>{book.bookId}</h1>
             </div>
           </div>
         ))}
