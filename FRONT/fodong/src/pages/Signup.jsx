@@ -51,9 +51,16 @@ const Signup = () => {
             />
           </Inputs>
           <div>
-            <Button color="green" onClick={onClick}>
-              회원가입
-            </Button>
+            <div className="glowButtonWrapper">
+              <button
+                color="green"
+                type="submit"
+                onClick={onClick}
+                className="glowButton"
+              >
+                <span className="buttonText">회원가입</span>
+              </button>
+            </div>
           </div>
         </Wrapper>
       </div>

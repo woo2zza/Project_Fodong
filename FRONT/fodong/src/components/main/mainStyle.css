@@ -170,7 +170,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -178,15 +178,21 @@
 }
 
 .modal-content {
-  background-color: #fff;
+  background-color: #ffffff;
   padding: 20px;
   border-radius: 20px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   width: 90%;
-  max-width: 400px;
+  max-width: 700px;
+  height: auto;
   text-align: center;
   position: relative;
   animation: scaleUp 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important;
 }
 
 @keyframes scaleUp {
@@ -199,14 +205,44 @@
     opacity: 1;
   }
 }
-
 .modal-content h2 {
+  font-weight: bold;
   color: #ff6347;
-  margin-top: 0;
+  text-align: center;
+  margin: 30px;
+  margin-top: 2rem;
+  font-size: 40px;
 }
 
-.modal-content p {
+.modal-content div {
   color: #333;
+  font-size: 30px;
+}
+
+.modal_button {
+  width: auto;
+  height: auto;
+  background-color: #f76c6c;
+  border-radius: 50%;
+  margin-top: auto;
+  display: flex;
+  padding: 5px;
+  justify-content: center;
+  align-items: center;
+  align-self: end;
+}
+
+.char-select {
+  display: flex;
+  flex-direction: column;
+  font-size: 30px;
+  justify-content: center;
+  margin: 30px;
+  gap: 50px;
+}
+.modal_button:hover {
+  transform: scale(1.1); /* 마우스를 올렸을 때 크기가 커짐 */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5); /* 그림자 효과 강조 */
 }
 
 /* 이전 다음 버튼 */

@@ -8,6 +8,7 @@ import FreindsToggler from "../components/main/Friends";
 import "./pages.css";
 // Main 컴포넌트
 
+<click-spark></click-spark>;
 const Main = () => {
   return (
     <div className="main_container">
