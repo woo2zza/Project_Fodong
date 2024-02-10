@@ -19,6 +19,10 @@ public interface FriendRepository {
 
     Integer ReverseFindFriendshipIdByFromIdWithToId(Friendship friendship);
 
+    String getStatusByFriendshipId(int friendshipId);
+
+    void deleteRelation(int friendshipId);
+
     void updateStatus(Friendship friendship);
 
     List<ProfileEntity> getFriendsByProfileId(int profileId);

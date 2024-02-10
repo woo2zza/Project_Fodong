@@ -15,11 +15,8 @@ import "./pages.css";
 const Main = () => {
     // 진명, 소켓연결 추가한 부분 확인필요
     const { stompClient, connect, disconnect } = useSocket()
-
-
     useEffect(() => {
         connect();
-
     }, [connect,disconnect]);
     //////////////////////////////////////
 
