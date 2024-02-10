@@ -6,8 +6,10 @@ const userStore = create(
     (set) => ({
       token: null,
       profileId: null,
+      nickname: null,
       setToken: (token) => set(() => ({ token })),
       setProfileId: (profileId) => set({ profileId }),
+      setNickname: (nickname) => set({ nickname }),
       //getToken 메서드는 필요 없음; 상태를 직접 선택하여 사용 가능
     }),
     {

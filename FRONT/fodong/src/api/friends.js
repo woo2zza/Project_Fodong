@@ -2,6 +2,24 @@ import axios from "axios";
 // import { userStore } from "../store/userStore";
 const API_URL = process.env.REACT_APP_API_URL;
 
+const getFriends = async (profileId, token) => {
+  try {
+    const response = await axios.get(`${API_URL}/friends/${profileId}`, {
+      headers: {
+        Authorization: `${token}`,
+      },
+    });
+    // const res = response.data.map((item) => {
+    //   return { profileId: item.profileId, nickname: item.nickname };
+    // });
+    // return res;
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};
+
 const searchNickname = async (nickname, token) => {
   // const token = userStore((state) => state.token);
   const params = { nickname };
@@ -25,7 +43,8 @@ const searchNickname = async (nickname, token) => {
 };
 
 const addFriends = async (fromProfileId, toProfileId, token) => {
-  const data = { fromProfileId, toProfileId };
+  const data = { fromProfileId: fromProfileId, toProfileId: toProfileId };
+  console.log(data);
   const response = await axios
     .post(`${API_URL}/friends/requests`, data, {
       headers: {
@@ -45,4 +64,51 @@ const addFriends = async (fromProfileId, toProfileId, token) => {
   return response;
 };
 
-export { searchNickname, addFriends };
+// const acceptFriendRequest = async (fromProfileId, token) => {
+//   const response = await axios
+//     .post(
+//       `${API_URL}/friends/accept`,
+//       { fromProfileId },
+//       {
+//         headers: {
+//           Authorization: `${token}`,
+//           "Content-Type": "application/json",
+//         },
+//       }
+//     )
+//     .then((response) => {
+//       return response.data;
+//     })
+//     .catch((error) => {
+//       console.error(error);
+//       return "친구 요청 수락 에러:" + error;
+//     });
+
+//   return response;
+// };
+
+// const rejectFriendRequest = async (fromProfileId, token) => {
+//   const response = await axios
+//     .post(
+//       `${API_URL}/friends/reject`,
+//       { fromProfileId },
+//       {
+//         headers: {
+//           Authorization: `${token}`,
+//           "Content-Type": "application/json",
+//         },
+//       }
+//     )
+//     .then((response) => {
+//       return response.data;
+//     })
+//     .catch((error) => {
+//       console.error(error);
+//       return "친구 요청 거절 에러:" + error;
+//     });
+
+//   return response;
+// };
+
+// export { searchNickname, addFriends, acceptFriendRequest, rejectFriendRequest };
+export { searchNickname, addFriends, getFriends };

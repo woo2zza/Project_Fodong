@@ -20,28 +20,30 @@ import Test from "./webrtc/TestRecording.jsx";
 
 function App() {
   return (
-      <SocketProvider>
-        <BrowserRouter basename="/fodong">
-          <Routes>
-            <Route path="/main" element={<Main />} />
-            <Route path="/" element={<Login />} />
-            <Route path="/storytelling/*" element={<StoryTelling />} />
-            <Route path="/signup/" element={<Signup />} />
-            <Route path="/profile/" element={<Profile />} />
-            <Route path="/bookshelf/" element={<Bookshelf />} />
-            <Route path="/booklist/" element={<BookList />} />
-            <Route path="/book/:id" element={<Book />} />
-            <Route path="/storyready/*" element={<StroyReady />} />
-            <Route path="/storyDetail" element={<StoryDetail />} />
-            {/*<Route path="/face/*" element={<Face />} />*/}                {/*자꾸 뻑나서 주석처리했음*/}
-            <Route path="/album/" element={<Album />} />
-            <Route path="/readBook/" element={<ReadBook />} />
-            {/* test용 */}
-            {/*<Route path="/test/" element={<Test />} />*/} {/*자꾸 뻑나서 주석처리했음*/}
-            <Route path="/sockettest" element={<WebSocketTest />} />
-          </Routes>
-        </BrowserRouter>
-      </SocketProvider>
+    <SocketProvider>
+      <BrowserRouter basename="/fodong">
+        <Routes>
+          <Route path="/main" element={<Main />} />
+          <Route path="/" element={<Login />} />
+          <Route path="/storytelling/*" element={<StoryTelling />} />
+          <Route path="/signup/" element={<Signup />} />
+          <Route path="/profile/" element={<Profile />} />
+          <Route path="/bookshelf/" element={<Bookshelf />} />
+          <Route path="/booklist/" element={<BookList />} />
+          <Route path="/book/:id" element={<Book />} />
+          <Route path="/storyready/*" element={<StroyReady />} />
+          <Route path="/storyDetail" element={<StoryDetail />} />
+          {/*<Route path="/face/*" element={<Face />} />*/}{" "}
+          {/*자꾸 뻑나서 주석처리했음*/}
+          <Route path="/album/" element={<Album />} />
+          <Route path="/readBook/" element={<ReadBook />} />
+          {/* test용 */}
+          <Route path="/test/" element={<Test />} />{" "}
+          {/*자꾸 뻑나서 주석처리했음*/}
+          <Route path="/sockettest" element={<WebSocketTest />} />
+        </Routes>
+      </BrowserRouter>
+    </SocketProvider>
   );
 }
 
