@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Modal from "./createModal";
 import EditModal from "./editModal";
@@ -93,8 +93,9 @@ function ProfileComponent() {
     setOpenEdit(true); // 편집 모달 열기
   };
 
-  const handleClick = (profileId) => {
+  const handleClick = (profileId, nickname) => {
     userStore.getState().setProfileId(profileId);
+    userStore.getState().setNickname(nickname);
     navigate("/main");
   };
 
@@ -110,7 +111,9 @@ function ProfileComponent() {
             <Grid item xs={12} sm={12} md={3} lg={3} key={profile.profileId}>
               <div className="card">
                 <img
-                  onClick={() => handleClick(profile.profileId)}
+                  onClick={() =>
+                    handleClick(profile.profileId, profile.nickname)
+                  }
                   className="profileImage"
                   src={profile.imageUrl || Chick}
                   alt={profile.nickname}
