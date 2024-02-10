@@ -75,6 +75,7 @@ public class SecurityConfig {
                                 "http://192.168.0.12:3000",
                                 "http://192.168.0.13:3000",
                                 "http://192.168.100.163:3000",
+                                "http://172.30.1.95:3000",
                                 "http://172.30.1.66:3000"));
                         configuration.setAllowedMethods(Collections.singletonList("*"));
                         configuration.setAllowCredentials(true);

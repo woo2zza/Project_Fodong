@@ -6,6 +6,8 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import UserVideoComponent from "./UserVideoComponent";
 //일단 video 없이
 
+const APPLICATION_SERVER_URL = "http://192.168.0.8:8080/api/v1/";
+
 // const APPLICATION_SERVER_URL = "http://192.168.100.91:8080/api/v1/";
 
 const APPLICATION_SERVER_URL = "http://localhost:8080/api/v1/";
