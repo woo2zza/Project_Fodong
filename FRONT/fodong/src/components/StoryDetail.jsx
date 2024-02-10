@@ -6,10 +6,10 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import UserVideoComponent from "./UserVideoComponent";
 //일단 video 없이
 
-//
-const APPLICATION_SERVER_URL = "https://i10c109.p.ssafy.io";
 // const APPLICATION_SERVER_URL = "http://192.168.100.91:8080/api/v1/";
-// const APPLICATION_SERVER_URL = "http://localhost:8080/api/v1/";
+
+const APPLICATION_SERVER_URL = "http://localhost:8080/api/v1/";
+
 // console.log(APPLICATION_SERVER_URL);
 const StoryDetail = () => {
   // session ID 어케할 지 수정
