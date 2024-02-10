@@ -1,59 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import SockJS from 'sockjs-client';
-import { Stomp } from '@stomp/stompjs';
+import React, { useEffect } from 'react';
+import { useSocket } from '../../contexts/SocketContext';
 
-function WebSocketTest() {
-    const [stompClient, setStompClient] = useState(null);
-    const [message, setMessage] = useState(''); // 사용자 입력 메시지를 저장할 상태
-    const [receivedMessages, setReceivedMessages] = useState([]); // 서버로부터 받은 메시지들을 저장할 상태
+const Main = () => {
+    const stompClient = useSocket();
 
     useEffect(() => {
-        const socket = new SockJS('http://192.168.0.8:8080/test/ws');
-        const client = Stomp.over(socket);
-
-        client.connect({}, () => {
-            setStompClient(client);
-
-            client.subscribe('/toClient/greetings', (message) => {
-                const receivedMsg = JSON.parse(message.body).content;
-                setReceivedMessages(prev => [...prev, receivedMsg]);
-            });
-        });
-
-        return () => {
-            if(client) {
-                client.disconnect();
+        // 서버로 메시지 보내는 함수
+        const sendMessage = () => {
+            if (stompClient) {
+                const message = { name: "User", content: "Hello World!" };
+                stompClient.send("/toServer/someEndpoint", {}, JSON.stringify(message));
+                console.log("Message sent");
             }
         };
-    }, []);
 
-    // 메시지 전송 함수
-    const sendMessage = () => {
-        if (stompClient && message.trim() !== '') {
-            stompClient.send("/toServer/hello", {}, JSON.stringify({ name: message }));
-            setMessage(''); // 메시지 전송 후 입력 필드 초기화
-        }
-    };
+        // 예시로 컴포넌트 마운트 시 메시지 보내기
+        sendMessage();
+
+        // stompClient가 변경될 때마다 useEffect가 재실행되지 않도록 의존성 배열에 추가
+    }, [stompClient]);
 
     return (
         <div>
-            <h2>WebSocket 테스트</h2>
-            {/* 메시지 입력 폼 */}
-            <input
-                type="text"
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                placeholder="메시지 입력"
-            />
-            <button onClick={sendMessage}>메시지 보내기</button>
-            <div>
-                <h3>수신된 메시지:</h3>
-                {receivedMessages.map((msg, index) => (
-                    <div key={index}>{msg}</div>
-                ))}
-            </div>
+            {/* Main 페이지 컨텐츠 */}
+            <h1>Main Page</h1>
+            {/* 필요한 경우 버튼 클릭 등을 통해 sendMessage 함수 호출 */}
         </div>
     );
-}
+};
 
-export default WebSocketTest;
+export default Main;

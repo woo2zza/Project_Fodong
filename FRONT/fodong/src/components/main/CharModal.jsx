@@ -39,7 +39,7 @@ const CharModal = ({ isOpen, closeModal, book }) => {
   if (!isOpen) return null; // isOpen이 false이면 모달을 렌더링하지 않음
 
   const goToStory = () => {
-    Navi("/storyready");
+    Navi("/sockettest");
   };
   // isOpen이 true일 때 모달 컨텐츠 렌더링
   return (
@@ -70,7 +70,7 @@ const CharModal = ({ isOpen, closeModal, book }) => {
           ></Webcam>
         </div>
         <div className="enter_button" onClick={goToStory}>
-          입장하기
+          동화구연 준비
         </div>
         <div className="modal_button" onClick={closeModal}>
           닫기
