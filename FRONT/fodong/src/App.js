@@ -1,3 +1,4 @@
+import React from "react";
 import "./App.css";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -13,33 +14,34 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import StroyReady from "./pages/StroyReady.jsx";
 import Face from "./components/face/Face.jsx";
 import WebSocketTest from "./components/sockettest/WebSocketTest";
-// 이거 component라 자식으로 납둬야함
+import { SocketProvider } from "./contexts/SocketContext";
 import StoryDetail from "./components/StoryDetail";
-
 import Test from "./webrtc/TestRecording.jsx";
+
 function App() {
-  <Login />;
   return (
-    <BrowserRouter basename="/fodong">
-      <Routes>
-        <Route path="/main" element={<Main />} />
-        <Route path="/" element={<Login />} />
-        <Route path="/storytelling/*" element={<StoryTelling />} />
-        <Route path="/signup/" element={<Signup />} />
-        <Route path="/profile/" element={<Profile />} />
-        <Route path="/bookshelf/" element={<Bookshelf />} />
-        <Route path="/booklist/" element={<BookList />} />
-        <Route path="/book/:id" element={<Book />} />
-        <Route path="/storyready/*" element={<StroyReady />} />
-        <Route path="/storyDetail" element={<StoryDetail />} />
-        <Route path="/face/*" element={<Face />} />
-        <Route path="album/" element={<Album />} />
-        <Route path="readBook/" element={<ReadBook />} />
-        {/* test용 */}
-        <Route path="/test/" element={<Test />} />
-        <Route path="/sockettest" element={<WebSocketTest />} />
-      </Routes>
-    </BrowserRouter>
+      <SocketProvider>
+        <BrowserRouter basename="/fodong">
+          <Routes>
+            <Route path="/main" element={<Main />} />
+            <Route path="/" element={<Login />} />
+            <Route path="/storytelling/*" element={<StoryTelling />} />
+            <Route path="/signup/" element={<Signup />} />
+            <Route path="/profile/" element={<Profile />} />
+            <Route path="/bookshelf/" element={<Bookshelf />} />
+            <Route path="/booklist/" element={<BookList />} />
+            <Route path="/book/:id" element={<Book />} />
+            <Route path="/storyready/*" element={<StroyReady />} />
+            <Route path="/storyDetail" element={<StoryDetail />} />
+            {/*<Route path="/face/*" element={<Face />} />*/}                {/*자꾸 뻑나서 주석처리했음*/}
+            <Route path="/album/" element={<Album />} />
+            <Route path="/readBook/" element={<ReadBook />} />
+            {/* test용 */}
+            {/*<Route path="/test/" element={<Test />} />*/} {/*자꾸 뻑나서 주석처리했음*/}
+            <Route path="/sockettest" element={<WebSocketTest />} />
+          </Routes>
+        </BrowserRouter>
+      </SocketProvider>
   );
 }
 
