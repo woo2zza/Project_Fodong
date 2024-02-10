@@ -8,4 +8,5 @@ public class FriendRequest {
     private int friendshipId;
     private int fromProfileId;
     private int toProfileId;
+    private String action;
 }

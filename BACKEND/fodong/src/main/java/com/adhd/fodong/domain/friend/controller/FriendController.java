@@ -20,7 +20,7 @@ public class FriendController {
 
     @GetMapping("/search")
     public List<ProfileEntity> findProfileByNickname(@RequestParam String nickname) {
-        //머지용
+        System.out.println("조회요청: " + nickname );
         return friendService.findProfilesByNickname(nickname);
     }
 

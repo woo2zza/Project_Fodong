@@ -37,5 +37,17 @@
         WHERE nickname LIKE CONCAT(#{nickname}, '%')
     </select>
 
+    <select id="getStatusByFriendshipId" resultType="String">
+        SELECT status FROM FRIENDSHIP_TB
+        WHERE friendship_id = #{friendshipId}
+    </select>
+
+
+    <delete id="deleteRelation">
+        DELETE FROM FRIENDSHIP_TB
+        WHERE friendship_id = #{friendshipId}
+    </delete>
+
+
 
 </mapper>
