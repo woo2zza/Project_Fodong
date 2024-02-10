@@ -137,8 +137,11 @@
 
 // export default Friends;
 
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
+import { debounce } from "lodash";
 import { userStore } from "../../store/userStore";
+import { searchNickname, addFriends } from "../../api/friends";
+import { useSocket } from "../../contexts/SocketContext";
 import {
   Fab,
   Paper,
@@ -159,23 +162,29 @@ import {
 function Friends() {
   const [open, setOpen] = useState(false);
   const [nickname, setNickname] = useState("");
-  const [friends, setFriends] = useState(["Alice", "Bob", "Charlie"]); // Example friends list
+  const [friends, setFriends] = useState([]); // friends rendering 처음 되었을 때 집어 넣어야 함
   const [searchResults, setSearchResults] = useState([]);
   const [showPopup, setShowPopup] = useState(false); // New state for controlling popup visibility
+  const [toProfileId, setToProfileId] = useState();
 
   const token = userStore((state) => state.token);
-
+  const profileId = userStore((state) => state.profileId);
   const handleToggle = () => {
     setOpen(!open);
   };
 
-  const handleAddFriend = (friend) => {
-    if (friend) {
-      setFriends([...friends, friend]);
-      setSearchResults([]);
-      setNickname("");
-      setShowPopup(false); // Hide popup after adding friend
+  const handleAddFriend = () => {
+    const numbers = nickname.match(/\d+/g);
+    console.log(numbers);
+    // let toProfileId = null;
+    if (numbers) {
+      toProfileId = setToProfileId(parseInt(numbers.join(""), 10));
     }
+    console.log(toProfileId);
+    const response = addFriends(profileId, toProfileId, token);
+    // 알림 보내는 요청
+    const response_sendRequest = sendFriendRequest();
+    console.log(response.data);
   };
 
   const handleDeleteFriend = (index) => {
@@ -184,18 +193,51 @@ function Friends() {
     setFriends(newFriends);
   };
 
+  // lodash의 Debounce 함수를 사용하여 검색 로직을 감싸줍니다
+  // useCallback을 사용 => 컴포넌트가 리렌더링될 때마다 함수가 새로 생성되는 것을 방지
+  const debouncedSearch = useCallback(
+    debounce(async (nickname) => {
+      nickname = nickname.trim();
+      if (nickname.trim() !== "") {
+        const res = await searchNickname(nickname, token);
+        // res에 해당하는 nickname들의 리스트를 받음
+        console.log(res);
+        // const nicknames = res.map((item) => item.nickname);
+        // const profileIds = res.map((item) => item.profileId)
+        const searchResult = res.map(
+          (item) => `${item.nickname} #${item.profileId}`
+        );
+        console.log(searchResult);
+        setSearchResults(searchResult);
+        if (searchResult) {
+          setShowPopup(true);
+        }
+      } else {
+        setSearchResults([]);
+        setShowPopup(false);
+      }
+    }, 300),
+    [token]
+  );
+
   const handleSearch = (e) => {
     const value = e.target.value;
     setNickname(value);
-    if (value.trim() !== "") {
-      const filteredFriends = friends.filter((friend) =>
-        friend.toLowerCase().includes(value.toLowerCase())
-      );
-      setSearchResults(filteredFriends);
-      setShowPopup(true);
-    } else {
-      setSearchResults([]);
-      setShowPopup(false);
+    debouncedSearch(value);
+  };
+
+  // friends request 알림
+  const { stompClient } = useSocket();
+  // 아래 함수를 통해 알림이 감
+  const sendFriendRequest = () => {
+    if (stompClient && toProfileId) {
+      const friendRequest = { toProfileId }; // 친구 요청 객체
+      stompClient.send(
+        "/toServer/friend-request",
+        {},
+        JSON.stringify(friendRequest)
+      ); // 서버로 친구 요청 메시지 전송
+      console.log("Friend request sent:", friendRequest);
     }
   };
 
@@ -255,10 +297,7 @@ function Friends() {
             onChange={handleSearch}
             fullWidth
           />
-          <Button
-            onClick={() => handleAddFriend(nickname)}
-            style={{ marginTop: 8 }}
-          >
+          <Button onClick={handleAddFriend} style={{ marginTop: 8 }}>
             추가
           </Button>
           {showPopup && (
@@ -276,7 +315,7 @@ function Friends() {
                 <ListItem
                   button
                   key={index}
-                  onClick={() => handleAddFriend(result)}
+                  onClick={() => setNickname(result)}
                 >
                   <ListItemText primary={result} />
                 </ListItem>
