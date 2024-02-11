@@ -6,10 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class RecordingEntity {
-    private int recordingID;
     private String recordingUrl;
     private int profileId;
     private int bookId;
-    private String title;
-    private String cover;
 }
