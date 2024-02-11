@@ -50,27 +50,6 @@ export const SocketProvider = ({ children }) => {
   // 방금 추가
   const value = { stompClient, connect, disconnect };
 
-  //   useEffect(() => {
-  //     // Ensure the stompClient is connected before subscribing
-  //     if (stompClient) {
-  //       const friendRequestSubscription = stompClient.subscribe(
-  //         "/toClient/friend-request",
-  //         (message) => {
-  //           const notification = JSON.parse(message.body);
-  //           console.log("Received friend request:", notification);
-  //           // Update your state or show a notification
-
-  //           alert(notification.message);
-  //         }
-  //       );
-
-  //       //   Clean up subscription on component unmount
-  //       return () => {
-  //         friendRequestSubscription.unsubscribe();
-  //       };
-  //     }
-  //   }, [stompClient]);
-
   return (
     <SocketContext.Provider value={value}>{children}</SocketContext.Provider>
   );
