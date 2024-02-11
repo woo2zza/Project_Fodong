@@ -25,6 +25,26 @@ public class AlbumServiceImpl implements AlbumService{
         }
 
         String uploadDir = "/var/www/html/recordings/";
+        String fileName = UUID.randomUUID()+".webm";
+        // 파일 객체 생성
+        File dest = new File(uploadDir + fileName);
+
+        try {
+            // 파일 저장
+            recordingDto.getVideo().transferTo(dest);
+            System.out.println("파일 업로드 성공");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("파일 업로드 실패");
+        }
+
+        RecordingEntity recordingEntity = new RecordingEntity();
+        recordingEntity.setProfileId(recordingDto.getProfileId());
+        recordingEntity.setRecordingUrl("https://i10.c109.p.ssafy.io/fodong/api/v1/album/"+fileName); // url 저장
+        recordingEntity.setBookId(recordingDto.getBookId()); // book id 설정
+
+        // 엔티티를 데이터베이스에 저장
+        albumRepository.save(recordingEntity);
     }
 
     @Override
