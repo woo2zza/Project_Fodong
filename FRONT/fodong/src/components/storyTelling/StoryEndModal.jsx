@@ -8,7 +8,7 @@ const StoryEndModal = ({onClose}) => {
 
     const handleClose = () => {
         onClose();
-        navigate("/");
+        navigate("/main");
     };
 
   return (
