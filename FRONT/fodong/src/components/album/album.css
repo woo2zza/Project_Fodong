@@ -1,3 +1,11 @@
+.Album_title {
+  font-size: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
 .albumContainer {
   display: flex;
   flex-wrap: wrap;
