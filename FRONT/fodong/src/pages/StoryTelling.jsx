@@ -56,9 +56,9 @@ const StoryTelling = () => {
                 path="/:page"
                 element={<Page1 onPageChange={handlePageChange} />}
               />
-                <Route path="/face" element={<Face />} /> {/* Face 컴포넌트를 위한 Route 추가 */}
               {/* <Route path="/:page" element={Charatecr} */}
             </Routes>
+           
           </Grid>
         </Grid>
       </section>

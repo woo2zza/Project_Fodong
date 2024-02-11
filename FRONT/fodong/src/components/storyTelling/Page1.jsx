@@ -4,7 +4,7 @@ import "./StoryTelling.css";
 import DummyScript from "./DummyScript";
 import { Route, Routes } from "react-router-dom";
 import Face from "../face/Face";
-
+import StoryEndModal from "./StoryEndModal";
 import RecordRTC from "recordrtc";
 
 const getCharacterStyles = (page, width) => {
@@ -63,6 +63,7 @@ const Page = ({ onPageChange }) => {
   const page = parseInt(pageParam, 10) || 1;
   const { antCharater, grasshopperCharater } = getCharacterStyles(page);
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 추가
 
   useEffect(() => {
     console.log(15, pageParam);
@@ -109,6 +110,8 @@ const Page = ({ onPageChange }) => {
       navigate(`/storytelling/${nextPage}`);
       // setPage(nextPage);
       onPageChange();
+    } else {
+      setIsModalOpen(true);
     }
   };
   const handleBeforePage = () => {
@@ -199,6 +202,7 @@ const Page = ({ onPageChange }) => {
       <button style={buttonStyle("right")} onClick={handleNextPage}>
         {">"}
       </button>
+      {isModalOpen && <StoryEndModal onClose={() => setIsModalOpen(false)} />}
     </div>
   );
 };
