@@ -64,32 +64,6 @@ function Friends() {
         });
     }
   };
-  // const handleAddFriend = () => {
-  //   const numbers = nickname.match(/\d+/g);
-  //   if (numbers) {
-  //     const parsedToProfileId = parseInt(numbers.join(""), 10);
-  //     // 이미 요청을 보낸 프로필인지 확인
-  //     if (requestedProfiles.includes(parsedToProfileId)) {
-  //       console.log(
-  //         "Already sent friend request to this profile:",
-  //         parsedToProfileId
-  //       );
-  //       return; // 이미 요청을 보냈다면 추가 동작을 중단
-  //     }
-
-  //     console.log(parsedToProfileId);
-  //     sendFriendRequest(parsedToProfileId);
-
-  //     addFriends(profileId, parsedToProfileId, token)
-  //       .then((response) => {
-  //         console.log(response.data);
-  //         setRequestedProfiles((prev) => [...prev, parsedToProfileId]); // 요청 보낸 프로필 ID 배열에 추가
-  //       })
-  //       .catch((error) => {
-  //         console.error("친구 추가 요청 실패:", error);
-  //       });
-  //   }
-  // };
 
   // 서버로 친구 요청을 전송하는 함수
   const sendFriendRequest = (toProfileId) => {
@@ -156,18 +130,6 @@ function Friends() {
     setFriendRequest(null); // 모달 닫을 때 친구 요청 데이터 초기화
   };
 
-  // 친구 요청 수락 버튼 이벤트 핸들러
-  // const handleAccept = () => {
-  //   acceptFriendRequest(friendRequest.fromProfileId, token)
-  //     .then((response) => {
-  //       console.log("친구 요청 수락 성공:", response);
-  //       // 성공 시 처리 로직, 예: 상태 업데이트나 알림 표시
-  //     })
-  //     .catch((error) => {
-  //       console.error("친구 요청 수락 에러:", error);
-  //     });
-  // };
-
   const handleAccept = () => {
     const requestPayload = {
       fromProfileId: profileId,
@@ -182,18 +144,6 @@ function Friends() {
     );
     handleCloseModal();
   };
-
-  // 친구 요청 거절 버튼 이벤트 핸들러
-  // const handleReject = () => {
-  //   rejectFriendRequest(friendRequest.fromProfileId, token)
-  //     .then((response) => {
-  //       console.log("친구 요청 거절 성공:", response);
-  //       // 성공 시 처리 로직, 예: 상태 업데이트나 알림 표시
-  //     })
-  //     .catch((error) => {
-  //       console.error("친구 요청 거절 에러:", error);
-  //     });
-  // };
 
   const handleReject = () => {
     const requestPayload = {
@@ -211,27 +161,6 @@ function Friends() {
     handleCloseModal();
   };
 
-  // useEffect
-  // useEffect(() => {
-  //   // Ensure the stompClient is connected before subscribing
-  //   if (stompClient) {
-  //     const friendRequestSubscription = stompClient.subscribe(
-  //       "/toClient/friend-request-response",
-  //       (message) => {
-  //         const notification = JSON.parse(message.body);
-  //         console.log("Received friend request:", notification);
-  //         // Update your state or show a notification
-
-  //         alert(notification.message);
-  //       }
-  //     );
-
-  //     //   Clean up subscription on component unmount
-  //     return () => {
-  //       friendRequestSubscription.unsubscribe();
-  //     };
-  //   }
-  // }, [stompClient]);
   // useEffect 내 친구 요청 수신 로직 수정...
   useEffect(() => {
     const fetchFriends = async () => {
