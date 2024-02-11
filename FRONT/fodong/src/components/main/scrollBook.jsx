@@ -46,7 +46,6 @@ const ScrollBook = () => {
 
   const openModal = (Id) => {
     const bookData = books.find((book, idx) => book.bookId === Id);
-    console.log(bookData, "sfwfwfw");
     if (bookData) {
       setSelectedBook(bookData);
       setIsModalOpen(true);
