@@ -33,7 +33,7 @@
 .titleStyle {
   font-size: 60px;
   font-weight: bold;
-  color: #ff6347;
+  color: #ffbb47;
   text-align: center;
   margin: 30px;
 }
@@ -178,6 +178,7 @@
 }
 
 .modal-content {
+  background: linear-gradient(145deg, #f1ecf2, #dacf96);
   background-color: #ffffff;
   padding: 20px;
   border-radius: 20px;
@@ -187,12 +188,11 @@
   height: auto;
   text-align: center;
   position: relative;
-  animation: scaleUp 0.3s ease-in-out;
+  animation: scaleUp 0.5s ease-in-out;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important;
 }
 
 @keyframes scaleUp {
@@ -207,16 +207,16 @@
 }
 .modal-content h2 {
   font-weight: bold;
-  color: #ff6347;
+  color: #e6ac1a;
   text-align: center;
-  margin: 30px;
-  margin-top: 2rem;
-  font-size: 40px;
+  margin: 30px 0 10px 0;
+  margin-top: 1rem;
+  font-size: 50px;
 }
 
 .modal-content div {
   color: #333;
-  font-size: 30px;
+  font-size: 25px;
 }
 
 .modal_button {
@@ -241,10 +241,39 @@
   gap: 50px;
 }
 .modal_button:hover {
-  transform: scale(1.1); /* 마우스를 올렸을 때 크기가 커짐 */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5); /* 그림자 효과 강조 */
+  transform: scale(1.1);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
 }
 
+.web-container {
+  transform: scaleX(-1);
+  object-fit: cover;
+  border-radius: 25px;
+  width: 100%;
+  height: 300px;
+}
+
+.enter_button {
+  background-color: #eac34b;
+  border: none;
+  border-radius: 30px;
+  padding: 10px 50px;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 15px;
+  transition: transform 0.3s ease;
+}
+
+.enter_button:hover {
+  background-color: #ebad2f;
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+.enterButtons {
+  display: flex;
+}
 /* 이전 다음 버튼 */
 .preButton,
 .goButton {
@@ -262,13 +291,13 @@
 
 .preButton:hover,
 .goButton:hover {
-  transform: scale(1.1); /* 마우스를 올렸을 때 크기가 커짐 */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5); /* 그림자 효과 강조 */
+  transform: scale(1.1);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
 }
 
 .preButton:active,
 .goButton:active {
-  transform: scale(0.9); /* 클릭할 때 버튼이 약간 축소 */
+  transform: scale(0.9);
 }
 
 .slide.active {
