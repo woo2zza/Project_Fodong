@@ -48,3 +48,47 @@
   background-color: #969393;
   border-radius: 8px;
 }
+
+.backgroundStyle {
+  /* 기존 스타일 유지 */
+  background-size: cover; /* 화면을 꽉 채우도록 설정 */
+}
+
+.antCharacter, .grasshopperCharacter {
+  /* 기존 스타일 유지 */
+  width: 35vw; /* 뷰포트 너비에 비례하여 크기 조정 */
+  height: auto; /* 이미지의 비율을 유지 */
+  object-fit: contain; /* 이미지가 컨테이너에 맞게 조정되도록 설정 */
+}
+
+.characters-container {
+  display: flex;
+  justify-content: space-around; /* 캐릭터들 사이에 공간을 균등하게 배분 */
+  align-items: flex-end; /* 캐릭터들을 하단에 맞춤 */
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: calc(100vh - /* 다른 요소의 높이만큼 뺀 값 */);
+}
+
+@media (min-width: 768px) {
+  .antCharacter, .grasshopperCharacter {
+    width: 30vw;
+  }
+}
+
+@media (max-width: 768px) {
+  .characters-container {
+    flex-direction: column; /* 화면이 작을 때는 캐릭터들을 세로로 쌓음 */
+    align-items: center; /* 중앙에 배치 */
+  }
+  .antCharacter, .grasshopperCharacter {
+    width: 40vw; /* 태블릿에서는 이미지 크기를 더 크게 조정 */
+  }
+}
+
+@media (max-width: 480px) {
+  .antCharacter, .grasshopperCharacter {
+    width: 60vw; /* 모바일에서는 이미지 크기를 더 크게 조정 */
+  }
+}

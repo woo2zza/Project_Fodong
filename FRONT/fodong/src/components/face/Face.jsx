@@ -1,12 +1,31 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as faceapi from "face-api.js";
-import ant from "./img/ant2.png";
+import { useParams } from "react-router-dom"; // useParams 추가
 
 function Face() {
   const [videoStream, setVideoStream] = useState(null); // 비디오 스트림 상태를 관리하는 state를 선언
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [faceImages, setFaceImages] = useState([]); // 각 얼굴의 이미지 데이터 URL을 저장
+  const { page } = useParams(); // 현재 페이지의 파라미터를 가져옴
+
+  const getPositionStyle = (index) => {
+    let bottom, left;
+  
+    // eslint-disable-next-line default-case
+    switch (page) {
+      case "1":
+        bottom = "170px";
+        left = `${150 + index * 100}px`;
+        break;
+        
+      case "2":
+        bottom = "100px";
+        left = `${150 + index * 100}px`;
+    }
+    return { bottom, left };
+  };
+
 
   useEffect(() => {
     // face-api 모델을 비동기적으로 로드하는 함수
@@ -108,6 +127,7 @@ function Face() {
     }
   };
 
+
   return (
     <div>
       <video
@@ -121,27 +141,29 @@ function Face() {
       <canvas ref={canvasRef} style={{ position: "absolute" }} />
       <div>
         {videoStream &&
-          faceImages.map((src, index) => (
+          faceImages.map((src, index) =>  {
+            const { bottom, left } = getPositionStyle(index); // 페이지와 인덱스에 따른 스타일 계산
+            return (
             <div
               key={index}
               style={{
                 position: "absolute",
-                width: "200px",
-                height: "200px",
+                width: "100px",
+                height: "100px",
                 backgroundSize: "cover",
                 backgroundPosition: "50% 50%",
                 borderRadius: "50%",
                 backgroundImage: `url(${src})`,
-                bottom: `${370}px`,
-                left: `${150 + index * 200}px`,
+                bottom,
+                left,
               }}
             ></div>
-          ))}
+          )})}
       </div>
       {/* <img src={ant} alt="개미" style={{ zIndex: 4 }}></img> */}
       <button
         onClick={stopVideo}
-        style={{ width: "100px", height: "30px", fontSize: "20px" }}
+        style={{ width: "100px", height: "30px", fontSize: "20px", position: "absolute", top: "20px", right: "20px"}}
       >
         카메라 종료
       </button>
