@@ -5,14 +5,8 @@ import "./mainStyle.css";
 
 const Buttons = () => {
   const [activeAnimation, setActiveAnimation] = useState(null);
-  const imagePaths = [
-    "chick.png",
-    "rabbit.png",
-    "penguin.png",
-    "chick.png",
-    "rabbit.png",
-  ];
-  const linkPaths = ["/bookList", "/", "/album", "/readbook", "/storydetail"];
+  const imagePaths = ["chick.png", "rabbit.png", "penguin.png"];
+  const linkPaths = ["/bookList", "/booklist", "/album"];
   const alts = ["chick", "rabbit", "penguin", "chick"];
 
   const handleButtonClick = (index) => {
