@@ -1,6 +1,9 @@
 package com.adhd.fodong.domain.user.account.controller;
 
+import com.adhd.fodong.domain.user.account.entity.AccountEntity;
 import com.adhd.fodong.domain.user.account.service.AccountService;
+import com.adhd.fodong.domain.user.profile.entity.ProfileEntity;
+import com.adhd.fodong.domain.user.profile.service.ProfileService;
 import com.adhd.fodong.global.dto.AccountEmailPasswordDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
