@@ -3,6 +3,7 @@ package com.adhd.fodong.global.jwt;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -56,6 +57,11 @@ public class JWTUtil {
                 .expiration(new Date(System.currentTimeMillis() + expiredMs))
                 .signWith(secretKey)
                 .compact();
+    }
+
+    public boolean validateToken(String token, UserDetails userDetails) {
+        final String username = getAccountEmail(token);
+        return (username.equals(userDetails.getUsername()) && !isExpired(token));
     }
 
 }

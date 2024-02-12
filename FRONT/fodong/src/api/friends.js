@@ -1,4 +1,6 @@
+import { useState } from "react";
 import axios from "axios";
+
 // import { userStore } from "../store/userStore";
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -64,6 +66,24 @@ const addFriends = async (fromProfileId, toProfileId, token) => {
   return response;
 };
 
+const getFriendEmail = async (friendProfileId, token) => {
+  const response = await axios
+    .get(`${API_URL}/profiles/one/${friendProfileId}`, {
+      headers: {
+        Authorization: `${token}`,
+      },
+    })
+    .then((response) => {
+      console.log(response.data.accountEmail);
+      // const email = new Array(response.data);
+      console.log(response.data.accountEmail + "여거는 함수 호출 시");
+      return response.data.accountEmail;
+    })
+    .catch((err) => console.error(err));
+
+  return response;
+};
+
 // const acceptFriendRequest = async (fromProfileId, token) => {
 //   const response = await axios
 //     .post(
@@ -111,4 +131,4 @@ const addFriends = async (fromProfileId, toProfileId, token) => {
 // };
 
 // export { searchNickname, addFriends, acceptFriendRequest, rejectFriendRequest };
-export { searchNickname, addFriends, getFriends };
+export { searchNickname, addFriends, getFriends, getFriendEmail };

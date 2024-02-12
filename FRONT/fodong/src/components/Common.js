@@ -12,7 +12,7 @@ export const StyledInput = styled.input`
   border-radius: 10px;
   border: none;
   background: transparent;
-  color: hsl(223, 90%, 90%);
+  color: ${(props) => props.color || "white"};
   margin-top: 8px; // 간격 추가
 `;
 

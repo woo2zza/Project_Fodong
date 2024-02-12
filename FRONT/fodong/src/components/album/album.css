@@ -1,28 +1,46 @@
+.Album_title {
+  font-size: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.item_bg {
+  background-image: url("./albumImg.png");
+  background-size: cover;
+}
+
 .albumContainer {
   display: flex;
   flex-wrap: wrap;
+  margin: 20px 30px;
   justify-content: center;
-  gap: 20px;
-  padding: 20px;
-  margin: auto;
+  gap: 50px;
 }
 
 .albumItem {
-  display: flex;
   flex-direction: column;
   align-items: center;
-  width: 200px;
+  height: 275px;
+  width: 290px;
   border-radius: 20px;
-  overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border: 2px solid #f8d7e4;
+  background-color: #fff0f5;
+  margin: 63px;
+  margin-left: 83px;
   cursor: pointer;
 }
 
 .albumItem:hover {
   transform: translateY(-5px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  transform: translateY(-5px) scale(1.05); /* 살짝 떠오르고 커지는 효과 */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .albumImage {
@@ -37,17 +55,21 @@
 
 .albumOverlay {
   width: 100%;
+  height: 30%;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
   position: absolute;
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
   color: white;
   text-align: center;
-  padding: 10px;
+  background: rgba(255, 192, 203, 0.8);
+  padding: 20px;
 }
 
 .albumTitle {
   margin: 0;
-  font-size: 16px;
+  font-size: 30px;
   font-weight: bold;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
