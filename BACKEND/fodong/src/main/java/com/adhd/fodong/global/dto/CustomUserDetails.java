@@ -25,8 +25,10 @@ public class CustomUserDetails implements UserDetails {
         return accountEntity.getAccountPwd();
     }
 
+
     @Override
     public String getUsername() {
+    // Principal 지정
         return accountEntity.getAccountEmail();
     }
 

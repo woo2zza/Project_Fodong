@@ -1,4 +1,5 @@
 import React from "react";
+import CharModal from "../main/CharModal";
 
 function BookItem({ book, viewMode }) {
   return (

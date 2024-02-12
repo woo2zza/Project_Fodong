@@ -8,6 +8,7 @@ import React, {
 import SockJS from "sockjs-client";
 import { Stomp } from "@stomp/stompjs";
 import { userStore } from "../store/userStore";
+import { multiStoryStore } from "../store/multiStoryStore";
 
 const SocketContext = createContext();
 
@@ -15,13 +16,20 @@ export const useSocket = () => useContext(SocketContext);
 
 export const SocketProvider = ({ children }) => {
   const [stompClient, setStompClient] = useState(null);
-  const [profileId, setProfileId] = useState(
-    userStore((state) => state.profileId)
-  );
-  // const profileId = userStore((state) => state.profileId);
+  const [isConnected, setIsConnected] = useState(false);
+  // const [profileId, setProfileId] = useState(
+  // userStore((state) => state.profileId)
+  // );
+  // const token = userStore((state) => state.token);
+  const { accountEmail, token, profileId } = userStore((state) => ({
+    token: state.token,
+    accountEmail: state.accountEmail,
+    profileId: state.profileId,
+  }));
+
   // 웹소켓 연결을 초기화하는 함수
+  // 의존성을
   const connect = useCallback(() => {
-    // 이미 연결된 상태면 더 이상 진행하지 않음
     if (stompClient) {
       console.log("Already connected.");
       return;
@@ -30,12 +38,37 @@ export const SocketProvider = ({ children }) => {
     const socket = new SockJS(process.env.REACT_APP_BACK_SOCKET_ENDPOINT);
     const newStompClient = Stomp.over(socket);
 
-    newStompClient.connect({ profileId: profileId }, (frame) => {
-      console.log("Connected: " + frame);
-      //   console.log("profileId: " + profileId);
-      setStompClient(newStompClient);
-    });
-  }, [stompClient, profileId]); // stompClient를 종속성 배열에 포함하여, stompClient 상태가 변경될 때만 함수가 업데이트되도록 함
+    newStompClient.connect(
+      {
+        Authorization: `${token}`,
+        profileId: profileId,
+        accountEmail: accountEmail,
+      },
+      (frame) => {
+        console.log("Connected: " + frame);
+        // console.log(token);
+        // console.log(profileId);
+        // console.log(accountEmail);
+        // console.log("여까지 테스트");
+        setStompClient(newStompClient);
+        setIsConnected(true); // 연결 성공 시 isConnected를 true로 설정
+
+        // 게임 초대 요청 구독 설정
+        // 여기 세부 로직 바꿔야 한다!!!
+        // "/user/queue/toClient/game-invite-response"
+        newStompClient.subscribe(
+          "/toClient/game-invite-response",
+          (message) => {
+            // const notification = JSON.parse(message.body);
+            const response = JSON.parse(message.body);
+            console.log("Received message:", response);
+            alert("Received message:", response);
+            // 여기에서 메시지에 따른 처리를 할 수 있습니다.
+          }
+        );
+      }
+    );
+  }, [stompClient]);
 
   // 웹소켓 연결을 해제하는 함수
   const disconnect = useCallback(() => {
@@ -43,12 +76,12 @@ export const SocketProvider = ({ children }) => {
       stompClient.disconnect(() => {
         console.log("Disconnected");
         setStompClient(null);
+        setIsConnected(false);
       });
     }
-  }, [stompClient]); // stompClient가 변경될 때만 새로 생성됩니다.
+  }, [stompClient]);
 
-  // 방금 추가
-  const value = { stompClient, connect, disconnect };
+  const value = { stompClient, connect, disconnect, isConnected };
 
   return (
     <SocketContext.Provider value={value}>{children}</SocketContext.Provider>

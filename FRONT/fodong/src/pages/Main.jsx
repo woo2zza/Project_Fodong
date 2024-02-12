@@ -1,6 +1,5 @@
-import React, {useEffect} from "react";
-import {useSocket} from "../contexts/SocketContext";
-
+import React, { useEffect } from "react";
+import { useSocket } from "../contexts/SocketContext";
 
 import { Grid } from "@mui/material";
 import DropdownButton from "../components/main/DropdownButton"; // Import the new component
@@ -13,13 +12,12 @@ import "./pages.css";
 
 <click-spark></click-spark>;
 const Main = () => {
-    // 진명, 소켓연결 추가한 부분 확인필요
-    const { stompClient, connect, disconnect } = useSocket()
-    useEffect(() => {
-        connect();
-    }, [connect,disconnect]);
-    //////////////////////////////////////
-
+  // 진명, 소켓연결 추가한 부분 확인필요
+  const { stompClient, connect, disconnect } = useSocket();
+  useEffect(() => {
+    connect();
+  }, [connect, disconnect]);
+  //////////////////////////////////////
 
   return (
     <div className="main_container">

@@ -12,7 +12,8 @@ import ReadBook from "./pages/ReadBook";
 import Profile from "./pages/Profile";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import StroyReady from "./pages/StroyReady.jsx";
-import Face from "./components/face/Face.jsx";
+import MultiStory from "./pages/MultiStory.jsx";
+// import Face from "./components/face/Face.jsx";
 import WebSocketTest from "./components/sockettest/WebSocketTest";
 import { SocketProvider } from "./contexts/SocketContext";
 import StoryDetail from "./components/StoryDetail";
@@ -40,7 +41,8 @@ function App() {
           {/* test용 */}
           <Route path="/test/" element={<Test />} />{" "}
           {/*자꾸 뻑나서 주석처리했음*/}
-          <Route path="/sockettest" element={<WebSocketTest />} />
+          {/* <Route path="/sockettest" element={<WebSocketTest />} /> */}
+          <Route path="/multi/*" element={<MultiStory />} />
         </Routes>
       </BrowserRouter>
     </SocketProvider>

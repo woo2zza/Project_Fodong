@@ -19,7 +19,9 @@ export const login = async (accountEmail, accountPwd) => {
     const authId = response.data.accountId;
     if (authToken) {
       localStorage.setItem("Token", authToken); // 'Authorization' 토큰을 저장.
+      // zustand에 token과 accountEmail 저장
       userStore.getState().setToken(authToken);
+      userStore.getState().setAccountEmail(accountEmail);
     } else {
       console.log("Authorization 토큰이 없습니다.");
     }

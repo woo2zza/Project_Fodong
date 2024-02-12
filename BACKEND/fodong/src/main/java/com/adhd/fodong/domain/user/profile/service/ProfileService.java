@@ -9,6 +9,8 @@ public interface ProfileService {
 
     public List<ProfileEntity> getProfiles(int accountId);
 
+    public ProfileEntity getProfile(int profileId);
+
     public void makeProfile(int accountId, ProfileDetails profileDetails);
 
     public void updateProfile(int profileId, ProfileDetails profileDetails);

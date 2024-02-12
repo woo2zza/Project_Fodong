@@ -10,5 +10,6 @@ public class ProfileEntity {
 
     private int profileId;
     private int accountId;
+    private String accountEmail;
     private String nickname;
 }
