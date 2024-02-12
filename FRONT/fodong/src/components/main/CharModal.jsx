@@ -49,7 +49,7 @@ const CharModal = ({ isOpen, closeModal, book }) => {
       console.log(response);
       // console.log("이거: " + response + "& " + response.sessionId);
       multiStoryStore.getState().setSessionId(response.sessionId);
-      Navi("/multi");
+      Navi(`/multi/${response.sessionId}`);
     } catch (error) {
       console.error("Game room session creation failed: ", error);
     }

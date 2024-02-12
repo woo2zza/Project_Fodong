@@ -5,6 +5,7 @@ import React, {
   useState,
   useCallback,
 } from "react";
+import { useNavigate } from "react-router-dom";
 import SockJS from "sockjs-client";
 import { Stomp } from "@stomp/stompjs";
 import { userStore } from "../store/userStore";
@@ -24,6 +25,8 @@ const SocketContext = createContext();
 export const useSocket = () => useContext(SocketContext);
 
 export const SocketProvider = ({ children }) => {
+  // const Navi = useNavigate();
+
   const [stompClient, setStompClient] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
   // const [profileId, setProfileId] = useState(
@@ -35,6 +38,8 @@ export const SocketProvider = ({ children }) => {
     accountEmail: state.accountEmail,
     profileId: state.profileId,
   }));
+  const [sessionId, setSessionId] = useState(null);
+  const [isGameAccepted, setIsGameAccepted] = useState(false);
 
   // 모달 관련 상태
   const [openModal, setOpenModal] = useState(false);
@@ -56,8 +61,9 @@ export const SocketProvider = ({ children }) => {
     const invitationPayload = {
       fromProfileId: profileId,
       toProfileId: inviteRequest.fromProfileId,
-      sessionId: inviteRequest.sessionId,
-      action: "accept",
+      roomSession: { ...inviteRequest.roomSession },
+      // roomSessionId: inviteRequest.roomSessionId,
+      action: "accepted",
     };
     // WebSocket을 통해 서버로 전송
     stompClient.send(
@@ -65,6 +71,9 @@ export const SocketProvider = ({ children }) => {
       {},
       JSON.stringify(invitationPayload)
     );
+    setSessionId(invitationPayload.roomSession.sessionId);
+    console.log(invitationPayload.roomSession.sessionId);
+    setIsGameAccepted(true);
     handleCloseModal();
   };
 
@@ -72,7 +81,8 @@ export const SocketProvider = ({ children }) => {
     const invitationPayload = {
       fromProfileId: profileId,
       toProfileId: inviteRequest.fromProfileId,
-      sessionId: inviteRequest.sessionId,
+      // roomSession : inviteRequest.roomSession,
+      // roomSessionId: inviteRequest.roomSessionId,
       action: "reject",
     };
 
@@ -82,6 +92,7 @@ export const SocketProvider = ({ children }) => {
       {},
       JSON.stringify(invitationPayload)
     );
+    setIsGameAccepted(false);
     handleCloseModal();
   };
 
@@ -119,17 +130,22 @@ export const SocketProvider = ({ children }) => {
           (message) => {
             // const notification = JSON.parse(message.body);
             const notification = JSON.parse(message.body);
+            // "==="를 사용하기 때문에 type도 백과 프론트가 맞추는 것이 매우 중요하다!!
             if (
-              notification.action === "sendInvtie" &&
+              notification.action === "sendInvite" &&
               notification.toProfileId === profileId
             ) {
               const inviteInfo = {
                 fromProfileId: notification.fromProfileId,
                 toProfileId: notification.toProfileId,
-                message: notification.message,
+                roomSession: notification.roomSession,
+                action: notification.action,
+                newTopic: notification.newTopic,
               };
               handleOpenModal(inviteInfo);
               console.log("Received message:", notification);
+              // console.log(openModal);
+              // console.log(inviteRequest);
             } else {
               console.log("SomeOne invited friends to play: ", notification);
             }
@@ -150,27 +166,37 @@ export const SocketProvider = ({ children }) => {
     }
   }, [stompClient]);
 
-  const value = { stompClient, connect, disconnect, isConnected };
+  // isGameAccepted
+  const value = {
+    stompClient,
+    connect,
+    disconnect,
+    isConnected,
+    sessionId,
+    isGameAccepted,
+  };
 
   return (
     <>
-      <SocketContext.Provider value={value}>{children}</SocketContext.Provider>
-      <Dialog open={openModal} onClose={handleCloseModal}>
-        <DialogTitle>친구 요청</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            {inviteRequest
-              ? `${inviteRequest.fromProfileId}님으로부터 친구 요청이 왔습니다.`
-              : ""}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleAccept} autoFocus>
-            수락
-          </Button>
-          <Button onClick={handleReject}>거절</Button>
-        </DialogActions>
-      </Dialog>
+      <SocketContext.Provider value={value}>
+        {children}
+        <Dialog open={openModal} onClose={handleCloseModal}>
+          <DialogTitle>친구 요청</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              {inviteRequest
+                ? `${inviteRequest.fromProfileId}님으로부터 동화 만들기 초대 요청이 왔습니다.`
+                : ""}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleAccept} autoFocus>
+              수락
+            </Button>
+            <Button onClick={handleReject}>거절</Button>
+          </DialogActions>
+        </Dialog>
+      </SocketContext.Provider>
     </>
   );
 };
