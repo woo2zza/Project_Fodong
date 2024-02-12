@@ -2,7 +2,6 @@
 import React, { useState, useRef } from "react";
 // import { startRecording, stopRecording } from "../recording.js";
 import html2canvas from "html2canvas";
-
 import Script from "../components/storyTelling/Script";
 import Page1 from "../components/storyTelling/Page1";
 import { Route, Routes } from "react-router-dom";
@@ -49,7 +48,7 @@ const StoryTelling = () => {
 
   return (
     <>
-      <section>
+      <section >
         <Grid id="container" container spacing={2}>
           <Grid item xs={12}>
             <Routes>
@@ -59,10 +58,11 @@ const StoryTelling = () => {
               />
               {/* <Route path="/:page" element={Charatecr} */}
             </Routes>
+           
           </Grid>
         </Grid>
       </section>
-      <section className="script-container" style={{ height: "15vh" }}>
+      <section >
         <Routes>
           <Route
             path="/:page"
@@ -72,12 +72,12 @@ const StoryTelling = () => {
           />
         </Routes>
       </section>
-      <button onClick={startRecording} disabled={recording}>
+      {/* <button onClick={startRecording} disabled={recording}>
         Start Recording
       </button>
       <button onClick={stopRecording} disabled={!recording}>
         Stop Recording
-      </button>
+      </button> */}
       {/* <video ref={videoRef} controls style={{ width: "100%" }}></video> */}
     </>
   );
