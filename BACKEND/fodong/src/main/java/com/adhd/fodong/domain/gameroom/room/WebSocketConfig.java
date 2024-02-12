@@ -40,7 +40,11 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
                         "http://172.30.1.93:3000",
                         "http://localhost:3000",
                         "http://192.168.0.25:3000",
-                        "http://172.30.1.64:3000")
+                        "http://172.30.1.64:3000",
+                        "wss://i10c109.p.ssafy.io",
+                        "ws://i10c109.p.ssafy.io",
+                        "https://i10c109.p.ssafy.io",
+                        "http://i10c109.p.ssafy.io")
                 .withSockJS();
     }
 
