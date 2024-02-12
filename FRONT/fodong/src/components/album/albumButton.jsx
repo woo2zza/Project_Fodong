@@ -40,7 +40,6 @@ const AlbumButton = () => {
   };
   return (
     <div className="albumContainer">
-      {useProfileId}
       {albums.map((album) => (
         <AlbumItem key={album.bookId} album={album} />
       ))}
