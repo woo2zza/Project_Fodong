@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getFriends } from "../api/friends.js";
 import { userStore } from "../store/userStore";
+import { multiStoryStore } from "../store/multiStoryStore.js";
 import { getFriendEmail } from "../api/friends.js";
 // import { sendInviteRequest } from "../api/multi.js";
 import { useSocket } from "../contexts/SocketContext.js";
@@ -44,19 +45,15 @@ const MultiStory = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedCharacters, setSelectedCharacters] = useState({});
   const [friends, setFriends] = useState([]);
-  const [sessionId, setSessionId] = useState(null);
-  const [stompClient, setStompClient] = useState(null);
-  // const [toAccountEmail, setToAccountEmail] = useState([]);
+  const [nowStompClient, setNowStompClient] = useState();
 
   const { token, profileId, nickname } = userStore((state) => ({
     token: state.token,
     profileId: state.profileId,
     nickname: state.nickname,
-    // sessionId: state.sessionId,
   }));
-
-  // const { stompClient } = useSocket();
-
+  const sessionId = multiStoryStore((state) => state.sessionId);
+  const { stompClient } = useSocket();
   // 왜 main에서 뜨는 것이냐 ..?
   useEffect(() => {
     const fetchFriends = async () => {
@@ -68,13 +65,9 @@ const MultiStory = () => {
     fetchFriends();
   }, []);
 
-  setSessionId(userStore((state) => state.sessionId));
-  console.log(sessionId);
   const handlePopoverOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  setStompClient(userStore((state) => state.stompClient));
-  console.log(stompClient);
 
   const handlePopoverClose = () => {
     setAnchorEl(null);
@@ -165,9 +158,13 @@ const MultiStory = () => {
     }
   };
 
+  const test = () => {
+    console.log(sessionId);
+    console.log(stompClient ? true : false);
+  };
+
   return (
     <Box sx={{ position: "relative", p: 2 }}>
-      {stompClient}
       {sessionId}
       <IconButton
         sx={{ position: "fixed", top: 16, right: 16, zIndex: 1 }}
@@ -246,6 +243,7 @@ const MultiStory = () => {
       </Grid>
       <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
         <Button variant="contained">시작하기</Button>
+        <button onClick={test}>테스트</button>
       </Box>
     </Box>
   );
