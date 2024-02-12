@@ -74,12 +74,14 @@ const getFriendEmail = async (friendProfileId, token) => {
       },
     })
     .then((response) => {
-      // console.log(response.data.accountEmail);
-      const email = new Array(response.data);
-      console.loge(email.accountEmail + "여거는 함수 호출 시");
-      return email.accountEmail;
+      console.log(response.data.accountEmail);
+      // const email = new Array(response.data);
+      console.log(response.data.accountEmail + "여거는 함수 호출 시");
+      return response.data.accountEmail;
     })
     .catch((err) => console.error(err));
+
+  return response;
 };
 
 // const acceptFriendRequest = async (fromProfileId, token) => {

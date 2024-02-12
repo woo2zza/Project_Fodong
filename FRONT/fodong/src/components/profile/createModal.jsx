@@ -22,6 +22,7 @@ function BasicModal({ open, setOpen, onCreateProfile }) {
             <StyledInput
               value={newNickname}
               placeholder="닉네임"
+              color="black"
               onChange={(e) => setNewNickname(e.target.value)}
             ></StyledInput>
           </Typography>

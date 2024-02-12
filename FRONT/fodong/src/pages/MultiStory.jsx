@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getFriends } from "../api/friends.js";
 import { userStore } from "../store/userStore";
+import { multiStoryStore } from "../store/multiStoryStore.js";
 import { getFriendEmail } from "../api/friends.js";
 // import { sendInviteRequest } from "../api/multi.js";
 import { useSocket } from "../contexts/SocketContext.js";
@@ -44,19 +45,14 @@ const MultiStory = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedCharacters, setSelectedCharacters] = useState({});
   const [friends, setFriends] = useState([]);
-  const [sessionId, setSessionId] = useState(null);
-  const [stompClient, setStompClient] = useState(null);
-  // const [toAccountEmail, setToAccountEmail] = useState([]);
 
   const { token, profileId, nickname } = userStore((state) => ({
     token: state.token,
     profileId: state.profileId,
     nickname: state.nickname,
-    // sessionId: state.sessionId,
   }));
-
-  // const { stompClient } = useSocket();
-
+  const sessionId = multiStoryStore((state) => state.sessionId);
+  const { stompClient } = useSocket();
   // 왜 main에서 뜨는 것이냐 ..?
   useEffect(() => {
     const fetchFriends = async () => {
@@ -68,13 +64,9 @@ const MultiStory = () => {
     fetchFriends();
   }, []);
 
-  setSessionId(userStore((state) => state.sessionId));
-  console.log(sessionId);
   const handlePopoverOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  setStompClient(userStore((state) => state.stompClient));
-  console.log(stompClient);
 
   const handlePopoverClose = () => {
     setAnchorEl(null);
@@ -142,7 +134,11 @@ const MultiStory = () => {
       // getFriendEmail 함수를 호출하여 이메일 주소를 직접 받아옴
       const toAccountEmail = await getFriendEmail(toProfileId, token);
       console.log("이거는 받았을 때: " + toAccountEmail); // 이메일 주소 로그 출력
-
+      if (stompClient) {
+        console.log("있음");
+      } else {
+        console.log("없음");
+      }
       if (stompClient && toProfileId && sessionId && toAccountEmail) {
         const requestPayload = {
           fromProfileId: fromProfileId,
@@ -157,6 +153,7 @@ const MultiStory = () => {
           JSON.stringify(requestPayload)
         );
         console.log("Invite request sent:", requestPayload);
+        alert("Invite request sent:", requestPayload);
       } else {
         console.log("Missing required information for sending invite");
       }
@@ -167,7 +164,6 @@ const MultiStory = () => {
 
   return (
     <Box sx={{ position: "relative", p: 2 }}>
-      {stompClient}
       {sessionId}
       <IconButton
         sx={{ position: "fixed", top: 16, right: 16, zIndex: 1 }}
