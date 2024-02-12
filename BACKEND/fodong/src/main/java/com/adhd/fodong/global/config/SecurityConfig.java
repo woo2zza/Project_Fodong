@@ -77,7 +77,13 @@ public class SecurityConfig {
                                 "http://192.168.0.14:3000",
                                 "http://192.168.100.163:3000",
                                 "http://172.30.1.95:3000",
-                                "http://172.30.1.66:3000"));
+                                "http://172.30.1.66:3000",
+                                "http://172.30.1.64:3000",
+                                "http://172.30.1.50:3000",
+                                "http://172.30.1.93:3000",
+                                "http://192.168.0.25:3000",
+                                "http://172.30.1.64:3000"
+                                ));
                         configuration.setAllowedMethods(Collections.singletonList("*"));
                         configuration.setAllowCredentials(true);
                         configuration.setAllowedHeaders(Collections.singletonList("*"));

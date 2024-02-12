@@ -4,8 +4,12 @@ package com.adhd.fodong.domain.user.profile.controller;
 import com.adhd.fodong.domain.user.profile.entity.ProfileEntity;
 import com.adhd.fodong.domain.user.profile.service.ProfileService;
 import com.adhd.fodong.domain.user.profile.dto.ProfileDetails;
+import com.adhd.fodong.global.dto.AccountEmailPasswordDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -36,6 +40,17 @@ public class ProfileController {
         List<ProfileEntity> profiles = profileService.getProfiles(accountId);
         return profiles;
     }
+
+    @Operation(summary = "프로필 객체 조회", description = "프로필ID를 통해 해당 프로필 객체 데이터를 조회한다.")
+    @ApiResponse(responseCode = "200",
+            description = "조회 성공",
+            content = @Content(schema = @Schema(implementation = ProfileEntity.class)))
+    @ResponseStatus(HttpStatus.CREATED)
+    @GetMapping("/one/{profileId}")
+    public ProfileEntity getProfile(@PathVariable int profileId) {
+        return profileService.getProfile(profileId);
+    }
+
 
     @Operation(summary = "프로필 수정", description = "프로필 닉네임을 수정")
     @ResponseStatus(HttpStatus.OK)

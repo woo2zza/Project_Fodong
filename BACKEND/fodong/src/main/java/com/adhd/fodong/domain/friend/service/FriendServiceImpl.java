@@ -6,6 +6,7 @@ import com.adhd.fodong.domain.friend.entity.Status;
 import com.adhd.fodong.domain.friend.repository.FriendRepository;
 import com.adhd.fodong.domain.gameroom.room.WebSocketEventListener;
 import com.adhd.fodong.domain.user.profile.entity.ProfileEntity;
+import com.adhd.fodong.domain.user.profile.repository.ProfileRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -21,6 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class FriendServiceImpl implements FriendService {
 
     private final FriendRepository friendRepository;
+    private final ProfileRepository profileRepository;
     private final SimpMessagingTemplate messagingTemplate; // 웹소켓 메시지 전송을 위한 SimpMessagingTemplate 주입
     private final WebSocketEventListener webSocketEventListener;
 
@@ -43,6 +45,7 @@ public class FriendServiceImpl implements FriendService {
         // 친구관계를 모두 조회하는데
         // 거절한 애들은 필요 없으니 필터링하고 전달
         List<ProfileEntity> Entities = friendRepository.getFriendsByProfileId(profileId);
+
         return Entities;
     }
 

@@ -5,6 +5,6 @@ import lombok.Data;
 
 @Data
 public class InfoForOpenvidu {
-    private Room room;
+//    private Room room;
     private ProfileEntity profile;
 }

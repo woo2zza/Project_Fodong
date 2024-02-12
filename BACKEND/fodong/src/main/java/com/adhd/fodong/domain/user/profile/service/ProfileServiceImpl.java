@@ -1,7 +1,9 @@
 package com.adhd.fodong.domain.user.profile.service;
 
 
+import com.adhd.fodong.domain.user.account.entity.AccountEntity;
 import com.adhd.fodong.domain.user.account.repository.AccountRepository;
+import com.adhd.fodong.domain.user.account.service.AccountService;
 import com.adhd.fodong.domain.user.profile.entity.ProfileEntity;
 import com.adhd.fodong.domain.user.profile.repository.ProfileRepository;
 import com.adhd.fodong.domain.user.profile.dto.ProfileDetails;
@@ -16,6 +18,7 @@ public class ProfileServiceImpl implements ProfileService{
 
     private final ProfileRepository profileRepository;
     private final AccountRepository accountRepository;
+    private final AccountService accountService;
 
     @Override
     public List<ProfileEntity> getProfiles(int accountId) {
@@ -37,6 +40,18 @@ public class ProfileServiceImpl implements ProfileService{
         System.out.println(accountId + "의 모든 프로필 조회");
         
         return allProfileByAccountId;
+    }
+
+    @Override
+    public ProfileEntity getProfile(int profileId) {
+        // profileId로 프로필 객체 조회
+        ProfileEntity profileEntity = profileRepository.findById(profileId);
+        // accountID로 accountEmail 찾기
+        AccountEntity accountEntity = accountRepository.findById(profileEntity.getAccountId());
+
+        // 프로필 객체에 accountEmail 넣기
+        profileEntity.setAccountEmail(accountEntity.getAccountEmail());
+        return profileEntity;
     }
 
     @Override
