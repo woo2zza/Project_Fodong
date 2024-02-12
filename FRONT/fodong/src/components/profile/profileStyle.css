@@ -53,7 +53,6 @@
   margin: 20px;
   padding: 50px 20px;
   border-radius: 15px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
   background-color: #fff;
 }
@@ -79,7 +78,7 @@
   padding: 25px;
   border-radius: 5%;
   text-align: center;
-  background: linear-gradient(135deg, #bbbba8, #929287);
+  background: linear-gradient(135deg, rgb(253, 227, 250), #e5e59b);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
 }
 

@@ -74,7 +74,8 @@ const getFriendEmail = async (friendProfileId, token) => {
       },
     })
     .then((response) => {
-      // console.log(response.data.accountEmail);
+      console.log(response.data.accountEmail);
+      // const email = new Array(response.data);
       console.log(response.data.accountEmail + "여거는 함수 호출 시");
       return response.data.accountEmail;
     })
