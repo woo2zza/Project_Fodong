@@ -80,6 +80,8 @@ const getFriendEmail = async (friendProfileId, token) => {
       return response.data.accountEmail;
     })
     .catch((err) => console.error(err));
+
+  return response;
 };
 
 // const acceptFriendRequest = async (fromProfileId, token) => {
