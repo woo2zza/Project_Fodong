@@ -114,3 +114,9 @@
   width: calc(100% - 7.2px);
   height: calc(100% - 7.2px);
 }
+
+.Album_container {
+  padding: 30px;
+  background-color: #f0e6f6;
+  height: 100%;
+}

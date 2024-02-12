@@ -40,7 +40,7 @@ public class AlbumServiceImpl implements AlbumService{
 
         RecordingEntity recordingEntity = new RecordingEntity();
         recordingEntity.setProfileId(recordingDto.getProfileId());
-        recordingEntity.setRecordingUrl("https://i10.c109.p.ssafy.io/fodong/api/v1/album/"+fileName); // url 저장
+        recordingEntity.setRecordingUrl("http://i10c109.p.ssafy.io/recordings/"+fileName); // url 저장
         recordingEntity.setBookId(recordingDto.getBookId()); // book id 설정
 
         // 엔티티를 데이터베이스에 저장
