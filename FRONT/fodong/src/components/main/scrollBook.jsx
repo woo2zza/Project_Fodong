@@ -78,7 +78,6 @@ const ScrollBook = () => {
           >
             <div className="book-info">
               <h3>{book.title}</h3>
-              <h1>{book.bookId}</h1>
             </div>
           </div>
         ))}

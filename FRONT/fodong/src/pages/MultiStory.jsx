@@ -9,16 +9,17 @@ import {
   Button,
   Avatar,
   IconButton,
-  Tooltip,
+  // Tooltip,
   Popover,
   List,
   ListItem,
   ListItemText,
-  ListItemIcon,
+  // ListItemIcon,
   Typography,
   Grid,
   Box,
 } from "@mui/material";
+import ForwardToInboxIcon from "@mui/icons-material/ForwardToInbox";
 import {
   AddCircleOutline,
   CheckCircleOutline,
@@ -59,6 +60,23 @@ const MultiStory = () => {
       const friendsData = await getFriends(profileId, token);
       setFriends(friendsData);
       // console.log(friends); // 위에 주속 오류 수정하기
+
+      if (stompClient) {
+        stompClient.subscribe("toClient/readyGame-response", (message) => {
+          const notification = JSON.parse(message.body);
+          // 나중에 action에 관해 추가할 곳
+          // if (
+
+          // ){
+          // const readyGameInfo = {
+
+          // }
+          // }
+          console.log("Received message:", notification);
+        });
+      } else {
+        console.log("There's no stompClient");
+      }
     };
 
     fetchFriends();
@@ -141,10 +159,13 @@ const MultiStory = () => {
       }
       if (stompClient && toProfileId && sessionId && toAccountEmail) {
         const requestPayload = {
+          toAccountEmail: toAccountEmail,
           fromProfileId: fromProfileId,
           toProfileId: toProfileId,
-          sessionId: sessionId,
-          toAccountEmail: toAccountEmail,
+          action: "sendInvite",
+          roomSession: {
+            sessionId: sessionId,
+          },
         };
         console.log("Sending invite request with payload:", requestPayload);
         stompClient.send(
@@ -153,7 +174,7 @@ const MultiStory = () => {
           JSON.stringify(requestPayload)
         );
         console.log("Invite request sent:", requestPayload);
-        alert("Invite request sent:", requestPayload);
+        // alert("Invite request sent:", requestPayload);
       } else {
         console.log("Missing required information for sending invite");
       }
@@ -187,7 +208,7 @@ const MultiStory = () => {
             <ListItem key={friend.profileId}>
               <ListItemText primary={friend.nickname} />
               {/* 여기 고치기 아이콘으로  */}
-              <button
+              {/* <button
                 onClick={() =>
                   sendInviteRequest(
                     sessionId,
@@ -199,7 +220,19 @@ const MultiStory = () => {
                 type="button"
               >
                 아이콘 집어 넣기
-              </button>
+              </button> */}
+              <Button
+                onClick={() =>
+                  sendInviteRequest(
+                    sessionId,
+                    friend.profileId,
+                    profileId,
+                    token
+                  )
+                }
+              >
+                <ForwardToInboxIcon />
+              </Button>
             </ListItem>
           ))}
           {/* 여기에 친구 초대 목록을 렌더링합니다. */}

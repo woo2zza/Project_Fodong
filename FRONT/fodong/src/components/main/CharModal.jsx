@@ -49,7 +49,7 @@ const CharModal = ({ isOpen, closeModal, book }) => {
       console.log(response);
       // console.log("이거: " + response + "& " + response.sessionId);
       multiStoryStore.getState().setSessionId(response.sessionId);
-      Navi("/multi");
+      Navi(`/multi/${response.sessionId}`);
     } catch (error) {
       console.error("Game room session creation failed: ", error);
     }
@@ -72,9 +72,9 @@ const CharModal = ({ isOpen, closeModal, book }) => {
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <h2>{selectBook.title}</h2>
         {/* 캐릭터들을 쉼표로 구분하여 표시 */}
-        <div>설명: {selectBook.summary || "Loading..."}</div>
+        <div>{selectBook.summary || "Loading..."}</div>
         <div>
-          등장인물 :{" "}
+          주인공 :{" "}
           {chars.map((character, index) => (
             <span key={index}>
               {character}

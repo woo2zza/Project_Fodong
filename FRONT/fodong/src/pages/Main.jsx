@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useSocket } from "../contexts/SocketContext";
-
+import { useNavigate } from "react-router-dom";
 import { Grid } from "@mui/material";
 import DropdownButton from "../components/main/DropdownButton"; // Import the new component
 import Buttons from "../components/main/buttons";
@@ -13,12 +13,19 @@ import "./pages.css";
 <click-spark></click-spark>;
 const Main = () => {
   // 진명, 소켓연결 추가한 부분 확인필요
-  const { stompClient, connect, disconnect } = useSocket();
+  const { stompClient, connect, disconnect, sessionId, isGameAccepted } =
+    useSocket();
   useEffect(() => {
     connect();
   }, [connect, disconnect]);
   //////////////////////////////////////
 
+  const Navi = useNavigate();
+  useEffect(() => {
+    if (sessionId && isGameAccepted) {
+      Navi(`/multi/${sessionId}`);
+    }
+  });
   return (
     <div className="main_container">
       <div className="fixedTop">

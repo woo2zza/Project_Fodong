@@ -3,9 +3,9 @@ import Book from "../components/readBook/Book";
 
 const BookList = () => {
   return (
-    <>
-      <Book />;
-    </>
+    <div>
+      <Book />
+    </div>
   );
 };
 

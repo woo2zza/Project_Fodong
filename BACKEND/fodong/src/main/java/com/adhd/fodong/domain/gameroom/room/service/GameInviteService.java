@@ -1,12 +1,15 @@
 package com.adhd.fodong.domain.gameroom.room.service;
 
-import com.adhd.fodong.domain.gameroom.room.entitiy.GameInviteRequest;
+import com.adhd.fodong.domain.gameroom.room.entitiy.invite.GameInviteRequest;
+import com.adhd.fodong.domain.gameroom.room.entitiy.invite.GameInviteResponse;
+import com.adhd.fodong.domain.gameroom.room.entitiy.RoomSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 @Slf4j
@@ -15,31 +18,83 @@ public class GameInviteService {
 
     private final SimpMessagingTemplate messagingTemplate;
 
-    public void sendPrivateGameInvite(GameInviteRequest gameInviteRequest) {
-        HashMap<String, Object> response = new HashMap<>();
+    public GameInviteResponse sendGameInvite(GameInviteRequest gameInviteRequest) {
 
-        try {
-            // 초대 메시지 로직 구현
-            log.info("{} 님이 {}를 동화구연방(세션 ID: {})에 초대했습니다.", gameInviteRequest.getFromProfileId(), gameInviteRequest.getToProfileId(), gameInviteRequest.getSessionId());
+        // 방장으로 부터 받은 세션 방정보 저장
+//        String roomId = gameInviteRequest.getRoomSession().getSessionId();
+        RoomSession roomSession = gameInviteRequest.getRoomSession();
 
-            // 메시지 내용 설정
-            response.put("toAccountEmail", gameInviteRequest.getToAccountEmail());
-            response.put("fromProfileId", gameInviteRequest.getFromProfileId());
-            response.put("toProfileId", gameInviteRequest.getToProfileId());
-            response.put("sessionId", gameInviteRequest.getSessionId());
-            response.put("message", gameInviteRequest.getFromProfileId() + " 님으로부터 같이 동화구연 하자는 요청이 왔어요!");
+        // 룸세션 정보 설정
+//        RoomSession newRoomSession = new RoomSession();
+//        newRoomSession.setSessionId(roomId);
 
-            // 특정 사용자에게 메시지 전송
-            messagingTemplate.convertAndSendToUser(
-                    gameInviteRequest.getToAccountEmail(), // 수신자의 고유 식별자
-                    "/toClient/game-invite-response", // 수신자만이 구독하는 개인 큐
-                    response
-            );
 
-        } catch (Exception e) {
-            log.error("Error processing game invite request: ", e);
-            response.put("message", "게임방 초대 요청 처리 중 오류가 발생했습니다.");
-        }
+        // 초대한 사람을 SET에 추가 (방장이 초대할 때)
+        // 오류있음 초대갈때마다 LIST가 새로 초기화되는듯
+//        Set<Integer> participantIds = roomSession.getParticipantIds();
+//        if (participantIds == null) {
+//            participantIds = new HashSet<>();
+//        }
+//        // 초대한 사람 SET에 추가 (방장 초대할 때)
+//        participantIds.add(gameInviteRequest.getFromProfileId());
+//        roomSession.setParticipantIds(participantIds);
+        updateParticipantIds(roomSession, gameInviteRequest.getFromProfileId());
 
+
+        // 만든 방ID 등 저장해서 응답
+        GameInviteResponse gameInviteResponse = new GameInviteResponse();
+        gameInviteResponse.setRoomSession(roomSession);
+        gameInviteResponse.setFromProfileId(gameInviteRequest.getFromProfileId());
+        gameInviteResponse.setToProfileId(gameInviteRequest.getToProfileId());
+        gameInviteResponse.setAction(gameInviteRequest.getAction());
+
+        System.out.println("----------------------------------------------");
+        System.out.println(gameInviteResponse.getFromProfileId() +" 님이 " + gameInviteResponse.getToProfileId() + " 에게 초대요청");
+        System.out.println("방 세션 정보 : " + gameInviteResponse.getRoomSession().getSessionId());
+        System.out.println("현재 참가자 정보 : " + gameInviteResponse.getRoomSession().getParticipantIds());
+        System.out.println("----------------------------------------------");
+        return gameInviteResponse;
     }
+
+
+    public GameInviteResponse acceptedGameInvite(GameInviteRequest gameInviteRequest) {
+
+        // 방장으로 부터 받은 세션 방정보 저장
+        RoomSession roomSession = gameInviteRequest.getRoomSession();
+
+        // 룸세션 정보 설정
+//        RoomSession newRoomSession = new RoomSession();
+//        newRoomSession.setSessionId(roomId);
+
+        // 수락한 사람 참여자 SET에 추가
+//        Set<Integer> participantIds = roomSession.getParticipantIds();
+//        participantIds.add(gameInviteRequest.getFromProfileId());
+//        roomSession.setParticipantIds(participantIds);
+        updateParticipantIds(roomSession, gameInviteRequest.getToProfileId());
+
+        // 만든 방ID 등 저장해서 응답
+        GameInviteResponse gameInviteResponse = new GameInviteResponse();
+        gameInviteResponse.setRoomSession(roomSession);
+        gameInviteResponse.setFromProfileId(gameInviteRequest.getFromProfileId());
+        gameInviteResponse.setToProfileId(gameInviteRequest.getToProfileId());
+        gameInviteResponse.setAction("accepted");
+
+        System.out.println("----------------------------------------------");
+        System.out.println(gameInviteResponse.getFromProfileId() +" 님이 " + gameInviteResponse.getToProfileId() + " 님의 초대요청 수락");
+        System.out.println("방 세션 정보 : " + gameInviteResponse.getRoomSession().getSessionId());
+        System.out.println("현재 참가자 정보 : " + gameInviteResponse.getRoomSession().getParticipantIds());
+        System.out.println("----------------------------------------------");
+
+        return gameInviteResponse;
+    }
+
+    public void updateParticipantIds(RoomSession roomSession, Integer profileId) {
+        Set<Integer> participantIds = roomSession.getParticipantIds();
+        if (participantIds == null) {
+            participantIds = new HashSet<>();
+            roomSession.setParticipantIds(participantIds); // RoomSession 객체에 새로운 Set 할당
+        }
+        participantIds.add(profileId);
+    }
+
 }
