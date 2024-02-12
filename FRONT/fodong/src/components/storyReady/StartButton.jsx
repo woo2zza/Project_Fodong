@@ -1,29 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Grid } from "@mui/material";
-const StartButton = () => {
+
+const StartButton = ({ style }) => {
   return (
-    <Grid
-      container
-      direction="column"
-      justifyContent="center"
-      alignItems="center"
-      style={{ height: "100%" }}
-    >
-      <div>
+    
+      <div style={style}>
         <Link to="/storytelling/1">
           <img
-            width="50px"
-            height="50px"
-            src={require(`./img/startbutton.png`)}
+            style={{ maxWidth: "100px", maxHeight: "100px" }}
+            src={require(`./img/start1.png`)}
             alt="startbutton"
           />
         </Link>
-        <p style={{ textAlign: "center" }}>
-          <h3>시작하기~</h3>
+        <p style={{ textAlign: "center", fontWeight: "bold"}}>
+          <h1>시작하기~</h1>
         </p>
       </div>
-    </Grid>
+  
   );
 };
 

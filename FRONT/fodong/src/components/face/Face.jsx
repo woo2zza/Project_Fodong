@@ -1,28 +1,43 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as faceapi from "face-api.js";
 import { useParams } from "react-router-dom"; // useParams 추가
+import "../storyTelling/StoryTelling.css";
 
-function Face() {
+function Face({ page, width }) {
   const [videoStream, setVideoStream] = useState(null); // 비디오 스트림 상태를 관리하는 state를 선언
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [faceImages, setFaceImages] = useState([]); // 각 얼굴의 이미지 데이터 URL을 저장
-  const { page } = useParams(); // 현재 페이지의 파라미터를 가져옴
 
-  const getPositionStyle = (index, width) => {
+  const getPositionStyle = (index, page, width) => {
     let bottom, left;
 
     // eslint-disable-next-line default-case
     switch (page) {
-      case "1":
-        bottom = "170px";
-        left = width > 768 ? `${150 + index * 100}px` : `${150 + index * 100}%`;
+      case 1:
+        if (index === 1) {
+          // antCharacter 스타일
+          bottom = width > 1024 ? "30%" : "37%";
+          left = width > 1024 ? "17%" : "17%";
+        } else if (index === 2) {
+          // grasshopperCharacter 스타일
+          bottom = width > 1024 ? "36%" : "45%";
+          left = width > 1024 ? "60%" : "66%";
+        }
         break;
-
-      case "2":
-        bottom = "100px";
-        left = width > 768 ? `${250 + index * 100}px` : `${250 + index * 100}%`;
-      // left = `${150 + index * 100}px`;
+      case 2:
+        if (index === 1) {
+          bottom = "20px";
+          left = width > 768 ? "320px" : "50%";
+        } else if (index === 2) {
+          bottom = "20px";
+          left = width > 768 ? "420px" : "70%";
+        }
+        break;
+      // 다른 페이지 번호에 대한 조건을 추가할 수 있습니다.
+      default:
+        bottom = "100px"; // 기본값
+        left = "50%"; // 기본값
     }
     return { bottom, left };
   };
@@ -141,20 +156,21 @@ function Face() {
       <div>
         {videoStream &&
           faceImages.map((src, index) => {
-            const { bottom, left } = getPositionStyle(index); // 페이지와 인덱스에 따른 스타일 계산
+            const style = getPositionStyle(index + 1, page, window.innerWidth); // 페이지와 인덱스에 따른 스타일 계산
             return (
               <div
                 key={index}
+                className="faceImage"
                 style={{
                   position: "absolute",
-                  width: "100px",
-                  height: "100px",
+                  minWidth: "100px",
+                  minHeight: "100px",
                   backgroundSize: "cover",
                   backgroundPosition: "50% 50%",
                   borderRadius: "50%",
                   backgroundImage: `url(${src})`,
-                  bottom,
-                  left,
+                  bottom: style.bottom,
+                  left: style.left,
                 }}
               ></div>
             );

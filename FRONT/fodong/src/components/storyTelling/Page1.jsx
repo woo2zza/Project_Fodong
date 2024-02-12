@@ -179,7 +179,7 @@ const Page = ({ onPageChange }) => {
           path="/"
           element={
             <div style={{ zIndex: 1 }}>
-              <Face />
+              <Face page={page} width={window.innerWidth} />
             </div>
           }
         />
