@@ -69,20 +69,17 @@ public class SecurityConfig {
                                 "http://192.168.100.158:3000",
                                 "https://192.168.100.158:3000",
                                 "https://i10c109.p.ssafy.io",
-                                "https://i10c109.p.ssafy.io:3000",
-                                "wss://i10c109.p.ssafy.io:3000",
-                                "ws://i10c109.p.ssafy.io:3000",
+                                "http://i10c109.p.ssafy.io",
+                                "wss://i10c109.p.ssafy.io",
+                                "ws://i10c109.p.ssafy.io",
+                                "http://192.168.0.11:3000",
                                 "http://192.168.0.12:3000",
                                 "http://192.168.0.13:3000",
                                 "http://192.168.0.14:3000",
-                                "http://192.168.100.163:3000",
-                                "http://172.30.1.95:3000",
-                                "http://172.30.1.66:3000",
-                                "http://172.30.1.64:3000",
-                                "http://172.30.1.50:3000",
-                                "http://172.30.1.93:3000",
-                                "http://192.168.0.25:3000",
-                                "http://172.30.1.64:3000"
+                                "http://192.168.0.15:3000",
+                                "http://192.168.0.20:3000",
+                                "http://192.168.0.22:3000",
+                                "http://192.168.0.34:3000"
                                 ));
                         configuration.setAllowedMethods(Collections.singletonList("*"));
                         configuration.setAllowCredentials(true);
