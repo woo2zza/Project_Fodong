@@ -1,7 +1,11 @@
 import "./album.css";
 
 const AlbumTitle = () => {
-  return <h1>Album</h1>;
+  return (
+    <div className="Album_title">
+      <div>Album</div>
+    </div>
+  );
 };
 
 export default AlbumTitle;

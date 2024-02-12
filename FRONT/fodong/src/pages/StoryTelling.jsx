@@ -2,12 +2,11 @@
 import React, { useState, useRef } from "react";
 // import { startRecording, stopRecording } from "../recording.js";
 import html2canvas from "html2canvas";
-
 import Script from "../components/storyTelling/Script";
 import Page1 from "../components/storyTelling/Page1";
 import { Route, Routes } from "react-router-dom";
 import Grid from "@mui/material/Grid";
-import Face from "../components/face/Face"
+import Face from "../components/face/Face";
 
 const StoryTelling = () => {
   const [scriptPage, setScriptPage] = useState(0);
@@ -21,35 +20,35 @@ const StoryTelling = () => {
     setScriptPage(0);
   };
 
-  // const startRecording = async () => {
-  //   const canvasElement = await html2canvas(
-  //     document.querySelector("#container")
-  //   );
-  //   const stream = canvasElement.captureStream(); // canvas에서 스트림 캡처
-  //   const mediaRecorder = new MediaRecorder(stream, { mimeType: "video/webm" });
+  const startRecording = async () => {
+    const canvasElement = await html2canvas(
+      document.querySelector("#container")
+    );
+    const stream = canvasElement.captureStream(); // canvas에서 스트림 캡처
+    const mediaRecorder = new MediaRecorder(stream, { mimeType: "video/webm" });
 
-  //   let chunks = [];
-  //   mediaRecorder.ondataavailable = (e) => chunks.push(e.data);
-  //   mediaRecorder.onstop = () => {
-  //     const blob = new Blob(chunks, { type: "video/webm" });
-  //     videoRef.current.src = URL.createObjectURL(blob);
-  //   };
+    let chunks = [];
+    mediaRecorder.ondataavailable = (e) => chunks.push(e.data);
+    mediaRecorder.onstop = () => {
+      const blob = new Blob(chunks, { type: "video/webm" });
+      videoRef.current.src = URL.createObjectURL(blob);
+    };
 
-  //   mediaRecorder.start();
-  //   mediaRecorderRef.current = mediaRecorder;
-  //   setRecording(true);
-  // };
+    mediaRecorder.start();
+    mediaRecorderRef.current = mediaRecorder;
+    setRecording(true);
+  };
 
-  // const stopRecording = () => {
-  //   if (mediaRecorderRef.current) {
-  //     mediaRecorderRef.current.stop();
-  //     setRecording(false);
-  //   }
-  // };
+  const stopRecording = () => {
+    if (mediaRecorderRef.current) {
+      mediaRecorderRef.current.stop();
+      setRecording(false);
+    }
+  };
 
   return (
     <>
-      <section>
+      <section >
         <Grid id="container" container spacing={2}>
           <Grid item xs={12}>
             <Routes>
@@ -58,12 +57,12 @@ const StoryTelling = () => {
                 element={<Page1 onPageChange={handlePageChange} />}
               />
               {/* <Route path="/:page" element={Charatecr} */}
-             </Routes>
+            </Routes>
+           
           </Grid>
-          
         </Grid>
       </section>
-      <section className="script-container" style={{ height: "15vh" }}>
+      <section >
         <Routes>
           <Route
             path="/:page"
@@ -78,8 +77,8 @@ const StoryTelling = () => {
       </button>
       <button onClick={stopRecording} disabled={!recording}>
         Stop Recording
-      </button>
-      <video ref={videoRef} controls style={{ width: "100%" }}></video> */}
+      </button> */}
+      {/* <video ref={videoRef} controls style={{ width: "100%" }}></video> */}
     </>
   );
 };
