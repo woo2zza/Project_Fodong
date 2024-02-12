@@ -2,12 +2,14 @@ package com.adhd.fodong.domain.gameroom.room;
 
 import com.adhd.fodong.domain.friend.dto.FriendRequest;
 import com.adhd.fodong.domain.friend.service.FriendService;
-import com.adhd.fodong.domain.gameroom.room.entitiy.GameInviteRequest;
-import com.adhd.fodong.domain.gameroom.room.entitiy.GameInviteResponse;
-import com.adhd.fodong.domain.gameroom.room.entitiy.GameRoomJoinRequest;
-import com.adhd.fodong.domain.gameroom.room.entitiy.RoomSession;
+import com.adhd.fodong.domain.gameroom.room.entitiy.*;
+import com.adhd.fodong.domain.gameroom.room.entitiy.invite.GameInviteRequest;
+import com.adhd.fodong.domain.gameroom.room.entitiy.invite.GameInviteResponse;
+import com.adhd.fodong.domain.gameroom.room.entitiy.ready.ReadyDataRequest;
+import com.adhd.fodong.domain.gameroom.room.entitiy.ready.ReadyDataResponse;
 import com.adhd.fodong.domain.gameroom.room.service.GameInviteService;
 import com.adhd.fodong.domain.gameroom.room.service.GameRoomSessionService;
+import com.adhd.fodong.domain.gameroom.room.service.ReadyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -16,7 +18,9 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 @Controller
 @RequiredArgsConstructor
@@ -24,16 +28,15 @@ import java.util.Map;
 public class WebSocketController {
 
     private final FriendService friendService;
-    private final GameRoomSessionService gameRoomSessionService;
-    private final SimpMessagingTemplate messagingTemplate;
     private final GameInviteService gameInviteService;
+    private final ReadyService readyService;
 
     //////////////////////////  친구기능 토픽 //////////////////////////////////////////
     @MessageMapping("/friend-request")
     @SendTo("/toClient/friend-request-response")
     public Map<String, Object> handleFriendRequest(FriendRequest friendRequest) {
         // 친구 기능과 관련된 푸쉬 토픽
-        
+
         HashMap<String, Object> response = new HashMap<>();
 
         try {
@@ -78,50 +81,52 @@ public class WebSocketController {
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
     //////////////////////////////////////  게임방 초대 기능 토픽 //////////////////////////////////////////
-    
-    
+
+
     // 게임 초대 요청 푸쉬
     @MessageMapping("/game-invite")
-//    @SendTo("/toClient/game-invite-response")
-    public void handleGameInvite(GameInviteRequest gameInviteRequest) {
-        System.out.println("게임방 초대 STOMP 요청 도착");
-        gameInviteService.sendPrivateGameInvite(gameInviteRequest);
-    }
+    @SendTo("/toClient/game-invite-response")
+    public GameInviteResponse handleGameInvite(GameInviteRequest gameInviteRequest) {
 
-    // 게임방 초대 응답 처리
-    @MessageMapping("/game-invite-response")
-    public void handleGameInviteResponse(GameInviteResponse gameInviteResponse) {
-        if (gameInviteResponse.isAccepted()) {
-            log.info("{} 사용자가 게임방 세션 {} 초대를 수락했습니다.", gameInviteResponse.getToProfileId(), gameInviteResponse.getSessionId());
-            // 초대 수락 처리 로직: 예를 들어, 사용자를 게임방 세션에 추가
-        } else {
-            log.info("{} 사용자가 게임방 세션 {} 초대를 거절했습니다.", gameInviteResponse.getToProfileId(), gameInviteResponse.getSessionId());
-            // 초대 거절 처리 로직: 필요한 경우 구현
+
+        switch (gameInviteRequest.getAction()) {
+            case "sendInvite":
+                // 초대 요청 처리 로직 구현
+                // 처음 방장이 게임방 만들 때 게임방 sessonId도 GameInviteRequest에 저장해서 보낸다
+                GameInviteResponse sendInviteResponse = gameInviteService.sendGameInvite(gameInviteRequest);
+                return sendInviteResponse;
+
+            case "accepted":
+                // 수락 로직 처리
+                GameInviteResponse inviteAccpetedResponse = gameInviteService.acceptedGameInvite(gameInviteRequest);
+                inviteAccpetedResponse.setNewTopic("toClient/readyGame-response");
+                return inviteAccpetedResponse;
         }
-        // 초대 응답에 대한 후속 처리 로직: 필요에 따라 추가
+        return null;
     }
 
-    // 게임방 참여 요청 처리
-    @MessageMapping("/game-room-join")
-    public void handleGameRoomJoin(GameRoomJoinRequest joinRequest) {
-        RoomSession roomSession = gameRoomSessionService.getGameRoomSession(joinRequest.getSessionId());
-        if (roomSession != null) {
-            roomSession.addParticipant(joinRequest.getToProfileId());
-            log.info(" {} 님이 동화구연 방 {} 에 참가하셨습니다. ", joinRequest.getToProfileId(), joinRequest.getSessionId());
-            updateGameRoomState(roomSession);
-        } else {
-            log.error("동화구연방 {} 참가 실패 ", joinRequest.getSessionId());
+//    같은 방에 들어온 유저들은 같은 토픽을 구독하게 한다
+    // 예시 토픽
+    // 이 토픽을 구독하고 있는 클라이언트들 = 같은 게임방에 있는 클라이언트 라고 가정한다
+    // 누군가가 시작버튼을 눌러 어떤 요청을하면 다른 클라이언트들도 똑같은 요청을 하게끔 한다
+
+    // 게임 시작 요청 메시지 핸들링
+    @MessageMapping("/readyGame")
+    @SendTo("toClient/readyGame-response")
+    public ReadyDataResponse shareReadyData(ReadyDataRequest readyDataRequest) {
+        // 게임방 초대 수락을 누른 클라이언트들이 구독할 토픽
+        // 이 토픽을 이용해서 필요한 데이터들을 실시간으로 주고받는다.
+
+        // 시작 버튼을 누르면 오픈비두 세션으로 다 같이 이동한다
+        if (readyDataRequest.getIsStart() == true) {
+            // 나중에 역할 정하는 기능도 추가할거면 역할 정하기 전까지는 시작하지 않는 분기 추가해야함
+            ReadyDataResponse startResponse = readyService.getStart(readyDataRequest);
+//            startResponse.setNewTopic("");
+            return startResponse;
         }
+
+        // 역할 정하기 기능(?)
+
+        return null;
     }
-
-    // 게임방 상태 업데이트 메시지 전송
-    private void updateGameRoomState(RoomSession roomSession) {
-        Map<String, Object> stateUpdateMessage = new HashMap<>();
-        stateUpdateMessage.put("sessionId", roomSession.getSessionId());
-        stateUpdateMessage.put("participants", roomSession.getParticipantIds());
-        stateUpdateMessage.put("gameState", roomSession.getGameState());
-
-        messagingTemplate.convertAndSend("/toClient/game-room-state/" + roomSession.getSessionId(), stateUpdateMessage);
-    }
-
 }

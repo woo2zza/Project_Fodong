@@ -2,9 +2,5 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/FACEMAPPING/test/DeepFaceLive" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/FACEMAPPING/test/Facial-Emotion-Recognition-with-OpenCV-and-Deepface" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/FACEMAPPING/test/Snapchat-Filters" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/FACEMAPPING/test/faceswap" vcs="Git" />
   </component>
 </project>

@@ -45,7 +45,7 @@ public class WebRtcController {
     @Operation(summary = "세션 생성", description = "세션 설정 정보를 인자로 받아 화상통화에 접근할 수 있는 세션을 생성하고 반환한다")
     public ResponseEntity<String> initializeSession(@RequestBody(required = false) Map<String, Object> params)
             throws OpenViduJavaClientException, OpenViduHttpException {
-        System.out.println("---------------신규 세션 생성-----------------");
+        System.out.println("---------------오픈비두 신규 세션 생성-----------------");
         // 설정한 세션
         SessionProperties properties = SessionProperties.fromJson(params).build();
         System.out.println("세션 설정 정보 : " + properties);
