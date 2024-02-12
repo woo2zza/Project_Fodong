@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Webcam from "react-webcam";
 import { useNavigate } from "react-router-dom";
+import { createGameRoomSession } from "../../api/multi";
+import multiStoryStore from "../../store/multiStoryStore.js";
 
 const API_URL = process.env.REACT_APP_API_URL;
 const API_BASE_URL = `${API_URL}/books`;
@@ -37,6 +39,22 @@ const CharModal = ({ isOpen, closeModal, book }) => {
   }, [accountId, token]);
   if (!isOpen) return null; // isOpen이 false이면 모달을 렌더링하지 않음
 
+  const handleGoMultiStory = () => {
+    goMultiStory();
+  };
+  const goMultiStory = async () => {
+    // zustand 활용  중앙 상태 저장소에 sessionId 저장
+    try {
+      const response = await createGameRoomSession(token);
+      console.log(response);
+      // console.log("이거: " + response + "& " + response.sessionId);
+      multiStoryStore.getState().setSessionId(response.sessionId);
+      Navi("/multi");
+    } catch (error) {
+      console.error("Game room session creation failed: ", error);
+    }
+  };
+
   const goSingleStory = () => {
     Navi("/storyReady");
   };
@@ -67,11 +85,12 @@ const CharModal = ({ isOpen, closeModal, book }) => {
         <div className="char-select">
           <Webcam className="web-container" />
         </div>
+
         <div className="enterButtons">
           <div className="enter_button" onClick={goSingleStory}>
             혼자하기
           </div>
-          <div className="enter_button" onClick={goTogetStory}>
+          <div className="enter_button" onClick={handleGoMultiStory}>
             같이하기
           </div>
           <div className="enter_button" onClick={goReadBook}>
