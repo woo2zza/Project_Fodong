@@ -50,8 +50,8 @@ const Background = () => {
       <img
         src={ant}
         style={{
-          width: "50vw",
-          maxWidth: "400px",
+          width: "35vw",
+          // maxWidth: "400px",
           height: "auto",
           position: "absolute",
           left: "23%",
@@ -64,8 +64,8 @@ const Background = () => {
       <img
         src={grasshopper}
         style={{
-          width: "50vw",
-          maxWidth: "400px",
+          width: "35vw",
+          // maxWidth: "400px",
           height: "auto",
           position: "absolute",
           left: "75%",

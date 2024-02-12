@@ -1,14 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as faceapi from "face-api.js";
 import { useParams } from "react-router-dom"; // useParams 추가
-import "../storyTelling/StoryTelling.css"
+import "../storyTelling/StoryTelling.css";
 
-function Face({page, width}) {
+function Face({ page, width }) {
   const [videoStream, setVideoStream] = useState(null); // 비디오 스트림 상태를 관리하는 state를 선언
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [faceImages, setFaceImages] = useState([]); // 각 얼굴의 이미지 데이터 URL을 저장
-  
 
   const getPositionStyle = (index, page, width) => {
     let bottom, left;
@@ -16,28 +15,30 @@ function Face({page, width}) {
     // eslint-disable-next-line default-case
     switch (page) {
       case 1:
-      if (index === 1) { // antCharacter 스타일
-        bottom = "28%";
-        left = width > 768 ? "17%" : "10%";
-      } else if (index === 2) { // grasshopperCharacter 스타일
-        bottom = "0px";
-        left = width > 768 ? "20px" : "30%";
-      }
-      break;
-    case 2:
-      if (index === 1) {
-        bottom = "20px";
-        left = width > 768 ? "320px" : "50%";
-      } else if (index === 2) {
-        bottom = "20px";
-        left = width > 768 ? "420px" : "70%";
-      }
-      break;
-    // 다른 페이지 번호에 대한 조건을 추가할 수 있습니다.
-    default:
-      bottom = "100px"; // 기본값
-      left = "50%"; // 기본값
-  }
+        if (index === 1) {
+          // antCharacter 스타일
+          bottom = width > 1024 ? "30%" : "37%";
+          left = width > 1024 ? "17%" : "17%";
+        } else if (index === 2) {
+          // grasshopperCharacter 스타일
+          bottom = width > 1024 ? "36%" : "45%";
+          left = width > 1024 ? "60%" : "66%";
+        }
+        break;
+      case 2:
+        if (index === 1) {
+          bottom = "20px";
+          left = width > 768 ? "320px" : "50%";
+        } else if (index === 2) {
+          bottom = "20px";
+          left = width > 768 ? "420px" : "70%";
+        }
+        break;
+      // 다른 페이지 번호에 대한 조건을 추가할 수 있습니다.
+      default:
+        bottom = "100px"; // 기본값
+        left = "50%"; // 기본값
+    }
     return { bottom, left };
   };
 
