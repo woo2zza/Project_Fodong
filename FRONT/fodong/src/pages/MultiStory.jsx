@@ -45,7 +45,6 @@ const MultiStory = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedCharacters, setSelectedCharacters] = useState({});
   const [friends, setFriends] = useState([]);
-  const [nowStompClient, setNowStompClient] = useState();
 
   const { token, profileId, nickname } = userStore((state) => ({
     token: state.token,
@@ -135,7 +134,11 @@ const MultiStory = () => {
       // getFriendEmail 함수를 호출하여 이메일 주소를 직접 받아옴
       const toAccountEmail = await getFriendEmail(toProfileId, token);
       console.log("이거는 받았을 때: " + toAccountEmail); // 이메일 주소 로그 출력
-
+      if (stompClient) {
+        console.log("있음");
+      } else {
+        console.log("없음");
+      }
       if (stompClient && toProfileId && sessionId && toAccountEmail) {
         const requestPayload = {
           fromProfileId: fromProfileId,
@@ -150,17 +153,13 @@ const MultiStory = () => {
           JSON.stringify(requestPayload)
         );
         console.log("Invite request sent:", requestPayload);
+        alert("Invite request sent:", requestPayload);
       } else {
         console.log("Missing required information for sending invite");
       }
     } catch (error) {
       console.error("Error sending invite request:", error);
     }
-  };
-
-  const test = () => {
-    console.log(sessionId);
-    console.log(stompClient ? true : false);
   };
 
   return (
@@ -243,7 +242,6 @@ const MultiStory = () => {
       </Grid>
       <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
         <Button variant="contained">시작하기</Button>
-        <button onClick={test}>테스트</button>
       </Box>
     </Box>
   );
