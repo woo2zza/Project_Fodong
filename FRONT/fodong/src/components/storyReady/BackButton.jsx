@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const BackButton = () => {
   return (
     <div>
-      <Link to="/">
+      <Link to="/main">
         <img src={require(`./img/back.png`)} alt="startbutton" style={{marginTop: '10', maxWidth: '100px', maxHeight: '100px'}} />
       </Link>
     </div>

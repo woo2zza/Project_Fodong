@@ -1,9 +1,10 @@
 import React, { useRef } from "react";
 import FlipPage from "react-pageflip";
 import "./book.css";
-
+import { useNavigate } from "react-router-dom";
 // A 컴포넌트 정의
 const A = () => {
+  const Nav = useNavigate();
   // 총 페이지 수와 FlipPage 컴포넌트를 조작하기 위한 ref
 
   const flipBookRef = useRef(null);
@@ -36,7 +37,7 @@ const A = () => {
     "피노키오의 선한 마음은 결국 마법으로 보상받았어요. 아침에 일어나 보니 피노키오는 진짜 소년이 되었답니다! 제페토 할아버지와 피노키오는 행복하게 살았어요.",
   ];
   const numberOfImages = pageImages.length;
-  const totalPage = numberOfImages + 1;
+  const totalPage = numberOfImages + 2;
   // 표지 페이지를 위한 컴포넌트
   // React.forwardRef를 사용해 ref를 내부 div로 전달
   const PageCover = React.forwardRef(({ title }, ref) => (
@@ -55,6 +56,10 @@ const A = () => {
     }
   };
 
+  const goMain = () => {
+    Nav("/main");
+  };
+
   // FlipPage 컴포넌트와 페이지 렌더링
   return (
     <div
@@ -67,10 +72,10 @@ const A = () => {
         alignItems: "center",
       }}
     >
-      <div className="book-container" style={{ width: 900, height: 800 }}>
+      <div className="book-container" style={{ width: 800, height: 700 }}>
         <FlipPage
-          width={900}
-          height={800}
+          width={800}
+          height={700}
           drawShadow={true}
           flippingTime={1000}
           usePortrait={true}
@@ -99,6 +104,9 @@ const A = () => {
             </div>
           ))}
           <PageCover title="THE END" />
+          <button onClick={goMain}>
+            <h1>메인으로 돌아가기</h1>
+          </button>
         </FlipPage>
       </div>
     </div>

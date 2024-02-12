@@ -1,19 +1,54 @@
 package com.adhd.fodong.domain.album.service;
 
+import com.adhd.fodong.domain.album.dto.RecordingDetails;
+import com.adhd.fodong.domain.album.dto.RecordingDto;
 import com.adhd.fodong.domain.album.entity.RecordingEntity;
 import com.adhd.fodong.domain.album.repository.AlbumRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class AlbumServiceImpl implements AlbumService{
 
     private final AlbumRepository albumRepository;
+
     @Override
-    public List<RecordingEntity> getRecordings(int profileId) {
+    public void save(RecordingDto recordingDto) {
+        if(recordingDto.getVideo().isEmpty()){
+            System.out.println("파일 없음");
+        }
+
+        String uploadDir = "/var/www/html/recordings/";
+        String fileName = UUID.randomUUID()+".webm";
+        // 파일 객체 생성
+        File dest = new File(uploadDir + fileName);
+
+        try {
+            // 파일 저장
+            recordingDto.getVideo().transferTo(dest);
+            System.out.println("파일 업로드 성공");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("파일 업로드 실패");
+        }
+
+        RecordingEntity recordingEntity = new RecordingEntity();
+        recordingEntity.setProfileId(recordingDto.getProfileId());
+        recordingEntity.setRecordingUrl("https://i10.c109.p.ssafy.io/fodong/api/v1/album/"+fileName); // url 저장
+        recordingEntity.setBookId(recordingDto.getBookId()); // book id 설정
+
+        // 엔티티를 데이터베이스에 저장
+        albumRepository.save(recordingEntity);
+    }
+
+    @Override
+    public List<RecordingDetails> getRecordings(int profileId) {
         // profileID로 profile의 모든 녹화본 조회
         if(profileId<=0){
             throw new RuntimeException("error:녹화본 조회 -> 유효하지 않은 profileID");
@@ -21,7 +56,7 @@ public class AlbumServiceImpl implements AlbumService{
 
         //존재하지 않는 profileId?
 
-        List<RecordingEntity> allRecordingsByProfileId = albumRepository.findAllRecordingsByProfileId(profileId);
+        List<RecordingDetails> allRecordingsByProfileId = albumRepository.findAllRecordingsByProfileId(profileId);
 
         return allRecordingsByProfileId;
     }

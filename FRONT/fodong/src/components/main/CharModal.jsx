@@ -8,6 +8,7 @@ import multiStoryStore from "../../store/multiStoryStore.js";
 
 const API_URL = process.env.REACT_APP_API_URL;
 const API_BASE_URL = `${API_URL}/books`;
+
 const CharModal = ({ isOpen, closeModal, book }) => {
   const Navi = useNavigate();
   const [selectBook, setSelectBook] = useState([]);
@@ -30,20 +31,18 @@ const CharModal = ({ isOpen, closeModal, book }) => {
       .get(`${API_BASE_URL}/${book.bookId}`, config)
       .then((response) => {
         setSelectBook(response.data);
-        console.log(response.data, "gfgfgfgf");
         setChars(response.data.characters);
       })
       .catch((error) => {
         console.error("서버 요청 실패:", error);
       });
   }, [accountId, token]);
-  console.log(selectBook, "dfadsfasdfads");
   if (!isOpen) return null; // isOpen이 false이면 모달을 렌더링하지 않음
 
-  const handleGoStory = () => {
-    goToStory();
+  const handleGoMultiStory = () => {
+    goMultiStory();
   };
-  const goToStory = async () => {
+  const goMultiStory = async () => {
     // zustand 활용  중앙 상태 저장소에 sessionId 저장
     try {
       const response = await createGameRoomSession(token);
@@ -55,11 +54,23 @@ const CharModal = ({ isOpen, closeModal, book }) => {
       console.error("Game room session creation failed: ", error);
     }
   };
+
+  const goSingleStory = () => {
+    Navi("/storyReady");
+  };
+
+  const goTogetStory = () => {
+    Navi("/album");
+  };
+  const goReadBook = () => {
+    Navi("/readbook");
+  };
+
   // isOpen이 true일 때 모달 컨텐츠 렌더링
   return (
     <div className="modal-overlay" onClick={closeModal}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <div style={{ fontFamily: "Segoe UI" }}>{selectBook.title}</div>
+        <h2>{selectBook.title}</h2>
         {/* 캐릭터들을 쉼표로 구분하여 표시 */}
         <div>설명: {selectBook.summary || "Loading..."}</div>
         <div>
@@ -72,19 +83,19 @@ const CharModal = ({ isOpen, closeModal, book }) => {
           ))}
         </div>
         <div className="char-select">
-          {/* 캐릭터 배열을 반복 처리하여 각 캐릭터 이름을 표시 */}
-          <Webcam
-            className="web-container"
-            style={{
-              transform: "scaleX(-1)",
-              objectFit: "cover",
-              width: "100%",
-              height: "300px",
-            }}
-          ></Webcam>
+          <Webcam className="web-container" />
         </div>
-        <div className="enter_button" onClick={handleGoStory}>
-          동화구연 준비
+
+        <div className="enterButtons">
+          <div className="enter_button" onClick={goSingleStory}>
+            혼자하기
+          </div>
+          <div className="enter_button" onClick={handleGoMultiStory}>
+            같이하기
+          </div>
+          <div className="enter_button" onClick={goReadBook}>
+            읽어주기
+          </div>
         </div>
         <div className="modal_button" onClick={closeModal}>
           닫기
