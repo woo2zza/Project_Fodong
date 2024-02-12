@@ -24,9 +24,9 @@ import java.util.Map;
 public class WebSocketController {
 
     private final FriendService friendService;
+    private final GameInviteService gameInviteService;
     private final GameRoomSessionService gameRoomSessionService;
     private final SimpMessagingTemplate messagingTemplate;
-    private final GameInviteService gameInviteService;
 
     //////////////////////////  친구기능 토픽 //////////////////////////////////////////
     @MessageMapping("/friend-request")
@@ -82,46 +82,36 @@ public class WebSocketController {
     
     // 게임 초대 요청 푸쉬
     @MessageMapping("/game-invite")
-//    @SendTo("/toClient/game-invite-response")
-    public void handleGameInvite(GameInviteRequest gameInviteRequest) {
-        System.out.println("게임방 초대 STOMP 요청 도착");
-        gameInviteService.sendPrivateGameInvite(gameInviteRequest);
-    }
+    @SendTo("/toClient/game-invite-response")
+    public GameInviteResponse handleGameInvite(GameInviteRequest gameInviteRequest) {
 
-    // 게임방 초대 응답 처리
-    @MessageMapping("/game-invite-response")
-    public void handleGameInviteResponse(GameInviteResponse gameInviteResponse) {
-        if (gameInviteResponse.isAccepted()) {
-            log.info("{} 사용자가 게임방 세션 {} 초대를 수락했습니다.", gameInviteResponse.getToProfileId(), gameInviteResponse.getSessionId());
-            // 초대 수락 처리 로직: 예를 들어, 사용자를 게임방 세션에 추가
-        } else {
-            log.info("{} 사용자가 게임방 세션 {} 초대를 거절했습니다.", gameInviteResponse.getToProfileId(), gameInviteResponse.getSessionId());
-            // 초대 거절 처리 로직: 필요한 경우 구현
+        HashMap<String, Object> response = new HashMap<>();
+
+        switch (gameInviteRequest.getAction()) {
+            case "sendInvite":
+                // 초대 요청 처리 로직 구현
+                // 처음 방장이 게임방 만들 때 게임방 sessonId도 GameInviteRequest에 저장해서 보낸다
+                GameInviteResponse gameInviteResponse = gameInviteService.sendGameInvite(gameInviteRequest);
+                return gameInviteResponse;
+
+//
+//            case "accepted":
+//            // 요청 푸쉬를 보내고 수락을 누르면 같은 방에 오게끔한다
         }
-        // 초대 응답에 대한 후속 처리 로직: 필요에 따라 추가
+
+        return null;
     }
 
-    // 게임방 참여 요청 처리
-    @MessageMapping("/game-room-join")
-    public void handleGameRoomJoin(GameRoomJoinRequest joinRequest) {
-        RoomSession roomSession = gameRoomSessionService.getGameRoomSession(joinRequest.getSessionId());
-        if (roomSession != null) {
-            roomSession.addParticipant(joinRequest.getToProfileId());
-            log.info(" {} 님이 동화구연 방 {} 에 참가하셨습니다. ", joinRequest.getToProfileId(), joinRequest.getSessionId());
-            updateGameRoomState(roomSession);
-        } else {
-            log.error("동화구연방 {} 참가 실패 ", joinRequest.getSessionId());
-        }
+    // 같은 방에 들어온 유저들은 같은 토픽을 구독하게 한다
+    // 예시 토픽
+    // 이 토픽을 구독하고 있는 클라이언트들 = 같은 게임방에 있는 클라이언트 라고 가정한다
+    // 누군가가 시작버튼을 눌러 어떤 요청을하면 다른 클라이언트들도 똑같은 요청을 하게끔 한다
+
+    // 게임 시작 요청 메시지 핸들링
+//    @MessageMapping("/gameRoom")
+//    @SendTo("/gameRoom-response/")
+//    public void handleGameStart(@RequestBody GameStartRequest gameStartRequest) {
+        // 게임 시작 로직 구현
+        // 모든 구독자에게 게임 시작 메시지 발송 -> 실제로 페이지가 이동되어야..
+
     }
-
-    // 게임방 상태 업데이트 메시지 전송
-    private void updateGameRoomState(RoomSession roomSession) {
-        Map<String, Object> stateUpdateMessage = new HashMap<>();
-        stateUpdateMessage.put("sessionId", roomSession.getSessionId());
-        stateUpdateMessage.put("participants", roomSession.getParticipantIds());
-        stateUpdateMessage.put("gameState", roomSession.getGameState());
-
-        messagingTemplate.convertAndSend("/toClient/game-room-state/" + roomSession.getSessionId(), stateUpdateMessage);
-    }
-
-}

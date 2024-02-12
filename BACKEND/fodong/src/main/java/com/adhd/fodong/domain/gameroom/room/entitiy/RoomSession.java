@@ -11,6 +11,9 @@ public class RoomSession {
     private Set<String> participantIds; // 참가자의 세션 ID 목록
     private String gameState; // 게임 상태 (예: 대기 중, 진행 중)
 
+    public RoomSession() {
+    }
+
     public RoomSession(String sessionId) {
         this.sessionId = sessionId;
         this.participantIds = new HashSet<>();

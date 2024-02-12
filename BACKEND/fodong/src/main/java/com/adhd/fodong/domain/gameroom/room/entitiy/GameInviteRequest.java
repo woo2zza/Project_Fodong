@@ -8,6 +8,7 @@ public class GameInviteRequest {
     private String fromProfileId; // 초대를 보내는 사용자 ID
     private String toProfileId; // 초대받는 사용자 ID
     private String sessionId; // 방장이 만든 게임방 세션 ID
+    private String action;
 
 
     public GameInviteRequest(String toAccountEmail,String fromProfileId, String toProfileId , String sessionId) {
