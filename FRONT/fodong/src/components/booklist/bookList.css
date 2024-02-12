@@ -33,14 +33,19 @@ label:hover {
 }
 
 .viewPaper {
-  padding: 5rem;
+  padding: 5rem 8rem;
   background-image: url("../main/image/테두리 배경1.PNG");
   border-radius: 30px;
-  margin: 3rem 8rem 5rem 8rem;
+  margin: 3rem 12rem 5rem 12rem;
   background-size: cover;
   background-repeat: no-repeat;
-  display: flex;
   justify-content: center;
+}
+@media (max-width: 768px) {
+  .viewPaper {
+    margin: 3rem 1rem; /* 좌우 마진을 줄입니다 */
+    padding: 5rem 1rem; /* 패딩도 조정할 수 있습니다 */
+  }
 }
 
 .cardListView.listView .cardItem {

@@ -25,6 +25,7 @@ function EditModal({ open, setOpen, profile, onEditProfile }) {
             value={newNickname}
             onChange={(e) => setNewNickname(e.target.value)}
             placeholder="닉네임"
+            color="black"
           />
         </Typography>
         {/* 이미지 업로드 필드 추가 필요 (선택 사항) */}
