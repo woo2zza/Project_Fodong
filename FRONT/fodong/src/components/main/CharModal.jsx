@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Webcam from "react-webcam";
 import { useNavigate } from "react-router-dom";
+import { createGameRoomSession } from "../../api/multi";
+import multiStoryStore from "../../store/multiStoryStore.js";
 
 const API_URL = process.env.REACT_APP_API_URL;
 const API_BASE_URL = `${API_URL}/books`;
@@ -38,8 +40,20 @@ const CharModal = ({ isOpen, closeModal, book }) => {
   console.log(selectBook, "dfadsfasdfads");
   if (!isOpen) return null; // isOpen이 false이면 모달을 렌더링하지 않음
 
-  const goToStory = () => {
-    Navi("/sockettest");
+  const handleGoStory = () => {
+    goToStory();
+  };
+  const goToStory = async () => {
+    // zustand 활용  중앙 상태 저장소에 sessionId 저장
+    try {
+      const response = await createGameRoomSession(token);
+      console.log(response);
+      // console.log("이거: " + response + "& " + response.sessionId);
+      multiStoryStore.getState().setSessionId(response.sessionId);
+      Navi("/multi");
+    } catch (error) {
+      console.error("Game room session creation failed: ", error);
+    }
   };
   // isOpen이 true일 때 모달 컨텐츠 렌더링
   return (
@@ -69,7 +83,7 @@ const CharModal = ({ isOpen, closeModal, book }) => {
             }}
           ></Webcam>
         </div>
-        <div className="enter_button" onClick={goToStory}>
+        <div className="enter_button" onClick={handleGoStory}>
           동화구연 준비
         </div>
         <div className="modal_button" onClick={closeModal}>

@@ -37,6 +37,7 @@ function Friends() {
 
   const token = userStore((state) => state.token);
   const profileId = userStore((state) => state.profileId);
+  // console.log(profileId);
   const { stompClient } = useSocket(); // useSocket 훅에서 stompClient 가져오기
   const [friends, setFriends] = useState([]);
   const handleToggle = () => setOpen(!open);
@@ -163,15 +164,8 @@ function Friends() {
 
   // useEffect 내 친구 요청 수신 로직 수정...
   useEffect(() => {
-    const fetchFriends = async () => {
-      const friendsData = await getFriends(profileId, token);
-      setFriends(friendsData);
-      console.log(friends);
-    };
-
-    fetchFriends();
-
     if (stompClient) {
+      console.log("여기 맞음");
       const friendRequestSubscription = stompClient.subscribe(
         "/toClient/friend-request-response",
         (message) => {
@@ -198,6 +192,17 @@ function Friends() {
       };
     }
   }, [stompClient, profileId]); // profileId 의존성 추가
+
+  // 이 부분 고쳐야 해!!
+  useEffect(() => {
+    const fetchFriends = async () => {
+      const friendsData = await getFriends(profileId, token);
+      setFriends(friendsData);
+      console.log(friends);
+    };
+
+    fetchFriends();
+  }, [stompClient]);
 
   // UI 렌더링 부분...
   return (
