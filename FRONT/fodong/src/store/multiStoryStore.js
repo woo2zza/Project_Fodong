@@ -11,4 +11,4 @@ const multiStoryStore = create((set) => ({
   // resetStompClient: () => set({ isStompClient: false }),
 }));
 
-export default multiStoryStore;
+export { multiStoryStore };

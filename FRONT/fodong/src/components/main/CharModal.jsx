@@ -1,10 +1,10 @@
 import "./mainStyle.css"; // 모달 스타일을 정의한 CSS 파일
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Webcam from "react-webcam";
 import { useNavigate } from "react-router-dom";
 import { createGameRoomSession } from "../../api/multi";
-import multiStoryStore from "../../store/multiStoryStore.js";
+import { multiStoryStore } from "../../store/multiStoryStore.js";
 
 const API_URL = process.env.REACT_APP_API_URL;
 const API_BASE_URL = `${API_URL}/books`;
@@ -39,9 +39,9 @@ const CharModal = ({ isOpen, closeModal, book }) => {
   }, [accountId, token]);
   if (!isOpen) return null; // isOpen이 false이면 모달을 렌더링하지 않음
 
-  const handleGoMultiStory = () => {
-    goMultiStory();
-  };
+  // const handleGoMultiStory = () => {
+  //   goMultiStory();
+  // };
   const goMultiStory = async () => {
     // zustand 활용  중앙 상태 저장소에 sessionId 저장
     try {
@@ -90,7 +90,7 @@ const CharModal = ({ isOpen, closeModal, book }) => {
           <div className="enter_button" onClick={goSingleStory}>
             혼자하기
           </div>
-          <div className="enter_button" onClick={handleGoMultiStory}>
+          <div className="enter_button" onClick={goMultiStory}>
             같이하기
           </div>
           <div className="enter_button" onClick={goReadBook}>
