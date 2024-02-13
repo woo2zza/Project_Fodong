@@ -7,6 +7,8 @@ export default function OpenViduVideoComponent({ streamManager }) {
     if (streamManager && videoRef.current) {
       streamManager.addVideoElement(videoRef.current);
     }
+    console.log("여기 테스트 : ");
+    console.log(streamManager ? true : false);
   }, [streamManager]);
 
   return <video autoPlay={true} ref={videoRef} />;

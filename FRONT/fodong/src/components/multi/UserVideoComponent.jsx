@@ -8,7 +8,7 @@ export default function UserVideoComponent({ streamManager }) {
   };
 
   return (
-    <div>
+    <div className="stream-container">
       {streamManager !== undefined ? (
         <div className="streamcomponent">
           <OpenViduVideoComponent streamManager={streamManager} />

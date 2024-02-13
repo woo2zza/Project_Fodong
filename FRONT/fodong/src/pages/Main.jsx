@@ -7,23 +7,19 @@ import Buttons from "../components/main/buttons";
 import ScrollBook from "../components/main/scrollBook";
 import Title from "../components/main/Title";
 import FreindsToggler from "../components/main/Friends";
-import { userStore } from "../store/userStore";
+// import { userStore } from "../store/userStore";
 import "./pages.css";
 // Main 컴포넌트
 
 <click-spark></click-spark>;
 const Main = () => {
-  const user_profileId = userStore.getState().profileId;
   // 진명, 소켓연결 추가한 부분 확인필요
   const { stompClient, connect, disconnect, sessionId, isGameAccepted } =
     useSocket();
 
   useEffect(() => {
-    console.log(user_profileId, " 여기여기");
-    if (user_profileId) {
-      connect();
-    }
-  }, [user_profileId]);
+    connect();
+  }, [connect, disconnect]);
   //////////////////////////////////////
 
   const Navi = useNavigate();
@@ -32,7 +28,7 @@ const Main = () => {
     if (sessionId && isGameAccepted) {
       Navi(`/multi/${sessionId}`);
     }
-  }, []);
+  }, [sessionId, isGameAccepted, Navi]);
   return (
     <div className="main_container">
       <div className="fixedTop">
