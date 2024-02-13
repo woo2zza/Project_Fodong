@@ -10,12 +10,13 @@ const StoryRoom = ({ isStart, sessionId, profileId, toggleState }) => {
   // const [sessionId, setSessionId] = useState(sessionId);
   console.log(isStart, sessionId, profileId);
   const [playState, setPlayState] = useState(isStart);
-  const myUserName = userStore((state) => state.userNickname);
   const [session, setSession] = useState(undefined);
   const [mainStreamManager, setMainStreamManager] = useState(undefined);
   const [publisher, setPublisher] = useState(undefined);
   const [subscribers, setSubscribers] = useState([]);
   const [currentVideoDevice, setCurrentVideoDevice] = useState(null);
+  const [nickname, setNickName] = useState(null);
+  const myUserName = userStore((state) => state.nickname);
 
   const handleToggleState = async (event) => {
     event.preventDefault();
@@ -59,6 +60,7 @@ const StoryRoom = ({ isStart, sessionId, profileId, toggleState }) => {
     if (session) {
       // Get a token from the OpenVidu deployment
       getToken().then(async (token) => {
+        console.log(myUserName);
         try {
           await session.connect(token, { clientData: myUserName });
 
@@ -87,7 +89,7 @@ const StoryRoom = ({ isStart, sessionId, profileId, toggleState }) => {
             (device) => device.deviceId === currentVideoDeviceId
           );
 
-          setMainStreamManager(publisher);
+          // setMainStreamManager(publisher);
           setPublisher(publisher);
           setCurrentVideoDevice(currentVideoDevice);
         } catch (error) {
@@ -100,6 +102,11 @@ const StoryRoom = ({ isStart, sessionId, profileId, toggleState }) => {
       });
     }
   }, [session]);
+
+  // useEffect(() => {
+  //   setNickName(myUserName);
+  //   console.log(myUserName)
+  // }, [myUserName]);
 
   const leaveSession = useCallback(() => {
     // Leave the session
@@ -242,12 +249,12 @@ const StoryRoom = ({ isStart, sessionId, profileId, toggleState }) => {
             />
           </div>
 
-          {mainStreamManager !== undefined ? (
+          {/* {mainStreamManager !== undefined ? (
             <div id="main-video" className="col-md-6">
               <h1>메인</h1>
               <UserVideoComponent streamManager={mainStreamManager} />
             </div>
-          ) : null}
+          ) : null} */}
           <div id="video-container" className="col-md-6">
             {publisher !== undefined ? (
               <div
