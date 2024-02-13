@@ -34,6 +34,15 @@ function Face({ page, width }) {
           left = width > 1024 ? "70%" : "74%";
         }
         break;
+      case 3:
+        if (index === 1) {
+          bottom =  width > 1024 ? "32%" : "42.3%";
+          left = width > 1024 ? "66%" : "69.5%";
+        } else if (index === 2) {
+          bottom = width > 1024 ? "35%" : "45%";
+          left = width > 1024 ? "23%" : "22%";
+        }
+        break;
       // 다른 페이지 번호에 대한 조건을 추가할 수 있습니다.
       default:
         bottom = "100px"; // 기본값

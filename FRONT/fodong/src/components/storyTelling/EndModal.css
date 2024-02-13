@@ -28,7 +28,7 @@
     cursor: pointer;
   }
   
-  @media (min-width: 768px) {
+  @media (min-width: 1024) {
     .modal {
       width: 40%; /* 태블릿과 데스크탑에서는 화면 너비의 40% */
     }
@@ -42,7 +42,7 @@
     }
   }
   
-  @media (min-width: 1024px) {
+  @media (max-width: 1024px) {
     .modal {
       width: 30%; /* 데스크탑에서는 화면 너비의 30% */
     }
