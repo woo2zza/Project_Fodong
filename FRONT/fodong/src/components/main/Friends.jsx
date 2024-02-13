@@ -216,16 +216,17 @@ function Friends() {
         <PersonAddIcon />
       </Fab>
       <Slide direction="up" in={open} mountOnEnter unmountOnExit>
-        <Paper
+        <paper
+          className="Paper"
           elevation={4}
           style={{
             position: "fixed",
-            bottom: 80,
-            right: 16,
+            bottom: 100,
+            right: 20,
             width: 300,
             maxHeight: "80%",
             overflow: "auto",
-            padding: "16px",
+            padding: "20px",
             zIndex: 1050,
           }}
         >
@@ -239,6 +240,7 @@ function Friends() {
           <List>
             {friends.map((friend, index) => (
               <ListItem
+                className="ListItem"
                 key={friend.profileId}
                 secondaryAction={
                   <IconButton
@@ -256,16 +258,22 @@ function Friends() {
             ))}
           </List>
           <TextField
+            className="TextField"
             label="친구 추가"
             value={nickname}
             onChange={handleSearch}
             fullWidth
           />
-          <Button onClick={handleAddFriend} style={{ marginTop: 8 }}>
+          <Button
+            className="Friend-button"
+            onClick={handleAddFriend}
+            style={{ marginTop: 8 }}
+          >
             추가
           </Button>
           {showPopup && (
             <List
+              className="friend-item"
               style={{
                 position: "absolute",
                 width: "100%",
@@ -286,10 +294,10 @@ function Friends() {
               ))}
             </List>
           )}
-        </Paper>
+        </paper>
       </Slide>
 
-      <Dialog open={openModal} onClose={handleCloseModal}>
+      <Dialog className="Dialog" open={openModal} onClose={handleCloseModal}>
         <DialogTitle>친구 요청</DialogTitle>
         <DialogContent>
           <DialogContentText>

@@ -7,26 +7,27 @@ const Buttons = () => {
   const [activeAnimation, setActiveAnimation] = useState(null);
   const imagePaths = ["rabbit.png", "penguin.png"];
   const linkPaths = ["/booklist", "/album"];
-  const alts = ["rabbit", "penguin"];
+  const alts = ["List", "Album"];
 
   const handleButtonClick = (index) => {
     setActiveAnimation(index); // 애니메이션 활성화
     setTimeout(() => {
       setActiveAnimation(null); // 애니메이션 비활성화
-    }, 1000); // 1초 후에 애니메이션 비활성화
+    }, 1000);
   };
   return (
     <div className="button_container">
       {imagePaths.map((image, index) => (
         <Link to={linkPaths[index]} key={index} className="styledLink">
-          <img
+          {/* <img
             src={require(`./image/${image}`)}
             alt={alts[index]}
             className={`imageButton ${
               activeAnimation === index ? "fireworks-animation" : ""
             }`}
             onClick={() => handleButtonClick(index)}
-          />
+          /> */}
+          <button className="main-buttons">{alts[index]}</button>
         </Link>
       ))}
     </div>
