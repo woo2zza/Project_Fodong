@@ -7,7 +7,9 @@ import Buttons from "../components/main/buttons";
 import ScrollBook from "../components/main/scrollBook";
 import Title from "../components/main/Title";
 import FreindsToggler from "../components/main/Friends";
+
 // import { userStore } from "../store/userStore";
+
 import "./pages.css";
 // Main 컴포넌트
 
@@ -29,6 +31,7 @@ const Main = () => {
       Navi(`/multi/${sessionId}`);
     }
   }, [sessionId, isGameAccepted, Navi]);
+
   return (
     <div className="main_container">
       <div className="fixedTop">
