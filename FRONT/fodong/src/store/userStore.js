@@ -12,6 +12,7 @@ const userStore = create(
       setProfileId: (profileId) => set({ profileId }),
       setNickname: (nickname) => set({ nickname }),
       setAccountEmail: (accountEmail) => set({ accountEmail }),
+      clearProfileId: () => set({ profileId: null }),
       //getToken 메서드는 필요 없음; 상태를 직접 선택하여 사용 가능
     }),
     {

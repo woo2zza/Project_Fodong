@@ -20,7 +20,10 @@ function ProfileComponent() {
 
   useEffect(() => {
     fetchProfiles();
-  }, []);
+    userStore.getState().clearProfileId();
+    console.log(userStore.getState().profileId);
+  }, [userStore.getState().profileId]);
+
   const token = localStorage.getItem("Token");
   const config = {
     headers: {
@@ -96,6 +99,7 @@ function ProfileComponent() {
   const handleClick = (profileId, nickname) => {
     userStore.getState().setProfileId(profileId);
     userStore.getState().setNickname(nickname);
+
     navigate("/main");
   };
 

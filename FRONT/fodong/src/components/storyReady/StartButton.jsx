@@ -7,8 +7,8 @@ const StartButton = ({ style }) => {
       <div style={style}>
         <Link to="/storytelling/1">
           <img
-            style={{ maxWidth: "100px", maxHeight: "100px" }}
-            src={require(`./img/start1.png`)}
+            style={{ maxWidth: "100px", maxHeight: "100px", borderRadius: "50%" }}
+            src={require(`./img/start.jpg`)}
             alt="startbutton"
           />
         </Link>

@@ -9,12 +9,19 @@ import {
 import { useForm } from "../hooks/useForm";
 import { signup } from "../api/signup";
 import { useNavigate } from "react-router-dom";
+import { userStore } from "../store/userStore";
+import { useEffect } from "react";
 // import { userStore } from "../store/userStore";
 const Signup = () => {
   const navigate = useNavigate();
   const [pwd, onChangePwd] = useForm();
   const [email, onChangeEmail] = useForm();
   // const setToken = userStore((state) => state.setToken);
+
+  useEffect(() => {
+    userStore.getState().clearProfileId();
+    console.log(userStore.getState().profileId);
+  }, []);
 
   const onClick = async () => {
     try {
