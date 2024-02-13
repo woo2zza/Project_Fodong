@@ -3,20 +3,12 @@ import { userStore } from "../../store/userStore.js";
 import axios from "axios";
 import { OpenVidu } from "openvidu-browser";
 import UserVideoComponent from "./UserVideoComponent";
-import { useSocket } from "../../contexts/SocketContext.js";
 
 const APPLICATION_SERVER_URL = process.env.REACT_APP_API_URL;
 // openVidu
-const StoryRoom = ({
-  isStart,
-  mySessionId,
-  profileId,
-  toggleState,
-  isMove,
-  sendStartRequest,
-}) => {
+const StoryRoom = ({ isStart, mySessionId, profileId, toggleState }) => {
   // const [sessionId, setSessionId] = useState(sessionId);
-  // console.log(mySessionId, profileId);
+  console.log(mySessionId, profileId);
   const [playState, setPlayState] = useState(false);
   const [session, setSession] = useState(undefined);
   const [mainStreamManager, setMainStreamManager] = useState(undefined);
@@ -24,13 +16,13 @@ const StoryRoom = ({
   const [subscribers, setSubscribers] = useState([]);
   const [currentVideoDevice, setCurrentVideoDevice] = useState(null);
   const [nickname, setNickName] = useState(null);
-
-  // 고칠 부분!! => nickname 이거 mapping 시켜서 렌더링 되도록 바꾸기!!
   const [myUserName, setMyUserName] = useState(
     userStore((state) => state.nickaname)
   );
+  // const myUserName = userStore((state) => state.nickname);
 
   const OV = useRef(new OpenVidu()); // useRef 개념..
+  // console.log(OV);
 
   const handleMainVideoStream = useCallback(
     (stream) => {
@@ -42,34 +34,9 @@ const StoryRoom = ({
   );
 
   // JOIN 세션
-  // const joinSession = useCallback(
-  //   (event) => {
-  //     event.preventDefault();
-  //     if (isMove){
-  //       const mySession = OV.current.initSession();
-
-  //       mySession.on("streamCreated", (event) => {
-  //         const subscriber = mySession.subscribe(event.stream, undefined);
-  //         setSubscribers((subscribers) => [...subscribers, subscriber]);
-  //       });
-
-  //       mySession.on("streamDestroyed", (event) => {
-  //         deleteSubscriber(event.stream.streamManager);
-  //       });
-
-  //       mySession.on("exception", (exception) => {
-  //         console.warn(exception);
-  //       });
-
-  //       setSession(mySession);
-  //       setPlayState((prev) => true);
-  //       toggleState((state) => true);
-  //     }
-  //   },
-  //   [playState, isMove]
-  // );
-  const joinSession = useEffect(() => {
-    if (isMove && isStart) {
+  const joinSession = useCallback(
+    (event) => {
+      event.preventDefault();
       const mySession = OV.current.initSession();
 
       mySession.on("streamCreated", (event) => {
@@ -87,9 +54,9 @@ const StoryRoom = ({
 
       setSession(mySession);
       setPlayState((prev) => true);
-      // toggleState((state) => true);
-    }
-  }, [isMove, isStart]);
+    },
+    [playState]
+  );
 
   useEffect(() => {
     setPlayState(isStart);
@@ -160,8 +127,6 @@ const StoryRoom = ({
     setSubscribers([]);
     setMainStreamManager(undefined);
     setPublisher(undefined);
-
-    toggleState((state) => false);
   }, [session]);
 
   const switchCamera = useCallback(async () => {
@@ -222,11 +187,6 @@ const StoryRoom = ({
     };
   }, [leaveSession]);
 
-  const handleSendStartRequest = (event) => {
-    event.preventDefault();
-    sendStartRequest();
-  };
-
   /**
    * --------------------------------------------
    * GETTING A TOKEN FROM YOUR APPLICATION SERVER
@@ -274,25 +234,6 @@ const StoryRoom = ({
     return response.data; // The token
   };
 
-  /* 여기서 부터 socket 이용한 상태 공유 코드 */
-  // const { stompClient } = useSocket();
-  // const sendStartRequest = (event) => {
-  //   event.preventDefault();
-  //   const readyRequestPayload = {
-  //     roomSession: {
-  //       sessionId: mySessionId,
-  //     },
-  //     isStart: true,
-  //   };
-  //   stompClient.send(
-  //     "/toServer/readyGame",
-  //     {},
-  //     JSON.stringify(readyRequestPayload)
-  //   );
-  //   // 여기서 딱히 set함수들 해줄 필요 없을 듯??
-  //   console.log(readyRequestPayload);
-  // };
-
   return (
     <div>
       {!playState ? (
@@ -300,9 +241,7 @@ const StoryRoom = ({
           <div id="join-dialog">
             <h1>동화 만들기~</h1>
 
-            {/* <form className="form-group" onSubmit={joinSession}> */}
-            {/* <form className="form-group" onSubmit={sendStartRequest}> */}
-            <form className="form-group" onSubmit={handleSendStartRequest}>
+            <form className="form-group" onSubmit={joinSession}>
               <p className="text-center">
                 <input
                   className="btn btn-lg btn-success"

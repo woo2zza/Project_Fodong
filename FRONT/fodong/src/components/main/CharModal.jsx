@@ -45,7 +45,7 @@ const CharModal = ({ isOpen, closeModal, book }) => {
   const goMultiStory = async () => {
     // zustand 활용  중앙 상태 저장소에 sessionId 저장
     try {
-      const response = await createGameRoomSession(token);
+      const response = await createGameRoomSession(book.bookId, token);
       console.log(response);
       // console.log("이거: " + response + "& " + response.sessionId);
       multiStoryStore.getState().setSessionId(response.sessionId);
