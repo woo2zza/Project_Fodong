@@ -18,36 +18,36 @@ const getCharacterStyles = (page, width) => {
       antCharater: {
         ...baseStyle,
         bottom: "0px",
-        right: width > 768 ? "220px" : "10%",
+        right:  "10%",
       },
       grasshopperCharater: {
         ...baseStyle,
         bottom: "0px",
-        left: width > 768 ? "20px" : "10%",
+        left: "10%",
       },
     },
     2: {
       antCharater: {
         ...baseStyle,
-        bottom: "20px",
-        right: width > 768 ? "20px" : "10%",
+        bottom: "-5%",
+        right:  "2%",
       },
       grasshopperCharater: {
         ...baseStyle,
-        bottom: "20px",
-        left: width > 768 ? "320px" : "10%",
+        bottom: "0px",
+        left:  "10%",
       },
     },
     3: {
       antCharater: {
         ...baseStyle,
         bottom: "0px",
-        left: width > 768 ? "420px" : "10%",
+        left:  "10%",
       },
       grasshopperCharater: {
         ...baseStyle,
         bottom: "0px",
-        right: width > 768 ? "120px" : "10%",
+        right:  "10%",
       },
     },
     // 다른 페이지에 대한 스타일을 계속 추가
