@@ -66,7 +66,7 @@ const Page = ({ onPageChange }) => {
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 추가
 
   useEffect(() => {
-    console.log(15, pageParam);
+    // console.log(15, pageParam);
     const imgeUrl = require(`../../../public/img/antstory/background/${pageParam}.jpg`);
     setImageSrc(imgeUrl);
   }, [pageParam]);
@@ -105,7 +105,7 @@ const Page = ({ onPageChange }) => {
 
   const handleNextPage = () => {
     const nextPage = page + 1;
-    console.log(28, page);
+    // console.log(28, page);
     if (nextPage <= DummyScript.length) {
       navigate(`/storytelling/${nextPage}`);
       // setPage(nextPage);
