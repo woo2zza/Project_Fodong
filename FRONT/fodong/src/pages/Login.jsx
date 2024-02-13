@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { login } from "../api/login";
 import { useNavigate } from "react-router-dom";
 import {
@@ -8,6 +8,7 @@ import {
   Inputs,
   Form,
 } from "../components/Common";
+import { userStore } from "../store/userStore";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -23,6 +24,11 @@ const Home = () => {
     setPwd(event.target.value);
     console.log(event.target.value);
   };
+
+  useEffect(() => {
+    userStore.getState().clearProfileId();
+    console.log(userStore.getState().profileId);
+  }, []);
 
   const onClick = async (e) => {
     e.preventDefault();
