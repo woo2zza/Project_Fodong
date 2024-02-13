@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import CharModal from "../main/CharModal";
 import "./bookList.css";
 import axios from "axios";
 import BookItem from "./BookItem";
@@ -9,6 +9,9 @@ const API_BASE_URL = `${API_URL}`;
 function App() {
   const [viewMode, setViewMode] = useState("listView");
   const [profiles, setProfiles] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태
+  const [selectedBook, setSelectedBook] = useState(null); // 선택된 책
+
   const token = localStorage.getItem("Token");
   const config = {
     headers: {
@@ -29,6 +32,16 @@ function App() {
       .catch((error) => {
         console.error("서버 요청 실패:", error);
       });
+  };
+
+  const openModal = (book) => {
+    setSelectedBook(book);
+    setIsModalOpen(true);
+  };
+
+  // 모달 닫기 함수
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -61,10 +74,22 @@ function App() {
       <section className={`viewPaper viewShadowLarge ${viewMode}`}>
         <ul className={`cardListView ${viewMode}`}>
           {profiles.map((book) => (
-            <BookItem key={book.bookId} book={book} viewMode={viewMode} />
+            <BookItem
+              key={book.bookId}
+              book={book}
+              viewMode={viewMode}
+              onBookSelect={openModal}
+            />
           ))}
         </ul>
       </section>
+      {isModalOpen && (
+        <CharModal
+          isOpen={isModalOpen}
+          closeModal={closeModal}
+          book={selectedBook}
+        />
+      )}
     </div>
   );
 }
