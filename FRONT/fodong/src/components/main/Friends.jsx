@@ -179,6 +179,8 @@ function Friends() {
               fromProfileId: notification.fromProfileId,
               toProfileId: notification.toProfileId,
               message: notification.message,
+              fromNickname: notification.fromNickname,
+              toNickname: notification.toNickname,
             };
             handleOpenModal(requestInfo);
           } else {
@@ -302,7 +304,7 @@ function Friends() {
         <DialogContent>
           <DialogContentText>
             {friendRequest
-              ? `${friendRequest.fromProfileId}님으로부터 친구 요청이 왔습니다.`
+              ? `${friendRequest.fromNickname}님으로부터 친구 요청이 왔습니다.`
               : ""}
           </DialogContentText>
         </DialogContent>
