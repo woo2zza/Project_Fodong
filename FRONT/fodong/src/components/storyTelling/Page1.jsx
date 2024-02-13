@@ -18,7 +18,7 @@ const getCharacterStyles = (page, width) => {
       antCharater: {
         ...baseStyle,
         bottom: "0px",
-        right:  "10%",
+        right: "10%",
       },
       grasshopperCharater: {
         ...baseStyle,
@@ -30,24 +30,24 @@ const getCharacterStyles = (page, width) => {
       antCharater: {
         ...baseStyle,
         bottom: "-5%",
-        right:  "2%",
+        right: "2%",
       },
       grasshopperCharater: {
         ...baseStyle,
         bottom: "0px",
-        left:  "10%",
+        left: "10%",
       },
     },
     3: {
       antCharater: {
         ...baseStyle,
         bottom: "0px",
-        left:  "10%",
+        left: "10%",
       },
       grasshopperCharater: {
         ...baseStyle,
         bottom: "0px",
-        right:  "10%",
+        right: "10%",
       },
     },
     // 다른 페이지에 대한 스타일을 계속 추가
@@ -64,6 +64,11 @@ const Page = ({ onPageChange }) => {
   const { antCharater, grasshopperCharater } = getCharacterStyles(page);
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 추가
+
+  const [activeVideoStream, setActiveVideoStream] = useState(null);
+  const [activeAudioStream, setActiveAudioStream] = useState(null);
+  //   let activeVideoStream = null;
+  // let activeAudioStream = null;
 
   useEffect(() => {
     // console.log(15, pageParam);
@@ -125,25 +130,36 @@ const Page = ({ onPageChange }) => {
   };
   // ;}
 
-  // 녹화 시작 함수
   const startRecording = async () => {
     try {
-      const mediaConstraints = { video: true, audio: true }; // 오디오 추가 가능
-      const stream = await navigator.mediaDevices.getDisplayMedia(
-        mediaConstraints
-      );
-      const newRecorder = new RecordRTC(stream, {
+      const videoStream = await navigator.mediaDevices.getDisplayMedia({
+        video: true,
+      });
+      const audioStream = await navigator.mediaDevices.getUserMedia({
+        audio: true,
+      });
+      // 오디오 트랙을 비디오 스트림에 추가합니다.
+      audioStream
+        .getAudioTracks()
+        .forEach((track) => videoStream.addTrack(track));
+
+      // 현재 활성화된 비디오 스트림과 오디오 스트림을 각각 저장합니다.
+      setActiveVideoStream(videoStream);
+      setActiveAudioStream(audioStream);
+      //     activeAudioStream = audioStream;
+      //  console.log(activeVideoStream)
+      //  console.log(activeAudioStream)
+      const newRecorder = new RecordRTC(videoStream, {
         type: "video",
-        mimeType: "video/webm",
+        mimeType: "video/webm;codecs=vp8,opus",
       });
       newRecorder.startRecording();
-      setRecorder(newRecorder);
+      setRecorder(newRecorder); // 상태 또는 변수에 레코더를 저장하는 함수를 호출합니다.
     } catch (error) {
       console.error("녹화 시작 중 오류 발생:", error);
     }
   };
-
-  // 녹화 중지 및 저장 함수
+  console.log(activeAudioStream);
   const stopRecording = () => {
     if (recorder) {
       recorder.stopRecording(() => {
@@ -156,6 +172,21 @@ const Page = ({ onPageChange }) => {
         a.download = "recorded_video.webm";
         a.click();
         window.URL.revokeObjectURL(url);
+        console.log(activeAudioStream, activeVideoStream);
+        // 비디오 스트림의 모든 트랙을 종료합니다.
+        if (activeVideoStream) {
+          activeVideoStream.getTracks().forEach((track) => track.stop());
+          console.log(activeVideoStream.getTracks());
+          // activeVideoStream = null;
+          setActiveVideoStream(null);
+        }
+
+        // 오디오 스트림의 모든 트랙을 종료합니다.
+        if (activeAudioStream) {
+          activeAudioStream.getTracks().forEach((track) => track.stop());
+          // activeAudioStream = null;
+          setActiveAudioStream(null);
+        }
       });
     }
   };
@@ -197,8 +228,8 @@ const Page = ({ onPageChange }) => {
         className="grasshopperCharacter"
         style={grasshopperCharater}
       />
-      {/* <button onClick={startRecording}>녹화 시작</button> */}
-      {/* <button onClick={stopRecording}>녹화 중지</button> */}
+      <button onClick={startRecording}>녹화 하기</button>
+      <button onClick={stopRecording}>녹화 중지</button>
       <button style={buttonStyle("right")} onClick={handleNextPage}>
         {">"}
       </button>

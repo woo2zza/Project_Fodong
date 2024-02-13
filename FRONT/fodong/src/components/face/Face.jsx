@@ -57,8 +57,8 @@ function Face({ page, width }) {
       await faceapi.nets.tinyFaceDetector.loadFromUri("../models");
       console.log("해줘");
       await faceapi.nets.faceLandmark68Net.loadFromUri("../models");
-      await faceapi.nets.faceRecognitionNet.loadFromUri("../models");
-      await faceapi.nets.faceExpressionNet.loadFromUri("../models");
+      // await faceapi.nets.faceRecognitionNet.loadFromUri("../models");
+      // await faceapi.nets.faceExpressionNet.loadFromUri("../models");
       startVideo(); // 모델 로딩 후 비디오 스트림을 시작
     };
     // 모델 로딩 함수를 실행
@@ -91,7 +91,7 @@ function Face({ page, width }) {
         let detections = await faceapi // face-api.js를 사용하여 비디오에서 얼굴을 감지
           .detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
           .withFaceLandmarks()
-          .withFaceExpressions();
+          // .withFaceExpressions();
 
         // 감지된 얼굴을 x좌표 기준으로 정렬합니다.
         detections = detections.sort(
@@ -158,7 +158,6 @@ function Face({ page, width }) {
         width="1"
         height="1"
         autoPlay
-        muted
         style={{ position: "absolute", top: "1px" }}
       />
       <canvas ref={canvasRef} style={{ position: "absolute" }} />
