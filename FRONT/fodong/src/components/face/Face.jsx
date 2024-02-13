@@ -27,11 +27,11 @@ function Face({ page, width }) {
         break;
       case 2:
         if (index === 1) {
-          bottom = "20px";
-          left = width > 768 ? "320px" : "50%";
+          bottom =  width > 1024 ? "25%" : "32%";
+          left = width > 1024 ? "21%" : "20.6%";
         } else if (index === 2) {
-          bottom = "20px";
-          left = width > 768 ? "420px" : "70%";
+          bottom = width > 1024 ? "29%" : "38%";
+          left = width > 1024 ? "70%" : "74%";
         }
         break;
       // 다른 페이지 번호에 대한 조건을 추가할 수 있습니다.
