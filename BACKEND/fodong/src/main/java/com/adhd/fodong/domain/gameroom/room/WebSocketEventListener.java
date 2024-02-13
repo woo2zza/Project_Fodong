@@ -18,6 +18,8 @@ public class WebSocketEventListener {
     public void handleWebSocketConnectListener(SessionConnectEvent event) {
         SimpMessageHeaderAccessor headers = SimpMessageHeaderAccessor.wrap(event.getMessage());
         String profileId = headers.getFirstNativeHeader("profileId"); // 여기서 사용자 ID를 얻는 방식은 프로젝트에 따라 다를 수 있습니다.
+        System.out.println("소켓 연결 시 받은 프로필 ID" + profileId );
+
         String sessionId = headers.getSessionId();
         sessionUserMap.put(sessionId, profileId);
         userSessionMap.put(profileId, sessionId);
