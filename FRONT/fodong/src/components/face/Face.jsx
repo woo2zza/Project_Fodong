@@ -17,21 +17,30 @@ function Face({ page, width }) {
       case 1:
         if (index === 1) {
           // antCharacter 스타일
-          bottom = width > 1024 ? "30%" : "37%";
-          left = width > 1024 ? "17%" : "17%";
+          bottom = width > 2499 ? "30%" : "35%";
+          left = width > 2499 ? "17%" : "16%";
         } else if (index === 2) {
           // grasshopperCharacter 스타일
-          bottom = width > 1024 ? "36%" : "45%";
-          left = width > 1024 ? "60%" : "66%";
+          bottom = width > 2499 ? "36%" : "44%";
+          left = width > 2499 ? "60%" : "64%";
         }
         break;
       case 2:
         if (index === 1) {
-          bottom =  width > 1024 ? "25%" : "32%";
-          left = width > 1024 ? "21%" : "20.6%";
+          bottom =  width > 2499 ? "25%" : "32%";
+          left = width > 2499 ? "21%" : "19%";
         } else if (index === 2) {
-          bottom = width > 1024 ? "29%" : "38%";
-          left = width > 1024 ? "70%" : "74%";
+          bottom = width > 2499 ? "29%" : "36%";
+          left = width > 2499 ? "70%" : "73%";
+        }
+        break;
+      case 3:
+        if (index === 1) {
+          bottom =  width > 2499 ? "32%" : "39%";
+          left = width > 2499 ? "66%" : "68.5%";
+        } else if (index === 2) {
+          bottom = width > 2499 ? "35%" : "41%";
+          left = width > 2499 ? "23%" : "21%";
         }
         break;
       // 다른 페이지 번호에 대한 조건을 추가할 수 있습니다.
@@ -70,7 +79,7 @@ function Face({ page, width }) {
 
   useEffect(() => {
     if (videoStream) {
-      console.log("1");
+      // console.log("1");
       // videoStream이 설정되었는지 확인
       const video = videoRef.current;
       const canvas = canvasRef.current;
@@ -108,7 +117,7 @@ function Face({ page, width }) {
 
   async function extractFaceFromBox(inputImage, box, index) {
     // 얼굴 이미지를 추출하고 상태에 저장하는 함수
-    console.log("2");
+    // console.log("2");
     const regionsToExtract = [
       new faceapi.Rect(box.x, box.y, box.width, box.height),
     ];

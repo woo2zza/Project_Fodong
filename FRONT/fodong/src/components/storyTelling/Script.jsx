@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import "./StoryTelling.css";
 import DummyScript from "./DummyScript";
 import { useParams, useNavigate } from "react-router-dom";
+import StoryEndModal from "./StoryEndModal";
 
 const Script = ({ scriptPage, setScriptPage }) => {
   const { page: pageParam } = useParams();
@@ -12,6 +13,7 @@ const Script = ({ scriptPage, setScriptPage }) => {
   // console.log(page);
   const [script, setScript] = useState(DummyScript[page - 1][scriptIndex].text);
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // const [prevPage, setPrevPage] = useState(page)
 
@@ -20,7 +22,7 @@ const Script = ({ scriptPage, setScriptPage }) => {
     // }, [scriptIndex, page]);
 
     const numPage = parseInt(pageParam, 10);
-    console.log(numPage);
+    // console.log(numPage);
     if (numPage !== page) {
       setPage(numPage);
     
@@ -45,9 +47,14 @@ const Script = ({ scriptPage, setScriptPage }) => {
   const handleNextScript = () => {
     const scriptLength = DummyScript[page - 1].length;
     console.log(scriptIndex)
+    console.log(page)
+    console.log(scriptLength)
     if (scriptIndex + 1 < scriptLength) {
       setScriptIndex((idx) => idx + 1);
-    } else if (page < DummyScript.length) {
+    } else if (page === DummyScript.length && scriptIndex === scriptLength -1) {
+      showModal();
+    }
+    else if (page < DummyScript.length) {
       // console.log(scriptIndex)
       // console.log(page )
       // console.log(setPage)
@@ -56,8 +63,13 @@ const Script = ({ scriptPage, setScriptPage }) => {
       setPage(nextPage);
       setScriptIndex(0);
       setScript(DummyScript[nextPage - 1][0].text);
-    }
+    } 
   };
+
+  const showModal = () => {
+    console.log(123123)
+    setIsModalOpen(true); 
+  }
 
   // console.log(script);
   return (
@@ -70,6 +82,7 @@ const Script = ({ scriptPage, setScriptPage }) => {
           <button className="story_button" onClick={handleNextScript}>
             다음
           </button>
+          {isModalOpen && <StoryEndModal onClose={() => setIsModalOpen(false)} />}
         </div>
       </div>
     // </div>
