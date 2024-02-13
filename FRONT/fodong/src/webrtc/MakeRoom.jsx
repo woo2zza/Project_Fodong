@@ -8,7 +8,8 @@ import UserVideoComponent from "./UserVideoComponent";
 //
 // const APPLICATION_SERVER_URL = "https://i10c109.p.ssafy.io/api/v1/";
 // const APPLICATION_SERVER_URL = "http://192.168.100.91:8080/api/v1/";
-const APPLICATION_SERVER_URL = "http://localhost:8080/api/v1/";
+// const APPLICATION_SERVER_URL = "http://localhost:8080/api/v1/";
+const APPLICATION_SERVER_URL = process.env.REACT_APP_BACK_SOCKET_ENDPOINT;
 // console.log(APPLICATION_SERVER_URL);
 const MakeRoom = (profileId, bookId) => {
   // session ID 어케할 지 수정
