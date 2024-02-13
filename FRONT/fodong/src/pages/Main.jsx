@@ -7,7 +7,9 @@ import Buttons from "../components/main/buttons";
 import ScrollBook from "../components/main/scrollBook";
 import Title from "../components/main/Title";
 import FreindsToggler from "../components/main/Friends";
+
 // import { userStore } from "../store/userStore";
+
 import "./pages.css";
 // Main 컴포넌트
 

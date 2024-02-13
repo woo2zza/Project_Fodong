@@ -6,7 +6,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import UserVideoComponent from "./UserVideoComponent";
 //일단 video 없이
 
-const APPLICATION_SERVER_URL = `${process.env.REACT_APP_API_URL}/`;
+const APPLICATION_SERVER_URL = process.env.REACT_APP_API_URL;
 
 // const APPLICATION_SERVER_URL = "http://192.168.100.91:8080/api/v1/";
 
@@ -194,7 +194,7 @@ const StoryDetail = () => {
 
   const createSession = async (sessionId) => {
     const response = await axios.post(
-      APPLICATION_SERVER_URL + "sessions",
+      APPLICATION_SERVER_URL + "/sessions",
       { customSessionId: sessionId },
       {
         headers: { "Content-Type": "application/json" },
@@ -205,7 +205,7 @@ const StoryDetail = () => {
 
   const createToken = async (sessionId) => {
     const response = await axios.post(
-      APPLICATION_SERVER_URL + "sessions/" + sessionId + "/connections",
+      APPLICATION_SERVER_URL + "/sessions/" + sessionId + "/connections",
       {},
       {
         headers: { "Content-Type": "application/json" },
