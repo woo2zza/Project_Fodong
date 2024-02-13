@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { getFriends } from "../api/friends.js";
 import { userStore } from "../store/userStore";
 import { multiStoryStore } from "../store/multiStoryStore.js";
 import { getFriendEmail } from "../api/friends.js";
-// import { sendInviteRequest } from "../api/multi.js";
 import { useSocket } from "../contexts/SocketContext.js";
+import StoryRoom from "../components/multi/StoryRoom";
 import {
   Button,
   Avatar,
@@ -45,15 +46,28 @@ const characters = [
 const MultiStory = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedCharacters, setSelectedCharacters] = useState({});
+  const [stateParam, setStateParam] = useState("ready");
+  const [isStart, setIsStart] = useState(false);
   const [friends, setFriends] = useState([]);
-
+  // const stateParam = useParams().state;
+  // console.log(stateParam);
   const { token, profileId, nickname } = userStore((state) => ({
     token: state.token,
     profileId: state.profileId,
     nickname: state.nickname,
   }));
-  const sessionId = multiStoryStore((state) => state.sessionId);
+  // const sessionId = multiStoryStore((state) => state.sessionId);
+  const sessionId = useParams().sessionId;
   const { stompClient } = useSocket();
+
+  // const Navi = useNavigate();
+  useEffect(() => {
+    if (stateParam === "start") {
+      setIsStart(true);
+      // Navi(`/multi/${sessionId}/start`);
+    }
+  }, [stateParam]);
+
   // 왜 main에서 뜨는 것이냐 ..?
   useEffect(() => {
     const fetchFriends = async () => {
@@ -99,46 +113,6 @@ const MultiStory = () => {
     }));
   };
 
-  // const handleInvite = () => {
-  //   let accountEmail = "";
-
-  // };
-
-  // const sendInviteRequest = async (
-  //   sessionId,
-  //   toProfileId,
-  //   fromProfileId,
-  //   token
-  // ) => {
-  //   // accountEmail 조회해야함!
-  //   const toAccountEmail = await getFriendEmail(toProfileId, token)
-  //   // setToAccountEmail(accountEmail);
-  //   console.log(toAccountEmail);
-  //   console.log("이제 보낼 겨");
-  //   console.log(stompClient ?? true);
-  //   console.log(toProfileId);
-  //   console.log(sessionId);
-  //   // console.log(accountEmail);
-  //   // if (stompClient && toProfileId && sessionId && accountEmail)
-  //   if (stompClient) {
-  //     const requestPayload = {
-  //       fromProfileId: fromProfileId,
-  //       toProfileId: toProfileId,
-  //       sessionId: sessionId,
-  //       toAccountEmail: toAccountEmail,
-  //     };
-  //     console.log("보낸 거 확인");
-  //     console.log(requestPayload);
-  //     stompClient.send(
-  //       "/toServer/game-invite",
-  //       {},
-  //       JSON.stringify(requestPayload)
-  //     );
-  //     console.log("Invite request sent:", requestPayload);
-  //   } else {
-  //     console.log("no stomp");
-  //   }
-  // };
   const sendInviteRequest = async (
     sessionId,
     toProfileId,
@@ -184,99 +158,98 @@ const MultiStory = () => {
   };
 
   return (
-    <Box sx={{ position: "relative", p: 2 }}>
-      {sessionId}
-      <IconButton
-        sx={{ position: "fixed", top: 16, right: 16, zIndex: 1 }}
-        onClick={handlePopoverOpen}
-      >
-        <Avatar>
-          <PeopleAlt />
-        </Avatar>
-      </IconButton>
-      <Popover
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handlePopoverClose}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
-        }}
-      >
-        <List>
-          {friends.map((friend, indx) => (
-            <ListItem key={friend.profileId}>
-              <ListItemText primary={friend.nickname} />
-              {/* 여기 고치기 아이콘으로  */}
-              {/* <button
-                onClick={() =>
-                  sendInviteRequest(
-                    sessionId,
-                    friend.profileId,
-                    profileId,
-                    token
-                  )
-                }
-                type="button"
-              >
-                아이콘 집어 넣기
-              </button> */}
-              <Button
-                onClick={() =>
-                  sendInviteRequest(
-                    sessionId,
-                    friend.profileId,
-                    profileId,
-                    token
-                  )
-                }
-              >
-                <ForwardToInboxIcon />
-              </Button>
-            </ListItem>
-          ))}
-          {/* 여기에 친구 초대 목록을 렌더링합니다. */}
-        </List>
-      </Popover>
-      <Grid
-        container
-        spacing={2}
-        justifyContent="center"
-        sx={{ overflowX: "auto", mt: 8 }}
-      >
-        {characters.map((character) => (
-          <Grid item key={character.id} xs={12} sm={6} md={4} lg={3}>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <img
-                src={character.image}
-                alt={character.name}
-                style={{ width: 100, height: 100 }}
-              />
-              <Typography>{character.name}</Typography>
-              <IconButton
-                onClick={() => toggleCharacterSelection(character.id)}
-              >
-                {selectedCharacters[character.id] ? (
-                  <CheckCircleOutline />
-                ) : (
-                  <AddCircleOutline />
-                )}
-              </IconButton>
-              {/* 선택된 유저의 닉네임 렌더링 */}
-            </Box>
+    <>
+      {/* ready 상태 */}
+      {!isStart && (
+        <Box sx={{ position: "relative", p: 2 }}>
+          {sessionId}
+          <IconButton
+            sx={{ position: "fixed", top: 16, right: 16, zIndex: 1 }}
+            onClick={handlePopoverOpen}
+          >
+            <Avatar>
+              <PeopleAlt />
+            </Avatar>
+          </IconButton>
+          <Popover
+            open={open}
+            anchorEl={anchorEl}
+            onClose={handlePopoverClose}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "left",
+            }}
+          >
+            <List>
+              {friends.map((friend, indx) => (
+                <ListItem key={friend.profileId}>
+                  <ListItemText primary={friend.nickname} />
+                  <Button
+                    onClick={() =>
+                      sendInviteRequest(
+                        sessionId,
+                        friend.profileId,
+                        profileId,
+                        token
+                      )
+                    }
+                  >
+                    <ForwardToInboxIcon />
+                  </Button>
+                </ListItem>
+              ))}
+              {/* 여기에 친구 초대 목록을 렌더링합니다. */}
+            </List>
+          </Popover>
+          <Grid
+            container
+            spacing={2}
+            justifyContent="center"
+            sx={{ overflowX: "auto", mt: 8 }}
+          >
+            {characters.map((character) => (
+              <Grid item key={character.id} xs={12} sm={6} md={4} lg={3}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <img
+                    src={character.image}
+                    alt={character.name}
+                    style={{ width: 100, height: 100 }}
+                  />
+                  <Typography>{character.name}</Typography>
+                  <IconButton
+                    onClick={() => toggleCharacterSelection(character.id)}
+                  >
+                    {selectedCharacters[character.id] ? (
+                      <CheckCircleOutline />
+                    ) : (
+                      <AddCircleOutline />
+                    )}
+                  </IconButton>
+                  {/* 선택된 유저의 닉네임 렌더링 */}
+                </Box>
+              </Grid>
+            ))}
           </Grid>
-        ))}
-      </Grid>
-      <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
-        <Button variant="contained">시작하기</Button>
-      </Box>
-    </Box>
+          {/* <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
+            <Button variant="contained">시작하기</Button>
+          </Box> */}
+        </Box>
+      )}
+      {/* start 상태 */}
+      <StoryRoom
+        // state={stateParam}
+        isStart={isStart}
+        sessionId={sessionId}
+        profileId={profileId}
+        toggleState={setStateParam}
+      />
+    </>
   );
 };
 

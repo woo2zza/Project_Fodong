@@ -42,7 +42,7 @@ function App() {
           <Route path="/test/" element={<Test />} />{" "}
           {/*자꾸 뻑나서 주석처리했음*/}
           {/* <Route path="/sockettest" element={<WebSocketTest />} /> */}
-          <Route path="/multi/*" element={<MultiStory />} />
+          <Route path="/multi/:sessionId/*" element={<MultiStory />} />
         </Routes>
       </BrowserRouter>
     </SocketProvider>
