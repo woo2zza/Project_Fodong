@@ -130,11 +130,6 @@ public class FriendServiceImpl implements FriendService {
                     fromUserSessionId,
                     "/toClient/friend-request-response", // 수정된 경로
                     "Your friend request to " + friendRequest.getToProfileId() + " has been accepted.");
-//
-//        messagingTemplate.convertAndSendToUser(
-//                String.valueOf(friendRequest.getFromProfileId()), // 요청을 보낸 사용자의 프로필 ID
-//                "/toClient/friend-request-response", // 수정된 경로
-//                friendRequest.getToProfileId() + " has been accepted."); // 알림 내용
         }
     }
 
@@ -163,11 +158,6 @@ public class FriendServiceImpl implements FriendService {
                     "/toClient/friend-request-response", // 수정된 경로
                     "Your friend request to " + friendRequest.getToProfileId() + " has been rejected.");
 
-
-//        messagingTemplate.convertAndSendToUser(
-//                String.valueOf(friendRequest.getFromProfileId()), // 요청을 보낸 사용자의 프로필 ID
-//                "/toClient/friend-request-response", // 수정된 경로
-//                friendRequest.getToProfileId() + " has been rejected."); // 알림 내용
         }
     }
 }
