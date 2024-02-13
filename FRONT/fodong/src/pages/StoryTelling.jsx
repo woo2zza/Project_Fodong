@@ -46,6 +46,16 @@ const StoryTelling = () => {
     }
   };
 
+  const stopVideo = () => {
+    const stream = videoRef.current?.srcObject;
+    if (stream) {
+      const tracks = stream.getTracks();
+      tracks.forEach((track) => {
+        track.stop();
+      });
+    }
+  }
+
   return (
     <>
       <section  >
@@ -54,7 +64,7 @@ const StoryTelling = () => {
             <Routes>
               <Route
                 path="/:page"
-                element={<Page1 onPageChange={handlePageChange} />}
+                element={<Page1 onPageChange={handlePageChange}  videoRef={videoRef} stopVideo={stopVideo}  />}
               />
               {/* <Route path="/:page" element={Charatecr} */}
             </Routes>
@@ -67,7 +77,7 @@ const StoryTelling = () => {
           <Route
             path="/:page"
             element={
-              <Script scriptPage={scriptPage} setScriptPage={setScriptPage} />
+              <Script scriptPage={scriptPage} setScriptPage={setScriptPage}  stopVideo={stopVideo}  />
             }
           />
         </Routes>

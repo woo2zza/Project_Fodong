@@ -56,7 +56,7 @@ const getCharacterStyles = (page, width) => {
   return styles[page] || {};
 };
 
-const Page = ({ onPageChange }) => {
+const Page = ({ onPageChange, videoRef, stopVideo }) => {
   const [recorder, setRecorder] = useState(null);
   const [imageSrc, setImageSrc] = useState("");
   const { page: pageParam } = useParams();
@@ -64,7 +64,7 @@ const Page = ({ onPageChange }) => {
   const { antCharater, grasshopperCharater } = getCharacterStyles(page);
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 추가
-  const videoRef = useRef(null);
+  // const videoRef = useRef(null);
   const [activeVideoStream, setActiveVideoStream] = useState(null);
   const [activeAudioStream, setActiveAudioStream] = useState(null);
   //   let activeVideoStream = null;
@@ -191,15 +191,15 @@ const Page = ({ onPageChange }) => {
     }
   };
 
-  const stopVideo = () => {
-    const stream = videoRef.current.srcObject;
-    if (stream) {
-      const tracks = stream.getTracks();
-      tracks.forEach(track => track.stop());
-      console.log("비디오 스트림 중지됨");
-    }
-    setIsModalOpen(false);
-  };
+  // const stopVideo = () => {
+  //   const stream = videoRef.current.srcObject;
+  //   if (stream) {
+  //     const tracks = stream.getTracks();
+  //     tracks.forEach(track => track.stop());
+  //     console.log("비디오 스트림 중지됨");
+  //   }
+  //   setIsModalOpen(false);
+  // };
 
   return (
     <div

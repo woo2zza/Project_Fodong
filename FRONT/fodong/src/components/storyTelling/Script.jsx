@@ -5,7 +5,7 @@ import DummyScript from "./DummyScript";
 import { useParams, useNavigate } from "react-router-dom";
 import StoryEndModal from "./StoryEndModal";
 
-const Script = ({ scriptPage, setScriptPage }) => {
+const Script = ({ scriptPage, setScriptPage, stopVideo }) => {
   const { page: pageParam } = useParams();
   const [page, setPage] = useState(parseInt(pageParam, 10) || 1);
   // const [page, setPage] = useState(useParams().page);
@@ -82,7 +82,7 @@ const Script = ({ scriptPage, setScriptPage }) => {
           <button className="story_button" onClick={handleNextScript}>
             다음
           </button>
-          {isModalOpen && <StoryEndModal onClose={() => setIsModalOpen(false)} />}
+          {isModalOpen && <StoryEndModal onClose={stopVideo} />}
         </div>
       </div>
     // </div>
