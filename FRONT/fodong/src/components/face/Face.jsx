@@ -3,9 +3,9 @@ import * as faceapi from "face-api.js";
 import { useParams } from "react-router-dom"; // useParams 추가
 import "../storyTelling/StoryTelling.css";
 
-function Face({ page, width }) {
+function Face({ page, width, videoRef }) {
   const [videoStream, setVideoStream] = useState(null); // 비디오 스트림 상태를 관리하는 state를 선언
-  const videoRef = useRef(null);
+  // const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [faceImages, setFaceImages] = useState([]); // 각 얼굴의 이미지 데이터 URL을 저장
 

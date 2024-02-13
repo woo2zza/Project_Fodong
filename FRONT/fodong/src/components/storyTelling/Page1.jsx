@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./StoryTelling.css";
 import DummyScript from "./DummyScript";
@@ -64,7 +64,7 @@ const Page = ({ onPageChange }) => {
   const { antCharater, grasshopperCharater } = getCharacterStyles(page);
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 추가
-
+  const videoRef = useRef(null);
   const [activeVideoStream, setActiveVideoStream] = useState(null);
   const [activeAudioStream, setActiveAudioStream] = useState(null);
   //   let activeVideoStream = null;
@@ -191,6 +191,16 @@ const Page = ({ onPageChange }) => {
     }
   };
 
+  const stopVideo = () => {
+    const stream = videoRef.current.srcObject;
+    if (stream) {
+      const tracks = stream.getTracks();
+      tracks.forEach(track => track.stop());
+      console.log("비디오 스트림 중지됨");
+    }
+    setIsModalOpen(false);
+  };
+
   return (
     <div
       style={{
@@ -210,7 +220,7 @@ const Page = ({ onPageChange }) => {
           path="/"
           element={
             <div style={{ zIndex: 1 }}>
-              <Face page={page} width={window.innerWidth} />
+              <Face page={page} width={window.innerWidth} videoRef={videoRef} />
             </div>
           }
         />
@@ -233,7 +243,7 @@ const Page = ({ onPageChange }) => {
       <button style={buttonStyle("right")} onClick={handleNextPage}>
         {">"}
       </button>
-      {isModalOpen && <StoryEndModal onClose={() => setIsModalOpen(false)} />}
+      {isModalOpen && <StoryEndModal onClose={stopVideo} />}
     </div>
   );
 };
