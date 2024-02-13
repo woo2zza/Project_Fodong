@@ -27,7 +27,7 @@ const Main = () => {
     if (sessionId && isGameAccepted) {
       Navi(`/multi/${sessionId}`);
     }
-  });
+  }, [sessionId, isGameAccepted, Navi]);
   return (
     <div className="main_container">
       <div className="fixedTop">
