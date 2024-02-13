@@ -1,43 +1,28 @@
-import { OpenVidu } from "openvidu-browser";
-
+import React, { useState, useEffect, useCallback, useRef } from "react";
+import { userStore } from "../../store/userStore.js";
 import axios from "axios";
-import React, { useCallback, useEffect, useRef, useState } from "react";
-
+import { OpenVidu } from "openvidu-browser";
 import UserVideoComponent from "./UserVideoComponent";
-//일단 video 없이
 
-const APPLICATION_SERVER_URL = `${process.env.REACT_APP_API_URL}/`;
-
-// const APPLICATION_SERVER_URL = "http://192.168.100.91:8080/api/v1/";
-
-// const APPLICATION_SERVER_URL = "http://localhost:8080/api/v1/";
-
-// console.log(APPLICATION_SERVER_URL);
-const StoryDetail = () => {
-  // session ID 어케할 지 수정
-  // 안겹쳐야 되고, 해당 방에 들어갈 때
-  // 비번 있으면 비번 쳐야 들어갈 수 있게 해야함
-  const [sessionId, setSessionId] = useState(
-    `Story${Math.floor(Math.random() * 100)}`
-  );
-  const [myUserName, setmyUserName] = useState(
-    `Participant${Math.floor(Math.random() * 100)}`
-  );
+const APPLICATION_SERVER_URL = process.env.REACT_APP_API_URL;
+// openVidu
+const StoryRoom = ({ isStart, mySessionId, profileId, toggleState }) => {
+  // const [sessionId, setSessionId] = useState(sessionId);
+  console.log(mySessionId, profileId);
+  const [playState, setPlayState] = useState(false);
   const [session, setSession] = useState(undefined);
   const [mainStreamManager, setMainStreamManager] = useState(undefined);
   const [publisher, setPublisher] = useState(undefined);
   const [subscribers, setSubscribers] = useState([]);
   const [currentVideoDevice, setCurrentVideoDevice] = useState(null);
+  const [nickname, setNickName] = useState(null);
+  const [myUserName, setMyUserName] = useState(
+    userStore((state) => state.nickaname)
+  );
+  // const myUserName = userStore((state) => state.nickname);
 
-  const OV = useRef(new OpenVidu());
-  console.log(OV);
-  const handleChangeSessionId = useCallback((e) => {
-    setSessionId(e.target.value);
-  }, []);
-
-  const handleChangeUserName = useCallback((e) => {
-    setmyUserName(e.target.value);
-  }, []);
+  const OV = useRef(new OpenVidu()); // useRef 개념..
+  // console.log(OV);
 
   const handleMainVideoStream = useCallback(
     (stream) => {
@@ -49,29 +34,40 @@ const StoryDetail = () => {
   );
 
   // JOIN 세션
-  const joinSession = useCallback(() => {
-    const mySession = OV.current.initSession();
+  const joinSession = useCallback(
+    (event) => {
+      event.preventDefault();
+      const mySession = OV.current.initSession();
 
-    mySession.on("streamCreated", (event) => {
-      const subscriber = mySession.subscribe(event.stream, undefined);
-      setSubscribers((subscribers) => [...subscribers, subscriber]);
-    });
+      mySession.on("streamCreated", (event) => {
+        const subscriber = mySession.subscribe(event.stream, undefined);
+        setSubscribers((subscribers) => [...subscribers, subscriber]);
+      });
 
-    mySession.on("streamDestroyed", (event) => {
-      deleteSubscriber(event.stream.streamManager);
-    });
+      mySession.on("streamDestroyed", (event) => {
+        deleteSubscriber(event.stream.streamManager);
+      });
 
-    mySession.on("exception", (exception) => {
-      console.warn(exception);
-    });
+      mySession.on("exception", (exception) => {
+        console.warn(exception);
+      });
 
-    setSession(mySession);
+      setSession(mySession);
+      setPlayState((prev) => true);
+    },
+    [playState]
+  );
+
+  useEffect(() => {
+    setPlayState(isStart);
   }, []);
 
   useEffect(() => {
     if (session) {
+      // setMyUserName(userStore((state)=>state.nickname))
       // Get a token from the OpenVidu deployment
       getToken().then(async (token) => {
+        // console.log(myUserName);
         try {
           await session.connect(token, { clientData: myUserName });
 
@@ -100,7 +96,7 @@ const StoryDetail = () => {
             (device) => device.deviceId === currentVideoDeviceId
           );
 
-          setMainStreamManager(publisher);
+          // setMainStreamManager(publisher);
           setPublisher(publisher);
           setCurrentVideoDevice(currentVideoDevice);
         } catch (error) {
@@ -112,7 +108,12 @@ const StoryDetail = () => {
         }
       });
     }
-  }, [session, myUserName]);
+  }, [session]);
+
+  // useEffect(() => {
+  //   setNickName(myUserName);
+  //   console.log(myUserName)
+  // }, [myUserName]);
 
   const leaveSession = useCallback(() => {
     // Leave the session
@@ -124,8 +125,6 @@ const StoryDetail = () => {
     OV.current = new OpenVidu();
     setSession(undefined);
     setSubscribers([]);
-    setSessionId("SessionA");
-    setmyUserName("Participant" + Math.floor(Math.random() * 100));
     setMainStreamManager(undefined);
     setPublisher(undefined);
   }, [session]);
@@ -188,24 +187,45 @@ const StoryDetail = () => {
     };
   }, [leaveSession]);
 
+  /**
+   * --------------------------------------------
+   * GETTING A TOKEN FROM YOUR APPLICATION SERVER
+   * --------------------------------------------
+   * The methods below request the creation of a Session and a Token to
+   * your application server. This keeps your OpenVidu deployment secure.
+   *
+   * In this sample code, there is no user control at all. Anybody could
+   * access your application server endpoints! In a real production
+   * environment, your application server must identify the user to allow
+   * access to the endpoints.
+   *
+   * Visit https://docs.openvidu.io/en/stable/application-server to learn
+   * more about the integration of OpenVidu in your application server.
+   */
+
   const getToken = useCallback(async () => {
-    return createSession(sessionId).then((sessionId) => createToken(sessionId));
-  }, [sessionId]);
+    const sessionId = await createSession(mySessionId);
+    console.log("Session ID:", sessionId);
+    const token = await createToken(sessionId);
+    console.log("Token:", token);
+    return token;
+  }, [mySessionId]);
 
   const createSession = async (sessionId) => {
     const response = await axios.post(
-      APPLICATION_SERVER_URL + "sessions",
+      APPLICATION_SERVER_URL + "/sessions",
       { customSessionId: sessionId },
       {
         headers: { "Content-Type": "application/json" },
       }
     );
+    console.log("세션 : ", response.data);
     return response.data; // The sessionId
   };
 
   const createToken = async (sessionId) => {
     const response = await axios.post(
-      APPLICATION_SERVER_URL + "sessions/" + sessionId + "/connections",
+      APPLICATION_SERVER_URL + "/sessions/" + sessionId + "/connections",
       {},
       {
         headers: { "Content-Type": "application/json" },
@@ -216,46 +236,28 @@ const StoryDetail = () => {
 
   return (
     <div>
-      {session === undefined ? (
+      {!playState ? (
         <div id="join">
           <div id="join-dialog">
             <h1>동화 만들기~</h1>
+
             <form className="form-group" onSubmit={joinSession}>
-              <p>
-                <label htmlFor="userName">Participant: </label>
-                <input
-                  type="text"
-                  id="userName"
-                  value={myUserName}
-                  onChange={handleChangeUserName}
-                  required
-                />
-              </p>
-              <p>
-                <label htmlFor="sessionId">Session: </label>
-                <input
-                  type="text"
-                  id="sessionId"
-                  value={sessionId}
-                  onChange={handleChangeSessionId}
-                />
-              </p>
               <p className="text-center">
                 <input
                   className="btn btn-lg btn-success"
                   name="commit"
                   type="submit"
-                  value="JOIN"
+                  value="시작하기"
                 />
               </p>
             </form>
           </div>
         </div>
       ) : null}
-      {session !== undefined ? (
+      {playState ? (
         <div id="session">
           <div id="session-header">
-            <h1 id="session-title">{sessionId}</h1>
+            <h1 id="session-title">{mySessionId}</h1>
             <input
               className="btn btn-large btn-danger"
               type="button"
@@ -274,6 +276,7 @@ const StoryDetail = () => {
 
           {mainStreamManager !== undefined ? (
             <div id="main-video" className="col-md-6">
+              <h1>메인</h1>
               <UserVideoComponent streamManager={mainStreamManager} />
             </div>
           ) : null}
@@ -283,6 +286,7 @@ const StoryDetail = () => {
                 className="stream-container col-md-6 col-xs-6"
                 onClick={() => handleMainVideoStream(publisher)}
               >
+                {/* <h1> 1번 </h1> */}
                 <UserVideoComponent streamManager={publisher} />
               </div>
             ) : null}
@@ -303,4 +307,4 @@ const StoryDetail = () => {
   );
 };
 
-export default StoryDetail;
+export default StoryRoom;

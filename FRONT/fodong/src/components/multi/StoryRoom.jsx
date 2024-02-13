@@ -3,29 +3,34 @@ import { userStore } from "../../store/userStore.js";
 import axios from "axios";
 import { OpenVidu } from "openvidu-browser";
 import UserVideoComponent from "./UserVideoComponent";
+import { useSocket } from "../../contexts/SocketContext.js";
 
 const APPLICATION_SERVER_URL = process.env.REACT_APP_API_URL;
 // openVidu
-const StoryRoom = ({ isStart, sessionId, profileId, toggleState }) => {
+const StoryRoom = ({
+  isStart,
+  mySessionId,
+  profileId,
+  toggleState,
+  isMove,
+  sendStartRequest,
+}) => {
   // const [sessionId, setSessionId] = useState(sessionId);
-  console.log(isStart, sessionId, profileId);
-  const [playState, setPlayState] = useState(isStart);
+  // console.log(mySessionId, profileId);
+  const [playState, setPlayState] = useState(false);
   const [session, setSession] = useState(undefined);
   const [mainStreamManager, setMainStreamManager] = useState(undefined);
   const [publisher, setPublisher] = useState(undefined);
   const [subscribers, setSubscribers] = useState([]);
   const [currentVideoDevice, setCurrentVideoDevice] = useState(null);
   const [nickname, setNickName] = useState(null);
-  const myUserName = userStore((state) => state.nickname);
 
-  const handleToggleState = async (event) => {
-    event.preventDefault();
-    await joinSession();
-    toggleState("start");
-  };
+  // 고칠 부분!! => nickname 이거 mapping 시켜서 렌더링 되도록 바꾸기!!
+  const [myUserName, setMyUserName] = useState(
+    userStore((state) => state.nickaname)
+  );
 
   const OV = useRef(new OpenVidu()); // useRef 개념..
-  console.log(OV);
 
   const handleMainVideoStream = useCallback(
     (stream) => {
@@ -37,30 +42,65 @@ const StoryRoom = ({ isStart, sessionId, profileId, toggleState }) => {
   );
 
   // JOIN 세션
-  const joinSession = useCallback(() => {
-    const mySession = OV.current.initSession();
+  // const joinSession = useCallback(
+  //   (event) => {
+  //     event.preventDefault();
+  //     if (isMove){
+  //       const mySession = OV.current.initSession();
 
-    mySession.on("streamCreated", (event) => {
-      const subscriber = mySession.subscribe(event.stream, undefined);
-      setSubscribers((subscribers) => [...subscribers, subscriber]);
-    });
+  //       mySession.on("streamCreated", (event) => {
+  //         const subscriber = mySession.subscribe(event.stream, undefined);
+  //         setSubscribers((subscribers) => [...subscribers, subscriber]);
+  //       });
 
-    mySession.on("streamDestroyed", (event) => {
-      deleteSubscriber(event.stream.streamManager);
-    });
+  //       mySession.on("streamDestroyed", (event) => {
+  //         deleteSubscriber(event.stream.streamManager);
+  //       });
 
-    mySession.on("exception", (exception) => {
-      console.warn(exception);
-    });
+  //       mySession.on("exception", (exception) => {
+  //         console.warn(exception);
+  //       });
 
-    setSession(mySession);
+  //       setSession(mySession);
+  //       setPlayState((prev) => true);
+  //       toggleState((state) => true);
+  //     }
+  //   },
+  //   [playState, isMove]
+  // );
+  const joinSession = useEffect(() => {
+    if (isMove && isStart) {
+      const mySession = OV.current.initSession();
+
+      mySession.on("streamCreated", (event) => {
+        const subscriber = mySession.subscribe(event.stream, undefined);
+        setSubscribers((subscribers) => [...subscribers, subscriber]);
+      });
+
+      mySession.on("streamDestroyed", (event) => {
+        deleteSubscriber(event.stream.streamManager);
+      });
+
+      mySession.on("exception", (exception) => {
+        console.warn(exception);
+      });
+
+      setSession(mySession);
+      setPlayState((prev) => true);
+      // toggleState((state) => true);
+    }
+  }, [isMove, isStart]);
+
+  useEffect(() => {
+    setPlayState(isStart);
   }, []);
 
   useEffect(() => {
     if (session) {
+      // setMyUserName(userStore((state)=>state.nickname))
       // Get a token from the OpenVidu deployment
       getToken().then(async (token) => {
-        console.log(myUserName);
+        // console.log(myUserName);
         try {
           await session.connect(token, { clientData: myUserName });
 
@@ -120,6 +160,8 @@ const StoryRoom = ({ isStart, sessionId, profileId, toggleState }) => {
     setSubscribers([]);
     setMainStreamManager(undefined);
     setPublisher(undefined);
+
+    toggleState((state) => false);
   }, [session]);
 
   const switchCamera = useCallback(async () => {
@@ -180,9 +222,34 @@ const StoryRoom = ({ isStart, sessionId, profileId, toggleState }) => {
     };
   }, [leaveSession]);
 
+  const handleSendStartRequest = (event) => {
+    event.preventDefault();
+    sendStartRequest();
+  };
+
+  /**
+   * --------------------------------------------
+   * GETTING A TOKEN FROM YOUR APPLICATION SERVER
+   * --------------------------------------------
+   * The methods below request the creation of a Session and a Token to
+   * your application server. This keeps your OpenVidu deployment secure.
+   *
+   * In this sample code, there is no user control at all. Anybody could
+   * access your application server endpoints! In a real production
+   * environment, your application server must identify the user to allow
+   * access to the endpoints.
+   *
+   * Visit https://docs.openvidu.io/en/stable/application-server to learn
+   * more about the integration of OpenVidu in your application server.
+   */
+
   const getToken = useCallback(async () => {
-    return createSession(sessionId).then((sessionId) => createToken(sessionId));
-  }, [sessionId]);
+    const sessionId = await createSession(mySessionId);
+    console.log("Session ID:", sessionId);
+    const token = await createToken(sessionId);
+    console.log("Token:", token);
+    return token;
+  }, [mySessionId]);
 
   const createSession = async (sessionId) => {
     const response = await axios.post(
@@ -207,18 +274,37 @@ const StoryRoom = ({ isStart, sessionId, profileId, toggleState }) => {
     return response.data; // The token
   };
 
+  /* 여기서 부터 socket 이용한 상태 공유 코드 */
+  // const { stompClient } = useSocket();
+  // const sendStartRequest = (event) => {
+  //   event.preventDefault();
+  //   const readyRequestPayload = {
+  //     roomSession: {
+  //       sessionId: mySessionId,
+  //     },
+  //     isStart: true,
+  //   };
+  //   stompClient.send(
+  //     "/toServer/readyGame",
+  //     {},
+  //     JSON.stringify(readyRequestPayload)
+  //   );
+  //   // 여기서 딱히 set함수들 해줄 필요 없을 듯??
+  //   console.log(readyRequestPayload);
+  // };
+
   return (
     <div>
-      {!isStart ? (
+      {!playState ? (
         <div id="join">
           <div id="join-dialog">
             <h1>동화 만들기~</h1>
 
             {/* <form className="form-group" onSubmit={joinSession}> */}
-            <form className="form-group">
+            {/* <form className="form-group" onSubmit={sendStartRequest}> */}
+            <form className="form-group" onSubmit={handleSendStartRequest}>
               <p className="text-center">
                 <input
-                  onClick={handleToggleState}
                   className="btn btn-lg btn-success"
                   name="commit"
                   type="submit"
@@ -229,10 +315,10 @@ const StoryRoom = ({ isStart, sessionId, profileId, toggleState }) => {
           </div>
         </div>
       ) : null}
-      {isStart ? (
+      {playState ? (
         <div id="session">
           <div id="session-header">
-            <h1 id="session-title">{sessionId}</h1>
+            <h1 id="session-title">{mySessionId}</h1>
             <input
               className="btn btn-large btn-danger"
               type="button"
@@ -249,19 +335,19 @@ const StoryRoom = ({ isStart, sessionId, profileId, toggleState }) => {
             />
           </div>
 
-          {/* {mainStreamManager !== undefined ? (
+          {mainStreamManager !== undefined ? (
             <div id="main-video" className="col-md-6">
               <h1>메인</h1>
               <UserVideoComponent streamManager={mainStreamManager} />
             </div>
-          ) : null} */}
+          ) : null}
           <div id="video-container" className="col-md-6">
             {publisher !== undefined ? (
               <div
                 className="stream-container col-md-6 col-xs-6"
                 onClick={() => handleMainVideoStream(publisher)}
               >
-                <h1> 1번 </h1>
+                {/* <h1> 1번 </h1> */}
                 <UserVideoComponent streamManager={publisher} />
               </div>
             ) : null}
