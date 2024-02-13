@@ -130,7 +130,7 @@
   width: 100%;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 2500px) {
   .antCharacter,
   .grasshopperCharacter {
     width: 40vw;
@@ -142,7 +142,7 @@
   }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 2499px) {
   .characters-container {
     flex-direction: column; /* 화면이 작을 때는 캐릭터들을 세로로 쌓음 */
     align-items: center; /* 중앙에 배치 */
@@ -152,8 +152,8 @@
     width: 35vw; /* 태블릿에서는 이미지 크기를 더 크게 조정 */
   }
   .faceImage {
-    width: 100px;
-    height: 100px;
+    width: 200px;
+    height: 200px;
   }
 }
 
