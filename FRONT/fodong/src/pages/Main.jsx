@@ -13,7 +13,7 @@ import "./pages.css";
 
 <click-spark></click-spark>;
 const Main = () => {
-
+  const user_profileId = userStore.getState().profileId;
   // 진명, 소켓연결 추가한 부분 확인필요
   const { stompClient, connect, disconnect, sessionId, isGameAccepted } =
     useSocket();
