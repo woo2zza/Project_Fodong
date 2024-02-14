@@ -15,6 +15,7 @@ const StoryTelling = () => {
   const videoRef = useRef(null); // 비디오 요소 참조를 위한 ref
   const mediaRecorderRef = useRef(null); // MediaRecorder 인스턴스를 저장
   const [recording, setRecording] = useState(false); // 녹화 상태 관리
+  const [isModalOpen, setIsModalOpen] = useState(false); //
 
   const handlePageChange = () => {
     setScriptPage(0);
@@ -46,6 +47,19 @@ const StoryTelling = () => {
     }
   };
 
+  const stopVideo = () => {
+    const stream = videoRef.current?.srcObject;
+    if (stream) {
+      const tracks = stream.getTracks();
+      tracks.forEach((track) => {
+        track.stop();
+      });
+    }
+    setIsModalOpen(false);
+  }
+
+  
+
   return (
     <>
       <section  >
@@ -54,7 +68,7 @@ const StoryTelling = () => {
             <Routes>
               <Route
                 path="/:page"
-                element={<Page1 onPageChange={handlePageChange} />}
+                element={<Page1 onPageChange={handlePageChange}  videoRef={videoRef} stopVideo={stopVideo}  />}
               />
               {/* <Route path="/:page" element={Charatecr} */}
             </Routes>
@@ -67,7 +81,7 @@ const StoryTelling = () => {
           <Route
             path="/:page"
             element={
-              <Script scriptPage={scriptPage} setScriptPage={setScriptPage} />
+              <Script scriptPage={scriptPage} setScriptPage={setScriptPage}  stopVideo={stopVideo}  />
             }
           />
         </Routes>

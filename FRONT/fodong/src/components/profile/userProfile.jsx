@@ -27,11 +27,12 @@ function ProfileComponent() {
     profileId: state.profileId,
   }));
 
+
   useEffect(() => {
     fetchProfiles();
     disconnect();
     userStore.getState().clearProfileId();
-    // console.log(userStore.getState().profileId);
+
   }, []);
 
   // const token = localStorage.getItem("Token");
@@ -102,14 +103,16 @@ function ProfileComponent() {
   };
 
   const handleEditClick = (profile) => {
-    setEditProfile(profile); // 편집할 프로필 설정
-    setOpenEdit(true); // 편집 모달 열기
+    setEditProfile(profile);
+    setOpenEdit(true);
   };
 
   const handleClick = (profileId, nickname) => {
     userStore.getState().setProfileId(profileId);
     userStore.getState().setNickname(nickname);
+  };
 
+  const clickMain = () => {
     navigate("/main");
   };
 
@@ -125,9 +128,10 @@ function ProfileComponent() {
             <Grid item xs={12} sm={12} md={3} lg={3} key={profile.profileId}>
               <div className="card">
                 <img
-                  onClick={() =>
-                    handleClick(profile.profileId, profile.nickname)
-                  }
+                  onClick={() => {
+                    handleClick(profile.profileId, profile.nickname);
+                    clickMain();
+                  }}
                   className="profileImage"
                   src={profile.imageUrl || Chick}
                   alt={profile.nickname}

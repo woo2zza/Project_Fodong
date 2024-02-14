@@ -47,6 +47,7 @@ const searchNickname = async (nickname, token) => {
 const addFriends = async (fromProfileId, toProfileId, token) => {
   const data = { fromProfileId: fromProfileId, toProfileId: toProfileId };
   console.log(data);
+  console.log("요청 몇번가는지 addFriends")
   const response = await axios
     .post(`${API_URL}/friends/requests`, data, {
       headers: {

@@ -5,6 +5,20 @@
   padding: 20px;
 }
 
+.logoContainer {
+  position: absolute;
+  left: 20px; /* Adjust based on desired padding */
+  top: 20px;
+  cursor: pointer;
+}
+
+.albumTitleCenter {
+  width: 100%;
+  font-size: 70px;
+  text-align: center;
+  padding: 20px;
+}
+
 .item_bg {
   background-image: url("./albumImg.png");
   background-size: cover;

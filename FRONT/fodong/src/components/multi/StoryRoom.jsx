@@ -4,14 +4,15 @@ import axios from "axios";
 import { Routes, Route } from "react-router-dom";
 import { OpenVidu } from "openvidu-browser";
 import UserVideoComponent from "./UserVideoComponent";
-import { useMultiStoryContext } from "../../contexts/MultiStoryContext.js";
-// import { useSocket } from "../../contexts/SocketContext.js";
+
+import "./multi.css";
 
 import { Grid, Button, Paper, Box } from "@mui/material";
 import VideoSlider from "./VideoSlider.jsx";
 import Story from "./Story.jsx";
 import Script from "./Script.jsx";
-
+import "./multi.css";
+import Webcam from "react-webcam";
 const APPLICATION_SERVER_URL = process.env.REACT_APP_API_URL;
 // openVidu
 const StoryRoom = ({
@@ -238,13 +239,16 @@ const StoryRoom = ({
   };
 
   return (
-    <div>
+    <div className="Room-container">
       {!playState ? (
-        <div id="join">
-          <div id="join-dialog">
+        <div id="join" className="storyRoomWrapper">
+          <div id="join-dialog" className="storyRoomDialog">
+            <Webcam className="web-container" />
             <h1>동화 만들기~</h1>
 
-            <form className="form-group" onSubmit={handleSendStartRequest}>
+
+            <form className="form-group storyRoomForm" onSubmit={handleSendStartRequest}>
+
               <p className="text-center">
                 <input
                   className="btn btn-lg btn-success"
@@ -258,8 +262,12 @@ const StoryRoom = ({
         </div>
       ) : null}
       {playState ? (
-        <Box id="session">
-          <Box id="session-header" sx={{ mb: 2 }}>
+        <Box id="session" className="storyRoomSession">
+          <Box
+            id="session-header"
+            sx={{ mb: 2 }}
+            className="storyRoomSessionHeader"
+          >
             {/* <h1 id="session-title">{mySessionId}</h1> */}
             <Button variant="contained" color="error" onClick={leaveSession}>
               Leave session
@@ -298,8 +306,11 @@ const StoryRoom = ({
                 //   onClick={() => handleMainVideoStream(sub)}
                 // >
                 //   <Paper elevation={3}>
-                <Box key={sub.id}>
-                  <UserVideoComponent streamManager={sub} />
+                <Box key={sub.id} className="storyRoomSubscriberBox">
+                  <UserVideoComponent
+                    streamManager={sub}
+                    className="storyRoomUserVideo"
+                  />
                 </Box>
                 // <span>{sub.id}</span>
                 //   </Paper>
@@ -316,81 +327,3 @@ const StoryRoom = ({
 };
 
 export default StoryRoom;
-
-// {playState ? (
-//   <div id="session">
-//     <div id="session-header">
-//       <h1 id="session-title">{mySessionId}</h1>
-//       <input
-//         className="btn btn-large btn-danger"
-//         type="button"
-//         id="buttonLeaveSession"
-//         onClick={leaveSession}
-//         value="Leave session"
-//       />
-//       <input
-//         className="btn btn-large btn-success"
-//         type="button"
-//         id="buttonSwitchCamera"
-//         onClick={switchCamera}
-//         value="Switch Camera"
-//       />
-//     </div>
-
-//     {mainStreamManager !== undefined ? (
-//       <div id="main-video" className="col-md-6">
-//         <h1>메인</h1>
-//         <UserVideoComponent streamManager={mainStreamManager} />
-//       </div>
-//     ) : null}
-//     <div id="video-container" className="col-md-6">
-//       {publisher !== undefined ? (
-//         <div
-//           className="stream-container col-md-6 col-xs-6"
-//           onClick={() => handleMainVideoStream(publisher)}
-//         >
-//           {/* <h1> 1번 </h1> */}
-//           <UserVideoComponent streamManager={publisher} />
-//         </div>
-//       ) : null}
-//       {subscribers.map((sub, i) => (
-//         <div
-//           key={sub.id}
-//           className="stream-container col-md-6 col-xs-6"
-//           onClick={() => handleMainVideoStream(sub)}
-//         >
-//           <span>{sub.id}</span>
-//           <UserVideoComponent streamManager={sub} />
-//         </div>
-//       ))}
-//     </div>
-//   </div>
-// ) : null}
-
-// JOIN 세션
-// const joinSession = useCallback(
-//   (event) => {
-//     event.preventDefault();
-//     if (isMove){
-//       const mySession = OV.current.initSession();
-
-//       mySession.on("streamCreated", (event) => {
-//         const subscriber = mySession.subscribe(event.stream, undefined);
-//         setSubscribers((subscribers) => [...subscribers, subscriber]);
-//       });
-
-//       mySession.on("streamDestroyed", (event) => {
-//         deleteSubscriber(event.stream.streamManager);
-//       });
-
-//       mySession.on("exception", (exception) => {
-//         console.warn(exception);
-//       });
-
-//       setSession(mySession);
-//       setPlayState((prev) => true);
-//       toggleState((state) => true);
-//     }
-//   },
-//   [playState, isMove]
-// );

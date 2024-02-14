@@ -43,6 +43,7 @@ function Friends() {
   const handleToggle = () => setOpen(!open);
 
   const handleAddFriend = (event) => {
+    console.log("요청 몇번가는지 handleAddFriend")
     event.preventDefault();
     const numbers = nickname.match(/\d+/g);
     if (numbers) {
@@ -50,7 +51,7 @@ function Friends() {
       console.log(parsedToProfileId);
 
       // sendFriendRequest 함수를 사용하여 친구 요청 메시지를 서버로 전송합니다.
-
+      // 요게 STOMP 구독인듯?
       sendFriendRequest(parsedToProfileId);
 
       // addFriends 함수는 백엔드에 HTTP 요청을 보내는 것으로 추정됩니다.
@@ -224,8 +225,9 @@ function Friends() {
           style={{
             position: "fixed",
             bottom: 100,
-            right: 20,
-            width: 300,
+            right: 50,
+            height: 260,
+            width: 330,
             maxHeight: "80%",
             overflow: "auto",
             padding: "20px",

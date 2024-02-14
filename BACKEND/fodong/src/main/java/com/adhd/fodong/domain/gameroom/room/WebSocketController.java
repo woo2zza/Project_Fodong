@@ -60,7 +60,7 @@ public class WebSocketController {
                     response.put("toProfileId", friendRequest.getToProfileId()); // 클라이언트에서 기대하는 대상 프로필 ID
                     response.put("fromNickname", fromNickanme);
                     response.put("toNickname", toNickname);
-
+                    System.out.println("친구요청 컨트롤러 sendRequest 옴");
                     break;
                 case "accept":
                     // 친구 요청 수락 처리 로직
@@ -70,6 +70,7 @@ public class WebSocketController {
                     response.put("message", "친구 요청이 수락되었습니다.");
                     response.put("fromNickname", fromNickanme);
                     response.put("toNickname", toNickname);
+                    System.out.println("친구요청 컨트롤러 accept 옴");
                     break;
                 case "reject":
                     // 친구 요청 거절 처리 로직
@@ -143,10 +144,33 @@ public class WebSocketController {
 
             System.out.println("시작요청에 대한 응답 : " + readyDataResponse.toString());
             return readyDataResponse;
-        } else {
-
-            System.out.println("스타트 요청 아니라고?");
-            return null;
         }
+
+        ReadyDataResponse readyDataResponse = new ReadyDataResponse();
+
+        // 동화페이지 넘기기 쉐어
+        switch(readyDataRequest.getAction()) {
+            case "nextScript":
+                // 다음 스크립트 처리 로직
+                readyDataResponse.setRoomSession(readyDataRequest.getRoomSession());
+                readyDataResponse.setAction("nextScript");
+                return readyDataResponse;
+            case "nextPage":
+                // 다음 페이지 처리 로직
+                readyDataResponse.setRoomSession(readyDataRequest.getRoomSession());
+                readyDataResponse.setAction("nextPage");
+                return readyDataResponse;
+            case "previousPage":
+                // 이전 페이지 처리 로직
+                readyDataResponse.setRoomSession(readyDataRequest.getRoomSession());
+                readyDataResponse.setAction("previousPage");
+                return readyDataResponse;
+            default:
+                // 알 수 없는 액션에 대한 처리 로직
+                System.out.println("알 수 없는 액션 요청: " + readyDataRequest.getAction());
+        }
+
+
+        return null;
     }
 }
