@@ -34,8 +34,10 @@ public class AlbumController {
             @RequestParam("profile_id") int profileId,
             @RequestParam("book_id") int bookId
     ){
+        System.out.println("영상 저장 요청 옴");
         RecordingDto recordingDto = new RecordingDto(video,profileId,bookId);
         albumService.save(recordingDto);
+        System.out.println("영상 저장 요청 객체 전달");
     }
 
     @Operation(summary = "녹화본 조회", description = "녹화본을 불러온다.")
