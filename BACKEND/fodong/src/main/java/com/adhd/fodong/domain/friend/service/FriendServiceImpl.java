@@ -92,17 +92,6 @@ public class FriendServiceImpl implements FriendService {
         friendship.setFriendshipId(getFriendshipId);
         System.out.println(friendRequest.getFromProfileId() + "이 " + friendRequest.getToProfileId() + "에게 친구 요청을 했습니다.");
 
-        // 친구 요청 성공 후 상대방 클라이언트에게 알림 전송
-        String toUserSessionId = webSocketEventListener.getSessionIdByProfileId(String.valueOf(friendRequest.getToProfileId()));
-        System.out.println("친구요청 알람 대상의 세션 : " + toUserSessionId );
-
-        messagingTemplate.convertAndSendToUser(
-                toUserSessionId,
-                "/toClient/friend-request",
-                "You have a new friend request from " + friendRequest.getFromProfileId());
-
-        System.out.println("알람 성공! : " + toUserSessionId + "으로 친구요청");
-
 
         return friendship;
     }

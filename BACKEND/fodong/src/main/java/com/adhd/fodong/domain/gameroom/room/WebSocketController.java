@@ -60,7 +60,7 @@ public class WebSocketController {
                     response.put("toProfileId", friendRequest.getToProfileId()); // 클라이언트에서 기대하는 대상 프로필 ID
                     response.put("fromNickname", fromNickanme);
                     response.put("toNickname", toNickname);
-
+                    System.out.println("친구요청 컨트롤러 sendRequest 옴");
                     break;
                 case "accept":
                     // 친구 요청 수락 처리 로직
@@ -70,6 +70,7 @@ public class WebSocketController {
                     response.put("message", "친구 요청이 수락되었습니다.");
                     response.put("fromNickname", fromNickanme);
                     response.put("toNickname", toNickname);
+                    System.out.println("친구요청 컨트롤러 accept 옴");
                     break;
                 case "reject":
                     // 친구 요청 거절 처리 로직

@@ -46,6 +46,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
                         "http://192.168.0.21:3000",
                         "http://192.168.0.22:3000",
                         "http://192.168.100.159:3000",
+                        "http://192.168.100.158:3000",
+                        "http://192.168.100.91:3000",
                         "https://i10c109.p.ssafy.io",
                         "http://i10c109.p.ssafy.io")
                 .withSockJS();
