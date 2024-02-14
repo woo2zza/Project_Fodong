@@ -4,7 +4,8 @@ import axios from "axios";
 import { Routes, Route } from "react-router-dom";
 import { OpenVidu } from "openvidu-browser";
 import UserVideoComponent from "./UserVideoComponent";
-import { useSocket } from "../../contexts/SocketContext.js";
+import { useMultiStoryContext } from "../../contexts/MultiStoryContext.js";
+// import { useSocket } from "../../contexts/SocketContext.js";
 
 import { Grid, Button, Paper, Box } from "@mui/material";
 import VideoSlider from "./VideoSlider.jsx";
@@ -20,9 +21,8 @@ const StoryRoom = ({
   toggleState,
   isMove,
   sendStartRequest,
+  sendChangePageRequest,
 }) => {
-  // const [sessionId, setSessionId] = useState(sessionId);
-  // console.log(mySessionId, profileId);
   const [playState, setPlayState] = useState(false);
   const [session, setSession] = useState(undefined);
   const [mainStreamManager, setMainStreamManager] = useState(undefined);
@@ -30,9 +30,7 @@ const StoryRoom = ({
   const [subscribers, setSubscribers] = useState([]);
   const [currentVideoDevice, setCurrentVideoDevice] = useState(null);
   const [nickname, setNickName] = useState(null);
-  const [page, setPage] = useState(null);
 
-  // 고칠 부분!! => nickname 이거 mapping 시켜서 렌더링 되도록 바꾸기!!
   const [myUserName, setMyUserName] = useState(
     userStore((state) => state.nickaname)
   );
@@ -48,33 +46,6 @@ const StoryRoom = ({
     [mainStreamManager]
   );
 
-  // JOIN 세션
-  // const joinSession = useCallback(
-  //   (event) => {
-  //     event.preventDefault();
-  //     if (isMove){
-  //       const mySession = OV.current.initSession();
-
-  //       mySession.on("streamCreated", (event) => {
-  //         const subscriber = mySession.subscribe(event.stream, undefined);
-  //         setSubscribers((subscribers) => [...subscribers, subscriber]);
-  //       });
-
-  //       mySession.on("streamDestroyed", (event) => {
-  //         deleteSubscriber(event.stream.streamManager);
-  //       });
-
-  //       mySession.on("exception", (exception) => {
-  //         console.warn(exception);
-  //       });
-
-  //       setSession(mySession);
-  //       setPlayState((prev) => true);
-  //       toggleState((state) => true);
-  //     }
-  //   },
-  //   [playState, isMove]
-  // );
   const joinSession = useEffect(() => {
     if (isMove && isStart) {
       const mySession = OV.current.initSession();
@@ -147,7 +118,7 @@ const StoryRoom = ({
           );
         }
       });
-      setPage(1);
+      // setPage(1);
     }
   }, [session]);
 
@@ -235,22 +206,6 @@ const StoryRoom = ({
     sendStartRequest();
   };
 
-  /**
-   * --------------------------------------------
-   * GETTING A TOKEN FROM YOUR APPLICATION SERVER
-   * --------------------------------------------
-   * The methods below request the creation of a Session and a Token to
-   * your application server. This keeps your OpenVidu deployment secure.
-   *
-   * In this sample code, there is no user control at all. Anybody could
-   * access your application server endpoints! In a real production
-   * environment, your application server must identify the user to allow
-   * access to the endpoints.
-   *
-   * Visit https://docs.openvidu.io/en/stable/application-server to learn
-   * more about the integration of OpenVidu in your application server.
-   */
-
   const getToken = useCallback(async () => {
     const sessionId = await createSession(mySessionId);
     console.log("Session ID:", sessionId);
@@ -282,25 +237,6 @@ const StoryRoom = ({
     return response.data; // The token
   };
 
-  /* 여기서 부터 socket 이용한 상태 공유 코드 */
-  // const { stompClient } = useSocket();
-  // const sendStartRequest = (event) => {
-  //   event.preventDefault();
-  //   const readyRequestPayload = {
-  //     roomSession: {
-  //       sessionId: mySessionId,
-  //     },
-  //     isStart: true,
-  //   };
-  //   stompClient.send(
-  //     "/toServer/readyGame",
-  //     {},
-  //     JSON.stringify(readyRequestPayload)
-  //   );
-  //   // 여기서 딱히 set함수들 해줄 필요 없을 듯??
-  //   console.log(readyRequestPayload);
-  // };
-
   return (
     <div>
       {!playState ? (
@@ -308,8 +244,6 @@ const StoryRoom = ({
           <div id="join-dialog">
             <h1>동화 만들기~</h1>
 
-            {/* <form className="form-group" onSubmit={joinSession}> */}
-            {/* <form className="form-group" onSubmit={sendStartRequest}> */}
             <form className="form-group" onSubmit={handleSendStartRequest}>
               <p className="text-center">
                 <input
@@ -346,9 +280,9 @@ const StoryRoom = ({
           <Routes>
             <Route path="/:page" element={<Story page={page} />} />
           </Routes> */}
-          {page}
-          <Story page={page} changePage={setPage} />
-          <Script page={page} changePage={setPage} />
+
+          <Story sendChangePageRequest={sendChangePageRequest} />
+          <Script sendChangePageRequest={sendChangePageRequest} />
 
           <Grid container xs={12} sm={6} spacing={2}>
             <VideoSlider>
@@ -432,3 +366,31 @@ export default StoryRoom;
 //     </div>
 //   </div>
 // ) : null}
+
+// JOIN 세션
+// const joinSession = useCallback(
+//   (event) => {
+//     event.preventDefault();
+//     if (isMove){
+//       const mySession = OV.current.initSession();
+
+//       mySession.on("streamCreated", (event) => {
+//         const subscriber = mySession.subscribe(event.stream, undefined);
+//         setSubscribers((subscribers) => [...subscribers, subscriber]);
+//       });
+
+//       mySession.on("streamDestroyed", (event) => {
+//         deleteSubscriber(event.stream.streamManager);
+//       });
+
+//       mySession.on("exception", (exception) => {
+//         console.warn(exception);
+//       });
+
+//       setSession(mySession);
+//       setPlayState((prev) => true);
+//       toggleState((state) => true);
+//     }
+//   },
+//   [playState, isMove]
+// );

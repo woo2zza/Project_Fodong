@@ -155,7 +155,7 @@ export const SocketProvider = ({ children }) => {
         );
       }
     );
-  }, [stompClient]);
+  }, [stompClient, profileId]);
 
   // 웹소켓 연결을 해제하는 함수
   const disconnect = useCallback(() => {
@@ -166,7 +166,7 @@ export const SocketProvider = ({ children }) => {
         setIsConnected(false);
       });
     }
-  }, [stompClient]);
+  }, [stompClient, profileId]);
 
   // isGameAccepted
   const value = {
