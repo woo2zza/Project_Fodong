@@ -2,9 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getFriends } from "../api/friends.js";
 import { userStore } from "../store/userStore";
-import { multiStoryStore } from "../store/multiStoryStore.js";
+import { multiStoryStore } from "../store/multiStoryStore";
 import { getFriendEmail } from "../api/friends.js";
 import { useSocket } from "../contexts/SocketContext.js";
+import {
+  MultiStoryProvider,
+  useMultiStoryContext,
+} from "../contexts/MultiStoryContext.js";
 import StoryRoom from "../components/multi/StoryRoom";
 import Img from "../img/storyready.png";
 import {
@@ -51,16 +55,16 @@ const MultiStory = () => {
   const [friends, setFriends] = useState([]);
   const [isMove, setIsMove] = useState(false);
   const [info, setInfo] = useState(null);
+  // const [page, setPage] = useState(1);
+  const { page, setPage, scriptIndex, setScriptIndex } = multiStoryStore();
+  // const [scriptIndex, setScriptIndex] = useState(0);
 
-  // const stateParam = useParams().state;
-  // console.log(stateParam);
   const { token, profileId, nickname, accountEmail } = userStore((state) => ({
     token: state.token,
     profileId: state.profileId,
     nickname: state.nickname,
     accountEmail: state.accountEmail,
   }));
-  // const sessionId = multiStoryStore((state) => state.sessionId);
   const sessionId = useParams().sessionId;
   // before
   const { stompClient } = useSocket();
@@ -74,13 +78,26 @@ const MultiStory = () => {
         if (notification.action === "move") {
           setIsMove(true);
           setIsStart(true);
-        } else {
-          console.log("not ready yet...");
+          setPage(1);
+          setScriptIndex(0);
+        } else if (notification.action === "nextPage") {
+          console.log("nextPage");
+          setPage(page + 1);
+          setScriptIndex(0);
+        } else if (notification.action === "previousPage") {
+          console.log("previousPage");
+          setPage(page - 1);
+          setScriptIndex(0);
+        } else if (notification.action === "nextScript") {
+          setScriptIndex(scriptIndex + 1);
+        } else if (notification.action === "firstScript") {
+          setScriptIndex(0);
         }
-        console.log("Received " + notification);
+
+        console.log("Received: ", notification);
       });
     }
-  }, [stompClient]);
+  }, [stompClient, page, scriptIndex, setPage, setScriptIndex]);
 
   const sendStartRequest = () => {
     const readyRequestPayload = {
@@ -102,7 +119,7 @@ const MultiStory = () => {
   useEffect(() => {
     const fetchFriends = async () => {
       const friendsData = await getFriends(profileId, token);
-      setFriends(friendsData);
+      setFriends(friendsData.filter((friend, idx) => idx % 2 === 0));
       // console.log(friends); // 위에 주속 오류 수정하기
     };
 
@@ -170,23 +187,16 @@ const MultiStory = () => {
     }
   };
 
-  //
-  // const sendStartRequest = () => {
-  //   const readyRequestPayload = {
-  //     roomSession: {
-  //       sessionId: sessionId,
-  //     },
-  //     isStart: true,
-  //   };
-  //   stompClient.send(
-  //     "/toServer/readyGame",
-  //     {},
-  //     JSON.stringify(readyRequestPayload)
-  //   );
-  //   setIsStart(true);
-  //   // 여기서 딱히 set함수들 해줄 필요 없을 듯??
-  //   console.log(readyRequestPayload);
-  // };
+  const sendChangePageRequest = (action) => {
+    const requestPayload = {
+      roomSession: {
+        sessionId: sessionId,
+      },
+      action: action,
+    };
+    stompClient.send("/toServer/readyGame", {}, JSON.stringify(requestPayload));
+    console.log("send:", requestPayload);
+  };
 
   return (
     <div className="MultiStory-container">
@@ -219,7 +229,7 @@ const MultiStory = () => {
           }}
         >
           <List>
-            {friends.map((friend, indx) => (
+            {friends.map((friend, index) => (
               <ListItem key={friend.profileId}>
                 <ListItemText primary={friend.nickname} />
                 <Button
@@ -285,18 +295,19 @@ const MultiStory = () => {
             ))}
           </Grid>
         )}
-        <StoryRoom
-          // state={stateParam}""
-          isStart={isStart}
-          mySessionId={sessionId}
-          profileId={profileId}
-          toggleState={setIsStart}
-          isMove={isMove}
-          sendStartRequest={sendStartRequest}
-        />
+        <MultiStoryProvider sendChangePageRequest={sendChangePageRequest}>
+          <StoryRoom
+            // state={stateParam}
+            isStart={isStart}
+            mySessionId={sessionId}
+            profileId={profileId}
+            toggleState={setIsStart}
+            isMove={isMove}
+            sendStartRequest={sendStartRequest}
+            sendChangePageRequest={sendChangePageRequest}
+          />
+        </MultiStoryProvider>
       </Box>
-
-      {/* start 상태 */}
     </div>
   );
 };

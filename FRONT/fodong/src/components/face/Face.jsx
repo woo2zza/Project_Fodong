@@ -3,9 +3,9 @@ import * as faceapi from "face-api.js";
 import { useParams } from "react-router-dom"; // useParams 추가
 import "../storyTelling/StoryTelling.css";
 
-function Face({ page, width }) {
+function Face({ page, width, videoRef }) {
   const [videoStream, setVideoStream] = useState(null); // 비디오 스트림 상태를 관리하는 state를 선언
-  const videoRef = useRef(null);
+  // const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [faceImages, setFaceImages] = useState([]); // 각 얼굴의 이미지 데이터 URL을 저장
 
@@ -57,8 +57,8 @@ function Face({ page, width }) {
       await faceapi.nets.tinyFaceDetector.loadFromUri("../models");
       console.log("해줘");
       await faceapi.nets.faceLandmark68Net.loadFromUri("../models");
-      await faceapi.nets.faceRecognitionNet.loadFromUri("../models");
-      await faceapi.nets.faceExpressionNet.loadFromUri("../models");
+      // await faceapi.nets.faceRecognitionNet.loadFromUri("../models");
+      // await faceapi.nets.faceExpressionNet.loadFromUri("../models");
       startVideo(); // 모델 로딩 후 비디오 스트림을 시작
     };
     // 모델 로딩 함수를 실행
@@ -78,6 +78,8 @@ function Face({ page, width }) {
   };
 
   useEffect(() => {
+    let intervalId;
+
     if (videoStream) {
       // console.log("1");
       // videoStream이 설정되었는지 확인
@@ -87,11 +89,11 @@ function Face({ page, width }) {
       faceapi.matchDimensions(canvas, displaySize); // 캔버스의 크기를 비디오의 크기에 맞춘다.
 
       // 일정 시간마다 얼굴 감지를 반복
-      setInterval(async () => {
+      intervalId = setInterval(async () => {
         let detections = await faceapi // face-api.js를 사용하여 비디오에서 얼굴을 감지
           .detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
           .withFaceLandmarks()
-          .withFaceExpressions();
+          // .withFaceExpressions();
 
         // 감지된 얼굴을 x좌표 기준으로 정렬합니다.
         detections = detections.sort(
@@ -112,6 +114,11 @@ function Face({ page, width }) {
         // 캔버스를 초기화
         canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
       }, 100);
+    } else {
+      if (intervalId) clearInterval(intervalId);
+    }
+    return () => {
+      if (intervalId) clearInterval(intervalId);
     }
   }, [videoStream]);
 
@@ -158,7 +165,6 @@ function Face({ page, width }) {
         width="1"
         height="1"
         autoPlay
-        muted
         style={{ position: "absolute", top: "1px" }}
       />
       <canvas ref={canvasRef} style={{ position: "absolute" }} />
@@ -194,7 +200,7 @@ function Face({ page, width }) {
           fontSize: "20px",
           position: "absolute",
           top: "20px",
-          right: "20px",
+          left: "20px",
         }}
       >
         카메라 종료
