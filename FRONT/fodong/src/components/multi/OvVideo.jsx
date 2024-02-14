@@ -11,5 +11,5 @@ export default function OpenViduVideoComponent({ streamManager }) {
     // console.log(streamManager ? true : false);
   }, [streamManager]);
 
-  return <video autoPlay={true} ref={videoRef} />;
+  return <video autoPlay={true} ref={videoRef} style={{ height: "20vh" }} />;
 }

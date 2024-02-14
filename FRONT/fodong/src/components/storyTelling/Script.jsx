@@ -25,7 +25,7 @@ const Script = ({ scriptPage, setScriptPage }) => {
     // console.log(numPage);
     if (numPage !== page) {
       setPage(numPage);
-    
+
       // if (numPage !== prevPage) {
       //   setScriptIndex(0);
       //   // setScript(DummyScript[page - 1][0].text);
@@ -36,25 +36,24 @@ const Script = ({ scriptPage, setScriptPage }) => {
   }, [pageParam, page, scriptPage]);
 
   useEffect(() => {
-
     if (DummyScript[page - 1] && DummyScript[page - 1][scriptIndex]) {
       setScript(DummyScript[page - 1][scriptIndex].text);
-    }}
-, [scriptIndex, page]);
-
-
+    }
+  }, [scriptIndex, page]);
 
   const handleNextScript = () => {
     const scriptLength = DummyScript[page - 1].length;
-    console.log(scriptIndex)
-    console.log(page)
-    console.log(scriptLength)
+    console.log(scriptIndex);
+    console.log(page);
+    console.log(scriptLength);
     if (scriptIndex + 1 < scriptLength) {
       setScriptIndex((idx) => idx + 1);
-    } else if (page === DummyScript.length && scriptIndex === scriptLength -1) {
+    } else if (
+      page === DummyScript.length &&
+      scriptIndex === scriptLength - 1
+    ) {
       showModal();
-    }
-    else if (page < DummyScript.length) {
+    } else if (page < DummyScript.length) {
       // console.log(scriptIndex)
       // console.log(page )
       // console.log(setPage)
@@ -63,28 +62,28 @@ const Script = ({ scriptPage, setScriptPage }) => {
       setPage(nextPage);
       setScriptIndex(0);
       setScript(DummyScript[nextPage - 1][0].text);
-    } 
+    }
   };
 
   const showModal = () => {
-    console.log(123123)
-    setIsModalOpen(true); 
-  }
+    console.log(123123);
+    setIsModalOpen(true);
+  };
 
   // console.log(script);
   return (
     // <div className="main-content" >
-      <div className="script-container">
-        <div className="script-text-container">
-          <h1 className="script_text">{script}</h1>
-        </div>
-        <div className="bottom" style={{margin:'0px'}}>
-          <button className="story_button" onClick={handleNextScript}>
-            다음
-          </button>
-          {isModalOpen && <StoryEndModal onClose={() => setIsModalOpen(false)} />}
-        </div>
+    <div className="script-container">
+      <div className="script-text-container">
+        <h1 className="script_text">{script}</h1>
       </div>
+      <div className="bottom" style={{ margin: "0px" }}>
+        <button className="story_button" onClick={handleNextScript}>
+          다음
+        </button>
+        {isModalOpen && <StoryEndModal onClose={() => setIsModalOpen(false)} />}
+      </div>
+    </div>
     // </div>
   );
 };
