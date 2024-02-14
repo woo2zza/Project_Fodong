@@ -1,0 +1,64 @@
+#join {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20%;
+  padding: 50px;
+}
+
+#join-dialog {
+  text-align: center;
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+#join-dialog h1 {
+  color: #333366;
+  margin-bottom: 20px;
+}
+
+.form-group input[type="submit"] {
+  background-color: #4caf50; /* Green */
+  color: white;
+  padding: 14px 120px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.storyRoomWrapper {
+  padding: 40px;
+  background: rgba(
+    255,
+    255,
+    255,
+    0.8
+  ); /* Semi-transparent white for readability */
+  border-radius: 20px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2); /* More pronounced shadow for depth */
+}
+
+.characterIcon {
+  width: 100px; /* Larger size for character icons */
+  height: 100px;
+  border-radius: 50%; /* Circular icons */
+  border: 2px solid #4caf50; /* Border color could be more playful */
+}
+
+.startButton {
+  font-size: 1.5rem; /* Larger text for readability */
+  padding: 15px 30px;
+  border-radius: 30px; /* Rounded corners for a soft, child-friendly feel */
+  background-color: #4caf50; /* Vibrant color */
+  color: white;
+  text-align: center;
+  display: inline-block;
+  transition: transform 0.3s ease; /* For a press-down animation */
+}
+
+.startButton:hover {
+  transform: scale(1.1); /* Slightly enlarge on hover for interactivity */
+}
