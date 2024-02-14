@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -53,10 +54,23 @@ public class FriendController {
             schema = @Schema(implementation = Friendship.class)))
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/requests")
-    public Friendship sendFriendRequest(@RequestBody FriendRequest friendRequest) {
-        // 친구 추가 요청
-        return friendService.sendFriendRequest(friendRequest);
+    public ResponseEntity<Friendship> sendFriendRequest(@RequestBody FriendRequest friendRequest) {
+        try {
+            // 의도적으로 2초(2000밀리초) 지연을 줍니다.
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt(); // 현재 스레드에 대한 인터럽트 상태를 복원
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+
+        Friendship friendship = friendService.sendFriendRequest(friendRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(friendship);
     }
+//    public Friendship sendFriendRequest(@RequestBody FriendRequest friendRequest) {
+//        // 친구 추가 요청
+//
+//        return friendService.sendFriendRequest(friendRequest);
+//    }
 
     @Operation(summary = "친구 요청 수락", description = "[SOCKET, STOMP 프로토콜과 연계, 수락 버튼 클릭을 통해 실시간으로 해당 HTTP 통신 연계] 친구 요청을 수락합니다.")
     @ApiResponse(responseCode = "202", description = "수락 성공")
