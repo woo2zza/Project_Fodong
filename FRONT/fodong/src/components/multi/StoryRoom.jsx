@@ -1,9 +1,15 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { userStore } from "../../store/userStore.js";
 import axios from "axios";
+import { Routes, Route } from "react-router-dom";
 import { OpenVidu } from "openvidu-browser";
 import UserVideoComponent from "./UserVideoComponent";
 import { useSocket } from "../../contexts/SocketContext.js";
+
+import { Grid, Button, Paper, Box } from "@mui/material";
+import VideoSlider from "./VideoSlider.jsx";
+import Story from "./Story.jsx";
+import Script from "./Script.jsx";
 
 const APPLICATION_SERVER_URL = process.env.REACT_APP_API_URL;
 // openVidu
@@ -24,6 +30,7 @@ const StoryRoom = ({
   const [subscribers, setSubscribers] = useState([]);
   const [currentVideoDevice, setCurrentVideoDevice] = useState(null);
   const [nickname, setNickName] = useState(null);
+  const [page, setPage] = useState(null);
 
   // 고칠 부분!! => nickname 이거 mapping 시켜서 렌더링 되도록 바꾸기!!
   const [myUserName, setMyUserName] = useState(
@@ -140,6 +147,7 @@ const StoryRoom = ({
           );
         }
       });
+      setPage(1);
     }
   }, [session]);
 
@@ -316,56 +324,111 @@ const StoryRoom = ({
         </div>
       ) : null}
       {playState ? (
-        <div id="session">
-          <div id="session-header">
-            <h1 id="session-title">{mySessionId}</h1>
-            <input
-              className="btn btn-large btn-danger"
-              type="button"
-              id="buttonLeaveSession"
-              onClick={leaveSession}
-              value="Leave session"
-            />
-            <input
-              className="btn btn-large btn-success"
-              type="button"
-              id="buttonSwitchCamera"
-              onClick={switchCamera}
-              value="Switch Camera"
-            />
-          </div>
+        <Box id="session">
+          <Box id="session-header" sx={{ mb: 2 }}>
+            {/* <h1 id="session-title">{mySessionId}</h1> */}
+            <Button variant="contained" color="error" onClick={leaveSession}>
+              Leave session
+            </Button>
+            {/* <Button variant="contained" color="primary" onClick={switchCamera}>
+              Switch Camera
+            </Button> */}
+          </Box>
+          {/* <Grid container spacing={2}> */}
+          {/* {mainStreamManager && (
+              <Grid item xs={12} sm={6}>
+                <h1>메인</h1>
+                <UserVideoComponent streamManager={mainStreamManager} />
+              </Grid>
+            )} */}
+          {/* <Grid item xs={12} sm={6}> */}
+          {/* 
+          <Routes>
+            <Route path="/:page" element={<Story page={page} />} />
+          </Routes> */}
+          {page}
+          <Story page={page} changePage={setPage} />
+          <Script page={page} changePage={setPage} />
 
-          {mainStreamManager !== undefined ? (
-            <div id="main-video" className="col-md-6">
-              <h1>메인</h1>
-              <UserVideoComponent streamManager={mainStreamManager} />
-            </div>
-          ) : null}
-          <div id="video-container" className="col-md-6">
-            {publisher !== undefined ? (
-              <div
-                className="stream-container col-md-6 col-xs-6"
-                onClick={() => handleMainVideoStream(publisher)}
-              >
-                {/* <h1> 1번 </h1> */}
-                <UserVideoComponent streamManager={publisher} />
-              </div>
-            ) : null}
-            {subscribers.map((sub, i) => (
-              <div
-                key={sub.id}
-                className="stream-container col-md-6 col-xs-6"
-                onClick={() => handleMainVideoStream(sub)}
-              >
-                <span>{sub.id}</span>
-                <UserVideoComponent streamManager={sub} />
-              </div>
-            ))}
-          </div>
-        </div>
+          <Grid container xs={12} sm={6} spacing={2}>
+            <VideoSlider>
+              {publisher && (
+                <Box item>
+                  <UserVideoComponent streamManager={publisher} />
+                </Box>
+              )}
+              {subscribers.map((sub, i) => (
+                // <Grid
+                //   key={sub.id}
+                //   item
+                //   onClick={() => handleMainVideoStream(sub)}
+                // >
+                //   <Paper elevation={3}>
+                <Box key={sub.id}>
+                  <UserVideoComponent streamManager={sub} />
+                </Box>
+                // <span>{sub.id}</span>
+                //   </Paper>
+                // </Grid>
+              ))}
+            </VideoSlider>
+          </Grid>
+          {/* </Grid> */}
+          {/* </Grid> */}
+        </Box>
       ) : null}
     </div>
   );
 };
 
 export default StoryRoom;
+
+// {playState ? (
+//   <div id="session">
+//     <div id="session-header">
+//       <h1 id="session-title">{mySessionId}</h1>
+//       <input
+//         className="btn btn-large btn-danger"
+//         type="button"
+//         id="buttonLeaveSession"
+//         onClick={leaveSession}
+//         value="Leave session"
+//       />
+//       <input
+//         className="btn btn-large btn-success"
+//         type="button"
+//         id="buttonSwitchCamera"
+//         onClick={switchCamera}
+//         value="Switch Camera"
+//       />
+//     </div>
+
+//     {mainStreamManager !== undefined ? (
+//       <div id="main-video" className="col-md-6">
+//         <h1>메인</h1>
+//         <UserVideoComponent streamManager={mainStreamManager} />
+//       </div>
+//     ) : null}
+//     <div id="video-container" className="col-md-6">
+//       {publisher !== undefined ? (
+//         <div
+//           className="stream-container col-md-6 col-xs-6"
+//           onClick={() => handleMainVideoStream(publisher)}
+//         >
+//           {/* <h1> 1번 </h1> */}
+//           <UserVideoComponent streamManager={publisher} />
+//         </div>
+//       ) : null}
+//       {subscribers.map((sub, i) => (
+//         <div
+//           key={sub.id}
+//           className="stream-container col-md-6 col-xs-6"
+//           onClick={() => handleMainVideoStream(sub)}
+//         >
+//           <span>{sub.id}</span>
+//           <UserVideoComponent streamManager={sub} />
+//         </div>
+//       ))}
+//     </div>
+//   </div>
+// ) : null}

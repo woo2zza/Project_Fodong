@@ -4,8 +4,6 @@ import { getFriends } from "../api/friends.js";
 import { userStore } from "../store/userStore";
 import { multiStoryStore } from "../store/multiStoryStore.js";
 import { getFriendEmail } from "../api/friends.js";
-import SockJS from "sockjs-client";
-import { Stomp } from "@stomp/stompjs";
 import { useSocket } from "../contexts/SocketContext.js";
 import StoryRoom from "../components/multi/StoryRoom";
 import {
@@ -52,6 +50,7 @@ const MultiStory = () => {
   const [friends, setFriends] = useState([]);
   const [isMove, setIsMove] = useState(false);
   const [info, setInfo] = useState(null);
+
   // const stateParam = useParams().state;
   // console.log(stateParam);
   const { token, profileId, nickname, accountEmail } = userStore((state) => ({
@@ -62,8 +61,10 @@ const MultiStory = () => {
   }));
   // const sessionId = multiStoryStore((state) => state.sessionId);
   const sessionId = useParams().sessionId;
+  // before
   const { stompClient } = useSocket();
 
+  //before
   useEffect(() => {
     if (stompClient) {
       stompClient.subscribe("/toClient/readyGame-response", (message) => {
