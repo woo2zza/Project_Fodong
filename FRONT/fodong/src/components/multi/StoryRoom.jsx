@@ -242,7 +242,7 @@ const StoryRoom = ({
     <div className="Room-container">
       {!playState ? (
         <div id="join" className="storyRoomWrapper">
-          <div id="join-dialog" className="storyRoomDialog">
+          <div id="join-dialog">
             <Webcam className="web-container" />
             <h1>동화 만들기~</h1>
 
