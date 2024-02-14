@@ -28,6 +28,7 @@ export const login = async (accountEmail, accountPwd) => {
 
     if (authId) {
       localStorage.setItem("accountId", authId);
+      userStore.getState().setAccountId(authId);
     } else {
       console.log("id 토큰이 없습니다.");
     }
