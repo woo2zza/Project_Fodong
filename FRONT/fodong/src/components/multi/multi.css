@@ -1,9 +1,16 @@
+.Room-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 #join {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 20%;
-  padding: 50px;
+  width: 70%;
+  padding: 80px;
 }
 
 #join-dialog {
@@ -20,7 +27,7 @@
 }
 
 .form-group input[type="submit"] {
-  background-color: #4caf50; /* Green */
+  background-color: #4caf50;
   color: white;
   padding: 14px 120px;
   border: none;
@@ -30,35 +37,29 @@
 }
 
 .storyRoomWrapper {
-  padding: 40px;
-  background: rgba(
-    255,
-    255,
-    255,
-    0.8
-  ); /* Semi-transparent white for readability */
+  background: #ffffffcc;
   border-radius: 20px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2); /* More pronounced shadow for depth */
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
 }
 
 .characterIcon {
-  width: 100px; /* Larger size for character icons */
+  width: 100px;
   height: 100px;
-  border-radius: 50%; /* Circular icons */
-  border: 2px solid #4caf50; /* Border color could be more playful */
+  border-radius: 50%;
+  border: 2px solid #4caf50;
 }
 
 .startButton {
-  font-size: 1.5rem; /* Larger text for readability */
+  font-size: 1.5rem;
   padding: 15px 30px;
-  border-radius: 30px; /* Rounded corners for a soft, child-friendly feel */
-  background-color: #4caf50; /* Vibrant color */
+  border-radius: 30px;
+  background-color: #4caf50;
   color: white;
   text-align: center;
   display: inline-block;
-  transition: transform 0.3s ease; /* For a press-down animation */
+  transition: transform 0.3s ease;
 }
 
 .startButton:hover {
-  transform: scale(1.1); /* Slightly enlarge on hover for interactivity */
+  transform: scale(1.1);
 }
