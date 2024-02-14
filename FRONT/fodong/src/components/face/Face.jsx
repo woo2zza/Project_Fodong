@@ -200,7 +200,7 @@ function Face({ page, width, videoRef }) {
           fontSize: "20px",
           position: "absolute",
           top: "20px",
-          right: "20px",
+          left: "20px",
         }}
       >
         카메라 종료

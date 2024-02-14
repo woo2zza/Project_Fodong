@@ -13,7 +13,7 @@ const Script = ({ scriptPage, setScriptPage, stopVideo }) => {
   // console.log(page);
   const [script, setScript] = useState(DummyScript[page - 1][scriptIndex].text);
   const navigate = useNavigate();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [isModalOpen, setIsModalOpen] = useState(false);
 
   // const [prevPage, setPrevPage] = useState(page)
 
@@ -52,7 +52,7 @@ const Script = ({ scriptPage, setScriptPage, stopVideo }) => {
     if (scriptIndex + 1 < scriptLength) {
       setScriptIndex((idx) => idx + 1);
     } else if (page === DummyScript.length && scriptIndex === scriptLength -1) {
-      showModal();
+  
     }
     else if (page < DummyScript.length) {
       // console.log(scriptIndex)
@@ -66,15 +66,6 @@ const Script = ({ scriptPage, setScriptPage, stopVideo }) => {
     } 
   };
 
-  const showModal = () => {
-    console.log(123123)
-    setIsModalOpen(true); 
-  }
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  }
-
 
   // console.log(script);
   return (
@@ -87,7 +78,7 @@ const Script = ({ scriptPage, setScriptPage, stopVideo }) => {
           <button className="story_button" onClick={handleNextScript}>
             다음
           </button>
-          {isModalOpen && <StoryEndModal onClose={stopVideo} onBack={closeModal} />}
+          {/* {isModalOpen && <StoryEndModal onClose={stopVideo} onBack={closeModal} />} */}
         </div>
       </div>
     // </div>

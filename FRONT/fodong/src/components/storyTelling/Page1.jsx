@@ -8,6 +8,8 @@ import StoryEndModal from "./StoryEndModal";
 import RecordRTC from "recordrtc";
 import axios from "axios";
 import { userStore } from "../../store/userStore";
+import { Button, IconButton } from "@mui/material";
+import VideocamIcon from '@mui/icons-material/Videocam';
 
 const getCharacterStyles = (page, width) => {
   const baseStyle = {
@@ -118,7 +120,7 @@ const Page = ({ onPageChange, videoRef, stopVideo }) => {
       // setPage(nextPage);
       onPageChange();
     } else {
-      setIsModalOpen(true);
+      // setIsModalOpen(true);
     }
   };
   const handleBeforePage = () => {
@@ -260,8 +262,8 @@ const Page = ({ onPageChange, videoRef, stopVideo }) => {
       style={{
         ...backgroundStyle,
         display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
+        // flexDirection: "row",
+        // justifyContent: "space-between",
         alignItems: "center",
       }}
     >
@@ -292,11 +294,26 @@ const Page = ({ onPageChange, videoRef, stopVideo }) => {
         className="grasshopperCharacter"
         style={grasshopperCharater}
       />
-      <button onClick={startRecording}>녹화 하기</button>
-      <button onClick={stopRecording}>녹화 중지</button>
+      {/* <button onClick={startRecording} style={{ position: 'absolute', top: '10px', right:'10px'}}>
+        녹화 하기
+        </button> */}
+        <Button startIcon={<VideocamIcon/>} variant="contained" onClick={startRecording} style={{ position: 'absolute', top: '10px', right:'10px'}}>
+  녹화 하기
+</Button>
+      {/* <button onClick={stopRecording}>녹화 중지</button> */}
+      <>
+      {page < DummyScript.length ? (
+      // 현재 페이지가 DummyScript의 길이보다 작으면 다음 페이지 버튼을 보여줌
       <button style={buttonStyle("right")} onClick={handleNextPage}>
         {">"}
       </button>
+    ) : (
+      // 페이지가 DummyScript의 길이와 같으면 end 버튼을 보여줌
+      <Button variant="contained" color="error" size="large" style={{position: 'absolute', bottom: '5px', right:'5px'}} onClick={() => setIsModalOpen(true)}>
+        종료
+      </Button>
+    )}
+      </>
       {isModalOpen && <StoryEndModal onClose={stopVideo} onBack={closeModal} />}
     </div>
   );
