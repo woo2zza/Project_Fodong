@@ -12,9 +12,10 @@ const Title = ({ nickname }) => {
     console.log(userStore.getState().profileId);
   }, []);
   const useNickname = userStore((state) => state.nickname);
+  const useProfileId = userStore((state) => state.profileId);
 
   const Mainbutton = () => {
-    MainNavi("/main");
+    window.location.reload();
   };
 
   return (
@@ -23,7 +24,9 @@ const Title = ({ nickname }) => {
         <img src={Logo} alt="logo" onClick={Mainbutton} />
       </div>
       <div className="titleStyle">
-        <div>{useNickname}'s World!</div>{" "}
+        <div>
+          {useNickname}'s World! {useProfileId}
+        </div>{" "}
       </div>
     </div>
   );
