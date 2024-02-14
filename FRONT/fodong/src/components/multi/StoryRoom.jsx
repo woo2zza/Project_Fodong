@@ -5,12 +5,12 @@ import { Routes, Route } from "react-router-dom";
 import { OpenVidu } from "openvidu-browser";
 import UserVideoComponent from "./UserVideoComponent";
 import { useSocket } from "../../contexts/SocketContext.js";
-
+import "./multi.css";
 import { Grid, Button, Paper, Box } from "@mui/material";
 import VideoSlider from "./VideoSlider.jsx";
 import Story from "./Story.jsx";
 import Script from "./Script.jsx";
-
+import "./multi.css";
 const APPLICATION_SERVER_URL = process.env.REACT_APP_API_URL;
 // openVidu
 const StoryRoom = ({
@@ -304,13 +304,16 @@ const StoryRoom = ({
   return (
     <div>
       {!playState ? (
-        <div id="join">
-          <div id="join-dialog">
+        <div id="join" className="storyRoomWrapper">
+          <div id="join-dialog" className="storyRoomDialog">
             <h1>동화 만들기~</h1>
 
             {/* <form className="form-group" onSubmit={joinSession}> */}
             {/* <form className="form-group" onSubmit={sendStartRequest}> */}
-            <form className="form-group" onSubmit={handleSendStartRequest}>
+            <form
+              className="form-group storyRoomForm"
+              onSubmit={handleSendStartRequest}
+            >
               <p className="text-center">
                 <input
                   className="btn btn-lg btn-success"
@@ -324,8 +327,12 @@ const StoryRoom = ({
         </div>
       ) : null}
       {playState ? (
-        <Box id="session">
-          <Box id="session-header" sx={{ mb: 2 }}>
+        <Box id="session" className="storyRoomSession">
+          <Box
+            id="session-header"
+            sx={{ mb: 2 }}
+            className="storyRoomSessionHeader"
+          >
             {/* <h1 id="session-title">{mySessionId}</h1> */}
             <Button variant="contained" color="error" onClick={leaveSession}>
               Leave session
@@ -364,8 +371,11 @@ const StoryRoom = ({
                 //   onClick={() => handleMainVideoStream(sub)}
                 // >
                 //   <Paper elevation={3}>
-                <Box key={sub.id}>
-                  <UserVideoComponent streamManager={sub} />
+                <Box key={sub.id} className="storyRoomSubscriberBox">
+                  <UserVideoComponent
+                    streamManager={sub}
+                    className="storyRoomUserVideo"
+                  />
                 </Box>
                 // <span>{sub.id}</span>
                 //   </Paper>
