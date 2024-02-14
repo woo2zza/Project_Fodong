@@ -225,8 +225,9 @@ function Friends() {
           style={{
             position: "fixed",
             bottom: 100,
-            right: 20,
-            width: 300,
+            right: 50,
+            height: 260,
+            width: 330,
             maxHeight: "80%",
             overflow: "auto",
             padding: "20px",

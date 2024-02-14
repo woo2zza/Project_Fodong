@@ -27,6 +27,7 @@ const Main = () => {
   const Navi = useNavigate();
   useEffect(() => {
     console.log("두번째 ");
+
     if (sessionId && isGameAccepted) {
       Navi(`/multi/${sessionId}`);
     }
