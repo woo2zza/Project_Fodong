@@ -1,13 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import { useMultiStoryContext } from "../../contexts/MultiStoryContext.js";
+import { multiStoryStore } from "../../store/multiStoryStore.js";
+
 import "../storyTelling/StoryTelling.css";
 
-const Story = ({ page, changePage }) => {
+const Story = () => {
   const [imageSrc, setImageSrc] = useState("");
   const [antCharacter, setAntCharacter] = useState();
   const [grasshopperCharacter, setGrasshopperCharacter] = useState();
   const [antSrc, setAntSrc] = useState();
   const [grasshopperSrc, setGrasshopperSrc] = useState();
   // const { antCharater, grasshopperCharater } = getCharacterStyles(page);
+
+  const sendChangePageRequest = useMultiStoryContext();
+
+  const {
+    page,
+    setPage,
+    nextPage,
+    prevPage,
+    scriptIndex,
+    setScriptIndex,
+    nextScriptIndex,
+  } = multiStoryStore();
 
   useEffect(() => {
     // console.log(15, pageParam);
@@ -75,6 +90,8 @@ const Story = ({ page, changePage }) => {
     setGrasshopperSrc(
       `${process.env.PUBLIC_URL}/img/antstory/character/grasshopper/${page}.jpg`
     );
+
+    console.log(page);
   }, [page]);
 
   // const antSrc = require(`../../../public/img/antstory/character/ant/${page}.jpg`);
@@ -107,19 +124,27 @@ const Story = ({ page, changePage }) => {
     zIndex: 1, // 우선 순위 설정
   });
 
-  const handleNextPage = () => {
-    // const nextPage = page + 1;
+  // const handleNextPage = () => {
+  //   // const nextPage = page + 1;
+  //   const nextPage = page + 1;
+  //   // 더미 lenght가 3이라서 이렇게 설정
+  //   const maxLength = 3;
+  //   if (nextPage <= maxLength) sendChangePageRequest("nextPage");
+  // };
+  // const handlePrevPage = () => {
+  //   const prevPage = page - 1;
+  //   if (prevPage >= 1) sendChangePageRequest("previousPage");
+  // };
+  const handleNextPage = useCallback(() => {
     const nextPage = page + 1;
     // 더미 lenght가 3이라서 이렇게 설정
     const maxLength = 3;
-    if (nextPage <= maxLength) changePage((prev) => prev + 1);
-  };
-  const handlePrevPage = () => {
+    if (nextPage <= maxLength) sendChangePageRequest("nextPage");
+  }, [page, sendChangePageRequest]);
+  const handlePrevPage = useCallback(() => {
     const prevPage = page - 1;
-    if (prevPage >= 1) {
-      changePage((prev) => prev - 1);
-    }
-  };
+    if (prevPage >= 1) sendChangePageRequest("previousPage");
+  }, [page, sendChangePageRequest]);
 
   return (
     <>

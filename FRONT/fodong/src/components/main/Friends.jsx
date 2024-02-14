@@ -200,7 +200,7 @@ function Friends() {
   useEffect(() => {
     const fetchFriends = async () => {
       const friendsData = await getFriends(profileId, token);
-      setFriends(friendsData);
+      setFriends(friendsData.filter((friend, idx) => idx % 2 === 0));
       console.log(friends);
     };
 

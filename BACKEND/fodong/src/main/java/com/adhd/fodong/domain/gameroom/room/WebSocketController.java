@@ -144,10 +144,33 @@ public class WebSocketController {
 
             System.out.println("시작요청에 대한 응답 : " + readyDataResponse.toString());
             return readyDataResponse;
-        } else {
-
-            System.out.println("스타트 요청 아니라고?");
-            return null;
         }
+
+        ReadyDataResponse readyDataResponse = new ReadyDataResponse();
+
+        // 동화페이지 넘기기 쉐어
+        switch(readyDataRequest.getAction()) {
+            case "nextScript":
+                // 다음 스크립트 처리 로직
+                readyDataResponse.setRoomSession(readyDataRequest.getRoomSession());
+                readyDataResponse.setAction("nextScript");
+                return readyDataResponse;
+            case "nextPage":
+                // 다음 페이지 처리 로직
+                readyDataResponse.setRoomSession(readyDataRequest.getRoomSession());
+                readyDataResponse.setAction("nextPage");
+                return readyDataResponse;
+            case "previousPage":
+                // 이전 페이지 처리 로직
+                readyDataResponse.setRoomSession(readyDataRequest.getRoomSession());
+                readyDataResponse.setAction("previousPage");
+                return readyDataResponse;
+            default:
+                // 알 수 없는 액션에 대한 처리 로직
+                System.out.println("알 수 없는 액션 요청: " + readyDataRequest.getAction());
+        }
+
+
+        return null;
     }
 }
