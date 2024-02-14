@@ -78,6 +78,8 @@ function Face({ page, width, videoRef }) {
   };
 
   useEffect(() => {
+    let intervalId;
+
     if (videoStream) {
       // console.log("1");
       // videoStream이 설정되었는지 확인
@@ -87,7 +89,7 @@ function Face({ page, width, videoRef }) {
       faceapi.matchDimensions(canvas, displaySize); // 캔버스의 크기를 비디오의 크기에 맞춘다.
 
       // 일정 시간마다 얼굴 감지를 반복
-      setInterval(async () => {
+      intervalId = setInterval(async () => {
         let detections = await faceapi // face-api.js를 사용하여 비디오에서 얼굴을 감지
           .detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
           .withFaceLandmarks()
@@ -112,6 +114,11 @@ function Face({ page, width, videoRef }) {
         // 캔버스를 초기화
         canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
       }, 100);
+    } else {
+      if (intervalId) clearInterval(intervalId);
+    }
+    return () => {
+      if (intervalId) clearInterval(intervalId);
     }
   }, [videoStream]);
 

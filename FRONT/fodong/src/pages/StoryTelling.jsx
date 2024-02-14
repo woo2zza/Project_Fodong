@@ -15,6 +15,7 @@ const StoryTelling = () => {
   const videoRef = useRef(null); // 비디오 요소 참조를 위한 ref
   const mediaRecorderRef = useRef(null); // MediaRecorder 인스턴스를 저장
   const [recording, setRecording] = useState(false); // 녹화 상태 관리
+  const [isModalOpen, setIsModalOpen] = useState(false); //
 
   const handlePageChange = () => {
     setScriptPage(0);
@@ -54,7 +55,10 @@ const StoryTelling = () => {
         track.stop();
       });
     }
+    setIsModalOpen(false);
   }
+
+  
 
   return (
     <>

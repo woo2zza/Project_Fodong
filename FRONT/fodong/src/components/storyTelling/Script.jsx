@@ -46,9 +46,9 @@ const Script = ({ scriptPage, setScriptPage, stopVideo }) => {
 
   const handleNextScript = () => {
     const scriptLength = DummyScript[page - 1].length;
-    console.log(scriptIndex)
-    console.log(page)
-    console.log(scriptLength)
+    // console.log(scriptIndex)
+    // console.log(page)
+    // console.log(scriptLength)
     if (scriptIndex + 1 < scriptLength) {
       setScriptIndex((idx) => idx + 1);
     } else if (page === DummyScript.length && scriptIndex === scriptLength -1) {
@@ -71,6 +71,11 @@ const Script = ({ scriptPage, setScriptPage, stopVideo }) => {
     setIsModalOpen(true); 
   }
 
+  const closeModal = () => {
+    setIsModalOpen(false);
+  }
+
+
   // console.log(script);
   return (
     // <div className="main-content" >
@@ -82,7 +87,7 @@ const Script = ({ scriptPage, setScriptPage, stopVideo }) => {
           <button className="story_button" onClick={handleNextScript}>
             다음
           </button>
-          {isModalOpen && <StoryEndModal onClose={stopVideo} />}
+          {isModalOpen && <StoryEndModal onClose={stopVideo} onBack={closeModal} />}
         </div>
       </div>
     // </div>

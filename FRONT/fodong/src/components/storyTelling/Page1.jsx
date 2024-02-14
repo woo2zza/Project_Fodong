@@ -6,6 +6,8 @@ import { Route, Routes } from "react-router-dom";
 import Face from "../face/Face";
 import StoryEndModal from "./StoryEndModal";
 import RecordRTC from "recordrtc";
+import axios from "axios";
+import { userStore } from "../../store/userStore";
 
 const getCharacterStyles = (page, width) => {
   const baseStyle = {
@@ -160,20 +162,68 @@ const Page = ({ onPageChange, videoRef, stopVideo }) => {
     }
   };
   console.log(activeAudioStream);
+  // const stopRecording = () => {
+  //   if (recorder) {
+  //     recorder.stopRecording(() => {
+  //       const blob = recorder.getBlob();
+  //       const url = URL.createObjectURL(blob);
+  //       const a = document.createElement("a");
+  //       document.body.appendChild(a);
+  //       a.style = "display: none";
+  //       a.href = url;
+  //       a.download = "recorded_video.webm";
+  //       a.click();
+  //       window.URL.revokeObjectURL(url);
+  //       // console.log(activeAudioStream, activeVideoStream);
+
+  //       // 비디오 스트림의 모든 트랙을 종료합니다.
+  //       if (activeVideoStream) {
+  //         activeVideoStream.getTracks().forEach((track) => track.stop());
+  //         console.log(activeVideoStream.getTracks());
+  //         // activeVideoStream = null;
+  //         setActiveVideoStream(null);
+  //       }
+
+  //       // 오디오 스트림의 모든 트랙을 종료합니다.
+  //       if (activeAudioStream) {
+  //         activeAudioStream.getTracks().forEach((track) => track.stop());
+  //         // activeAudioStream = null;
+  //         setActiveAudioStream(null);
+  //       }
+  //     });
+  //   }
+  // };
+  const token = localStorage.getItem("Token");
+  const config = {
+    headers: {
+      Authorization: `${token}`,
+      "Content-Type": "multipart/form-data",
+    },
+  };
+
+  const API_URL = process.env.REACT_APP_API_URL;
+  const API_BASE_URL = `${API_URL}/album/save`;
+  const { profileId } = userStore();
+
   const stopRecording = () => {
     if (recorder) {
-      recorder.stopRecording(() => {
+      recorder.stopRecording(async () => {
         const blob = recorder.getBlob();
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        document.body.appendChild(a);
-        a.style = "display: none";
-        a.href = url;
-        a.download = "recorded_video.webm";
-        a.click();
-        window.URL.revokeObjectURL(url);
-        console.log(activeAudioStream, activeVideoStream);
-        // 비디오 스트림의 모든 트랙을 종료합니다.
+        const formData = new FormData();
+        formData.append("video", blob, "recorded_video.webm");
+        formData.append("profile_id", profileId);
+        formData.append("book_id", "1");
+
+        try {
+          const response = await axios.post(`${API_BASE_URL}`, formData, {
+            config,
+          });
+          console.log("Success:", response.data);
+        } catch (error) {
+          console.error("Error:", error);
+        }
+
+        // 파일 전송 후 필요한 추가 작업을 여기에 작성합니다.
         if (activeVideoStream) {
           activeVideoStream.getTracks().forEach((track) => track.stop());
           console.log(activeVideoStream.getTracks());
@@ -190,6 +240,10 @@ const Page = ({ onPageChange, videoRef, stopVideo }) => {
       });
     }
   };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  }
 
   // const stopVideo = () => {
   //   const stream = videoRef.current.srcObject;
@@ -243,7 +297,7 @@ const Page = ({ onPageChange, videoRef, stopVideo }) => {
       <button style={buttonStyle("right")} onClick={handleNextPage}>
         {">"}
       </button>
-      {isModalOpen && <StoryEndModal onClose={stopVideo} />}
+      {isModalOpen && <StoryEndModal onClose={stopVideo} onBack={closeModal} />}
     </div>
   );
 };
