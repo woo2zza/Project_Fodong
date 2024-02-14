@@ -11,6 +11,7 @@ import VideoSlider from "./VideoSlider.jsx";
 import Story from "./Story.jsx";
 import Script from "./Script.jsx";
 import "./multi.css";
+import Webcam from "react-webcam";
 const APPLICATION_SERVER_URL = process.env.REACT_APP_API_URL;
 // openVidu
 const StoryRoom = ({
@@ -302,10 +303,11 @@ const StoryRoom = ({
   // };
 
   return (
-    <div>
+    <div className="Room-container">
       {!playState ? (
         <div id="join" className="storyRoomWrapper">
           <div id="join-dialog" className="storyRoomDialog">
+            <Webcam className="web-container" />
             <h1>동화 만들기~</h1>
 
             {/* <form className="form-group" onSubmit={joinSession}> */}
