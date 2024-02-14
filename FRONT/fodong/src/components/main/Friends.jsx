@@ -43,6 +43,7 @@ function Friends() {
   const handleToggle = () => setOpen(!open);
 
   const handleAddFriend = (event) => {
+    console.log("요청 몇번가는지 handleAddFriend")
     event.preventDefault();
     const numbers = nickname.match(/\d+/g);
     if (numbers) {
@@ -50,7 +51,7 @@ function Friends() {
       console.log(parsedToProfileId);
 
       // sendFriendRequest 함수를 사용하여 친구 요청 메시지를 서버로 전송합니다.
-
+      // 요게 STOMP 구독인듯?
       sendFriendRequest(parsedToProfileId);
 
       // addFriends 함수는 백엔드에 HTTP 요청을 보내는 것으로 추정됩니다.
@@ -179,6 +180,8 @@ function Friends() {
               fromProfileId: notification.fromProfileId,
               toProfileId: notification.toProfileId,
               message: notification.message,
+              fromNickname: notification.fromNickname,
+              toNickname: notification.toNickname,
             };
             handleOpenModal(requestInfo);
           } else {
@@ -197,7 +200,7 @@ function Friends() {
   useEffect(() => {
     const fetchFriends = async () => {
       const friendsData = await getFriends(profileId, token);
-      setFriends(friendsData);
+      setFriends(friendsData.filter((friend, idx) => idx % 2 === 0));
       console.log(friends);
     };
 
@@ -216,16 +219,18 @@ function Friends() {
         <PersonAddIcon />
       </Fab>
       <Slide direction="up" in={open} mountOnEnter unmountOnExit>
-        <Paper
+        <paper
+          className="Paper"
           elevation={4}
           style={{
             position: "fixed",
-            bottom: 80,
-            right: 16,
-            width: 300,
+            bottom: 100,
+            right: 50,
+            height: 260,
+            width: 330,
             maxHeight: "80%",
             overflow: "auto",
-            padding: "16px",
+            padding: "20px",
             zIndex: 1050,
           }}
         >
@@ -239,6 +244,7 @@ function Friends() {
           <List>
             {friends.map((friend, index) => (
               <ListItem
+                className="ListItem"
                 key={friend.profileId}
                 secondaryAction={
                   <IconButton
@@ -256,16 +262,22 @@ function Friends() {
             ))}
           </List>
           <TextField
+            className="TextField"
             label="친구 추가"
             value={nickname}
             onChange={handleSearch}
             fullWidth
           />
-          <Button onClick={handleAddFriend} style={{ marginTop: 8 }}>
+          <Button
+            className="Friend-button"
+            onClick={handleAddFriend}
+            style={{ marginTop: 8 }}
+          >
             추가
           </Button>
           {showPopup && (
             <List
+              className="friend-item"
               style={{
                 position: "absolute",
                 width: "100%",
@@ -286,15 +298,15 @@ function Friends() {
               ))}
             </List>
           )}
-        </Paper>
+        </paper>
       </Slide>
 
-      <Dialog open={openModal} onClose={handleCloseModal}>
+      <Dialog className="Dialog" open={openModal} onClose={handleCloseModal}>
         <DialogTitle>친구 요청</DialogTitle>
         <DialogContent>
           <DialogContentText>
             {friendRequest
-              ? `${friendRequest.fromProfileId}님으로부터 친구 요청이 왔습니다.`
+              ? `${friendRequest.fromNickname}님으로부터 친구 요청이 왔습니다.`
               : ""}
           </DialogContentText>
         </DialogContent>

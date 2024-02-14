@@ -23,9 +23,8 @@
   top: 0;
   left: 0;
   right: 0;
-  text-align: center;
   padding: 20px;
-  z-index: 2;
+  z-index: 10; /* Increase z-index if necessary */
 }
 
 .dropdownMargin {
@@ -118,5 +117,7 @@
 .Album_container {
   padding: 30px;
   background-color: #f0e6f6;
-  height: 100%;
+}
+
+.MultiStory-container {
 }

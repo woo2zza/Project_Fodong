@@ -77,15 +77,17 @@ const A = () => {
       }}
     >
       <div className="Readbook-container">
-        <div className="glowButtonWrapper">
-          <button
-            color="green"
-            type="submit"
-            onClick={goMain}
-            className="glowButton"
-          >
-            <span className="buttonText">메인으로 돌아가기</span>
-          </button>
+        <div className="mainButton">
+          <div className="glowButtonWrapper">
+            <button
+              color="green"
+              type="submit"
+              onClick={goMain}
+              className="glowButton"
+            >
+              <span className="buttonText">메인으로 돌아가기</span>
+            </button>
+          </div>
         </div>
         <div className="book-container" style={{ width: 800, height: 700 }}>
           <FlipPage
@@ -121,7 +123,7 @@ const A = () => {
                   onClick={() => playSound(Sound[index])}
                   className="voice-button"
                 >
-                  음성 듣기
+                  <i class="fa-solid fa-volume-high"></i>
                 </button>
               </div>
             ))}

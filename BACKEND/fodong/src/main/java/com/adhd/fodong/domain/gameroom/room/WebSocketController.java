@@ -10,6 +10,9 @@ import com.adhd.fodong.domain.gameroom.room.entitiy.ready.ReadyDataResponse;
 import com.adhd.fodong.domain.gameroom.room.service.GameInviteService;
 import com.adhd.fodong.domain.gameroom.room.service.GameRoomSessionService;
 import com.adhd.fodong.domain.gameroom.room.service.ReadyService;
+import com.adhd.fodong.domain.user.profile.entity.ProfileEntity;
+import com.adhd.fodong.domain.user.profile.repository.ProfileRepository;
+import com.adhd.fodong.domain.user.profile.service.ProfileService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -30,6 +33,8 @@ public class WebSocketController {
     private final FriendService friendService;
     private final GameInviteService gameInviteService;
     private final ReadyService readyService;
+    private final ProfileRepository profileRepository;
+
 
     //////////////////////////  친구기능 토픽 //////////////////////////////////////////
     @MessageMapping("/friend-request")
@@ -38,6 +43,10 @@ public class WebSocketController {
         // 친구 기능과 관련된 푸쉬 토픽
 
         HashMap<String, Object> response = new HashMap<>();
+
+        // 닉네임 찾아서 넣어주기
+        String fromNickanme = profileRepository.findById(friendRequest.getFromProfileId()).getNickname();
+        String toNickname = profileRepository.findById(friendRequest.getToProfileId()).getNickname();
 
         try {
             switch (friendRequest.getAction()) {
@@ -49,6 +58,9 @@ public class WebSocketController {
                     response.put("fromProfileId", friendRequest.getFromProfileId());
                     response.put("message", friendRequest.getFromProfileId() + " 님이 " + friendRequest.getToProfileId() + " 에게 친구 요청을 보냈습니다.");
                     response.put("toProfileId", friendRequest.getToProfileId()); // 클라이언트에서 기대하는 대상 프로필 ID
+                    response.put("fromNickname", fromNickanme);
+                    response.put("toNickname", toNickname);
+                    System.out.println("친구요청 컨트롤러 sendRequest 옴");
                     break;
                 case "accept":
                     // 친구 요청 수락 처리 로직
@@ -56,6 +68,9 @@ public class WebSocketController {
                     response.put("fromProfileId", friendRequest.getFromProfileId());
                     response.put("toProfileId", friendRequest.getToProfileId()); // 클라이언트에서 기대하는 대상 프로필 ID
                     response.put("message", "친구 요청이 수락되었습니다.");
+                    response.put("fromNickname", fromNickanme);
+                    response.put("toNickname", toNickname);
+                    System.out.println("친구요청 컨트롤러 accept 옴");
                     break;
                 case "reject":
                     // 친구 요청 거절 처리 로직
@@ -63,6 +78,8 @@ public class WebSocketController {
                     response.put("fromProfileId", friendRequest.getFromProfileId());
                     response.put("toProfileId", friendRequest.getToProfileId()); // 클라이언트에서 기대하는 대상 프로필 ID
                     response.put("message", "친구 요청이 거절되었습니다.");
+                    response.put("fromNickname", fromNickanme);
+                    response.put("toNickname", toNickname);
                     break;
                 default:
                     response.put("message", "알 수 없는 요청입니다.");
@@ -112,20 +129,47 @@ public class WebSocketController {
 
     // 게임 시작 요청 메시지 핸들링
     @MessageMapping("/readyGame")
-    @SendTo("toClient/readyGame-response")
+    @SendTo("/toClient/readyGame-response")
     public ReadyDataResponse shareReadyData(ReadyDataRequest readyDataRequest) {
         // 게임방 초대 수락을 누른 클라이언트들이 구독할 토픽
         // 이 토픽을 이용해서 필요한 데이터들을 실시간으로 주고받는다.
 
         // 시작 버튼을 누르면 오픈비두 세션으로 다 같이 이동한다
+
         if (readyDataRequest.getIsStart() == true) {
             // 나중에 역할 정하는 기능도 추가할거면 역할 정하기 전까지는 시작하지 않는 분기 추가해야함
-            ReadyDataResponse startResponse = readyService.getStart(readyDataRequest);
+            System.out.println("-------------------게임시작 요청 들어옴-------------------");
+            ReadyDataResponse readyDataResponse = readyService.getStart(readyDataRequest);
 //            startResponse.setNewTopic("");
-            return startResponse;
+
+            System.out.println("시작요청에 대한 응답 : " + readyDataResponse.toString());
+            return readyDataResponse;
         }
 
-        // 역할 정하기 기능(?)
+        ReadyDataResponse readyDataResponse = new ReadyDataResponse();
+
+        // 동화페이지 넘기기 쉐어
+        switch(readyDataRequest.getAction()) {
+            case "nextScript":
+                // 다음 스크립트 처리 로직
+                readyDataResponse.setRoomSession(readyDataRequest.getRoomSession());
+                readyDataResponse.setAction("nextScript");
+                return readyDataResponse;
+            case "nextPage":
+                // 다음 페이지 처리 로직
+                readyDataResponse.setRoomSession(readyDataRequest.getRoomSession());
+                readyDataResponse.setAction("nextPage");
+                return readyDataResponse;
+            case "previousPage":
+                // 이전 페이지 처리 로직
+                readyDataResponse.setRoomSession(readyDataRequest.getRoomSession());
+                readyDataResponse.setAction("previousPage");
+                return readyDataResponse;
+            default:
+                // 알 수 없는 액션에 대한 처리 로직
+                System.out.println("알 수 없는 액션 요청: " + readyDataRequest.getAction());
+        }
+
 
         return null;
     }

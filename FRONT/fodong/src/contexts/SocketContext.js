@@ -141,6 +141,8 @@ export const SocketProvider = ({ children }) => {
                 roomSession: notification.roomSession,
                 action: notification.action,
                 newTopic: notification.newTopic,
+                fromNickname: notification.fromNickname,
+                toNickname: notification.toNickname,
               };
               handleOpenModal(inviteInfo);
               console.log("Received message:", notification);
@@ -153,7 +155,7 @@ export const SocketProvider = ({ children }) => {
         );
       }
     );
-  }, [stompClient]);
+  }, [stompClient, profileId]);
 
   // 웹소켓 연결을 해제하는 함수
   const disconnect = useCallback(() => {
@@ -164,7 +166,7 @@ export const SocketProvider = ({ children }) => {
         setIsConnected(false);
       });
     }
-  }, [stompClient]);
+  }, [stompClient, profileId]);
 
   // isGameAccepted
   const value = {
@@ -185,7 +187,7 @@ export const SocketProvider = ({ children }) => {
           <DialogContent>
             <DialogContentText>
               {inviteRequest
-                ? `${inviteRequest.fromProfileId}님으로부터 동화 만들기 초대 요청이 왔습니다.`
+                ? `${inviteRequest.fromNickname}님으로부터 동화 만들기 초대 요청이 왔습니다.`
                 : ""}
             </DialogContentText>
           </DialogContent>

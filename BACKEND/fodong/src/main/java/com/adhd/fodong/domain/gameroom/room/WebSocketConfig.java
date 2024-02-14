@@ -46,6 +46,15 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
                         "http://192.168.0.21:3000",
                         "http://192.168.0.22:3000",
                         "http://192.168.100.159:3000",
+                        "http://192.168.100.158:3000",
+                        "http://192.168.100.91:3000",
+                        "https://i10c109.p.ssafy.io",
+                        "http://i10c109.p.ssafy.io")
+                .withSockJS();
+        registry.addEndpoint("/ws") // 소켓연결시 붙는 http(or https) 기본경로 나중에 nginx 리다이렉트 설정gd때 참고?
+                .setAllowedOrigins(
+                        "http://localhost:3000",
+                        "http://192.168.0.13:3000",
                         "https://i10c109.p.ssafy.io",
                         "http://i10c109.p.ssafy.io")
                 .withSockJS();

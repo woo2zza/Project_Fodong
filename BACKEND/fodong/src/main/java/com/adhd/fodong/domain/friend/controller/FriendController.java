@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Tag(name = "친구 API", description = "프로필을 기준으로 친구관계를 생성")
 @RestController
@@ -22,6 +23,7 @@ import java.util.List;
 public class FriendController {
 
     private final FriendService friendService;
+    private final ConcurrentHashMap<String, Boolean> processingRequests = new ConcurrentHashMap<>();
 
     @Operation(summary = "닉네임으로 프로필 검색", description = "주어진 닉네임으로 프로필을 검색합니다.")
     @ApiResponse(
@@ -45,6 +47,7 @@ public class FriendController {
         // profileId의 모든 친구관계 조회
         return friendService.getRelations(profileId);
     }
+
 
     @Operation(summary = "친구 요청 보내기", description = "[SOCKET, STOMP 프로토콜과 연계, 실시간으로 타겟 클라이언트에게 푸쉬 알람연계] 타겟에게 친구 요청을 보냅니다.")
     @ApiResponse(

@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from "react";
-
+import CharModal from "../main/CharModal";
 import "./bookList.css";
+import Logo from "../../img/logo.png";
 import axios from "axios";
 import BookItem from "./BookItem";
+import { useNavigate } from "react-router-dom";
 
 const API_URL = process.env.REACT_APP_API_URL;
 const API_BASE_URL = `${API_URL}`;
 function App() {
+  const Mainnavi = useNavigate();
   const [viewMode, setViewMode] = useState("listView");
   const [profiles, setProfiles] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태
+  const [selectedBook, setSelectedBook] = useState(null); // 선택된 책
+
   const token = localStorage.getItem("Token");
   const config = {
     headers: {
@@ -31,8 +37,32 @@ function App() {
       });
   };
 
+  const openModal = (book) => {
+    setSelectedBook(book);
+    setIsModalOpen(true);
+  };
+
+  // 모달 닫기 함수
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const Mainbutton = () => {
+    Mainnavi("/main");
+  };
   return (
     <div className="booklist_body">
+      <div>
+        <img
+          className="logo_container"
+          src={Logo}
+          alt="logo"
+          onClick={Mainbutton}
+          style={{
+            width: "80px",
+          }}
+        />
+      </div>
       <div className="booklist_name">
         <h>BookList</h>
       </div>
@@ -61,10 +91,22 @@ function App() {
       <section className={`viewPaper viewShadowLarge ${viewMode}`}>
         <ul className={`cardListView ${viewMode}`}>
           {profiles.map((book) => (
-            <BookItem key={book.bookId} book={book} viewMode={viewMode} />
+            <BookItem
+              key={book.bookId}
+              book={book}
+              viewMode={viewMode}
+              onBookSelect={openModal}
+            />
           ))}
         </ul>
       </section>
+      {isModalOpen && (
+        <CharModal
+          isOpen={isModalOpen}
+          closeModal={closeModal}
+          book={selectedBook}
+        />
+      )}
     </div>
   );
 }

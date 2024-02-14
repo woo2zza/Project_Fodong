@@ -8,10 +8,7 @@ export default function UserVideoComponent({ streamManager }) {
   };
 
   return (
-    <div
-      className="stream-container"
-      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
-    >
+    <div className="stream-container">
       {streamManager !== undefined ? (
         <div className="streamcomponent">
           <OpenViduVideoComponent streamManager={streamManager} />
