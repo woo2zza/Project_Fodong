@@ -46,51 +46,63 @@ const characters = [
 const MultiStory = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedCharacters, setSelectedCharacters] = useState({});
-  const [stateParam, setStateParam] = useState("ready");
   const [isStart, setIsStart] = useState(false);
   const [friends, setFriends] = useState([]);
+  const [isMove, setIsMove] = useState(false);
+  const [info, setInfo] = useState(null);
+
   // const stateParam = useParams().state;
   // console.log(stateParam);
-  const { token, profileId, nickname } = userStore((state) => ({
+  const { token, profileId, nickname, accountEmail } = userStore((state) => ({
     token: state.token,
     profileId: state.profileId,
     nickname: state.nickname,
+    accountEmail: state.accountEmail,
   }));
   // const sessionId = multiStoryStore((state) => state.sessionId);
   const sessionId = useParams().sessionId;
+  // before
   const { stompClient } = useSocket();
 
-  // const Navi = useNavigate();
+  //before
   useEffect(() => {
-    if (stateParam === "start") {
-      setIsStart(true);
-      // Navi(`/multi/${sessionId}/start`);
+    if (stompClient) {
+      stompClient.subscribe("/toClient/readyGame-response", (message) => {
+        console.log("구독");
+        const notification = JSON.parse(message.body);
+        if (notification.action === "move") {
+          setIsMove(true);
+          setIsStart(true);
+        } else {
+          console.log("not ready yet...");
+        }
+        console.log("Received " + notification);
+      });
     }
-  }, [stateParam]);
+  }, [stompClient]);
 
-  // 왜 main에서 뜨는 것이냐 ..?
+  const sendStartRequest = () => {
+    const readyRequestPayload = {
+      roomSession: {
+        sessionId: sessionId,
+      },
+      isStart: true,
+    };
+    stompClient.send(
+      "/toServer/readyGame",
+      {},
+      JSON.stringify(readyRequestPayload)
+    );
+    // setIsStart(true);
+    // 여기서 딱히 set함수들 해줄 필요 없을 듯??
+    console.log(readyRequestPayload);
+  };
+
   useEffect(() => {
     const fetchFriends = async () => {
       const friendsData = await getFriends(profileId, token);
       setFriends(friendsData);
       // console.log(friends); // 위에 주속 오류 수정하기
-
-      if (stompClient) {
-        stompClient.subscribe("toClient/readyGame-response", (message) => {
-          const notification = JSON.parse(message.body);
-          // 나중에 action에 관해 추가할 곳
-          // if (
-
-          // ){
-          // const readyGameInfo = {
-
-          // }
-          // }
-          console.log("Received message:", notification);
-        });
-      } else {
-        console.log("There's no stompClient");
-      }
     };
 
     fetchFriends();
@@ -157,50 +169,68 @@ const MultiStory = () => {
     }
   };
 
+  //
+  // const sendStartRequest = () => {
+  //   const readyRequestPayload = {
+  //     roomSession: {
+  //       sessionId: sessionId,
+  //     },
+  //     isStart: true,
+  //   };
+  //   stompClient.send(
+  //     "/toServer/readyGame",
+  //     {},
+  //     JSON.stringify(readyRequestPayload)
+  //   );
+  //   setIsStart(true);
+  //   // 여기서 딱히 set함수들 해줄 필요 없을 듯??
+  //   console.log(readyRequestPayload);
+  // };
+
   return (
     <>
       {/* ready 상태 */}
-      {!isStart && (
-        <Box sx={{ position: "relative", p: 2 }}>
-          {sessionId}
-          <IconButton
-            sx={{ position: "fixed", top: 16, right: 16, zIndex: 1 }}
-            onClick={handlePopoverOpen}
-          >
-            <Avatar>
-              <PeopleAlt />
-            </Avatar>
-          </IconButton>
-          <Popover
-            open={open}
-            anchorEl={anchorEl}
-            onClose={handlePopoverClose}
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "left",
-            }}
-          >
-            <List>
-              {friends.map((friend, indx) => (
-                <ListItem key={friend.profileId}>
-                  <ListItemText primary={friend.nickname} />
-                  <Button
-                    onClick={() =>
-                      sendInviteRequest(
-                        sessionId,
-                        friend.profileId,
-                        profileId,
-                        token
-                      )
-                    }
-                  >
-                    <ForwardToInboxIcon />
-                  </Button>
-                </ListItem>
-              ))}
-              {/* 여기에 친구 초대 목록을 렌더링합니다. */}
-            </List>
-          </Popover>
+      <Box sx={{ position: "relative", p: 2 }}>
+        {sessionId}
+        <IconButton
+          sx={{ position: "fixed", top: 16, right: 16, zIndex: 1 }}
+          onClick={handlePopoverOpen}
+        >
+          <Avatar>
+            <PeopleAlt />
+          </Avatar>
+        </IconButton>
+        <Popover
+          open={open}
+          anchorEl={anchorEl}
+          onClose={handlePopoverClose}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "left",
+          }}
+        >
+          <List>
+            {friends.map((friend, indx) => (
+              <ListItem key={friend.profileId}>
+                <ListItemText primary={friend.nickname} />
+                <Button
+                  onClick={() =>
+                    sendInviteRequest(
+                      sessionId,
+                      friend.profileId,
+                      profileId,
+                      token
+                    )
+                  }
+                >
+                  <ForwardToInboxIcon />
+                </Button>
+              </ListItem>
+            ))}
+            {/* 여기에 친구 초대 목록을 렌더링합니다. */}
+          </List>
+        </Popover>
+        {!isStart && (
           <Grid
             container
             spacing={2}
@@ -236,18 +266,18 @@ const MultiStory = () => {
               </Grid>
             ))}
           </Grid>
-          {/* <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
-            <Button variant="contained">시작하기</Button>
-          </Box> */}
-        </Box>
-      )}
+        )}
+      </Box>
+
       {/* start 상태 */}
       <StoryRoom
         // state={stateParam}
         isStart={isStart}
-        sessionId={sessionId}
+        mySessionId={sessionId}
         profileId={profileId}
-        toggleState={setStateParam}
+        toggleState={setIsStart}
+        isMove={isMove}
+        sendStartRequest={sendStartRequest}
       />
     </>
   );

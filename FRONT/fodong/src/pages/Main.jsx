@@ -7,6 +7,9 @@ import Buttons from "../components/main/buttons";
 import ScrollBook from "../components/main/scrollBook";
 import Title from "../components/main/Title";
 import FreindsToggler from "../components/main/Friends";
+
+// import { userStore } from "../store/userStore";
+
 import "./pages.css";
 // Main 컴포넌트
 
@@ -24,10 +27,11 @@ const Main = () => {
   const Navi = useNavigate();
   useEffect(() => {
     console.log("두번째 ");
+
     if (sessionId && isGameAccepted) {
       Navi(`/multi/${sessionId}`);
     }
-  });
+  }, [sessionId, isGameAccepted, Navi]);
   return (
     <div className="main_container">
       <div className="fixedTop">

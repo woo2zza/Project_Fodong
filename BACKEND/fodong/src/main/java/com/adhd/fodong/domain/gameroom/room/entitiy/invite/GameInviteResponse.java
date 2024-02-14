@@ -11,6 +11,8 @@ public class GameInviteResponse {
     private RoomSession roomSession;
     private int fromProfileId; // 초대를 보내는 사용자 ID
     private int toProfileId; // 초대 받은 사용자 Id
+    private String fromNickname;
+    private String toNickname;
     private String action;
     private String newTopic;
 

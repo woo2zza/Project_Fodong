@@ -1,17 +1,22 @@
 import React from "react";
 import CharModal from "../main/CharModal";
 
-function BookItem({ book, viewMode }) {
+function BookItem({ book, viewMode, onBookSelect }) {
+  const handleBookClick = () => {
+    if (onBookSelect) {
+      onBookSelect(book);
+    }
+  };
+
   return (
-    <li className={`cardItem ${viewMode}`}>
+    <li className={`cardItem ${viewMode}`} onClick={handleBookClick}>
       <img
         src={`${book.cover}`}
         alt={`${book.title} cover`}
         className="bookCover"
       />
       <div className="textOverlay">
-        <h2>{book.title}</h2>
-        <p>{book.characters || "등장인물 정보 없음"}</p>
+        <h1>{book.title}</h1>
       </div>
     </li>
   );

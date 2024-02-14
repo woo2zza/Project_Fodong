@@ -25,7 +25,7 @@ const Script = ({ scriptPage, setScriptPage, stopVideo }) => {
     // console.log(numPage);
     if (numPage !== page) {
       setPage(numPage);
-    
+
       // if (numPage !== prevPage) {
       //   setScriptIndex(0);
       //   // setScript(DummyScript[page - 1][0].text);
@@ -36,13 +36,10 @@ const Script = ({ scriptPage, setScriptPage, stopVideo }) => {
   }, [pageParam, page, scriptPage]);
 
   useEffect(() => {
-
     if (DummyScript[page - 1] && DummyScript[page - 1][scriptIndex]) {
       setScript(DummyScript[page - 1][scriptIndex].text);
-    }}
-, [scriptIndex, page]);
-
-
+    }
+  }, [scriptIndex, page]);
 
   const handleNextScript = () => {
     const scriptLength = DummyScript[page - 1].length;
@@ -63,7 +60,7 @@ const Script = ({ scriptPage, setScriptPage, stopVideo }) => {
       setPage(nextPage);
       setScriptIndex(0);
       setScript(DummyScript[nextPage - 1][0].text);
-    } 
+    }
   };
 
 
@@ -81,6 +78,13 @@ const Script = ({ scriptPage, setScriptPage, stopVideo }) => {
           {/* {isModalOpen && <StoryEndModal onClose={stopVideo} onBack={closeModal} />} */}
         </div>
       </div>
+      <div className="bottom" style={{ margin: "0px" }}>
+        <button className="story_button" onClick={handleNextScript}>
+          다음
+        </button>
+        {isModalOpen && <StoryEndModal onClose={() => setIsModalOpen(false)} />}
+      </div>
+    </div>
     // </div>
   );
 };
