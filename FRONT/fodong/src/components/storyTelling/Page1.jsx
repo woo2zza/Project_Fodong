@@ -314,7 +314,7 @@ const Page = ({ onPageChange, videoRef, stopVideo }) => {
       </Button>
     )}
       </>
-      {isModalOpen && <StoryEndModal onClose={stopVideo} onBack={closeModal} />}
+      {isModalOpen && <StoryEndModal onClose={stopVideo} onBack={closeModal} onRecording={stopRecording}/>}
     </div>
   );
 };
