@@ -17,7 +17,6 @@ function BookItem({ book, viewMode, onBookSelect }) {
       />
       <div className="textOverlay">
         <h1>{book.title}</h1>
-        <h3>{book.characters || "등장인물 정보 없음"}</h3>
       </div>
     </li>
   );

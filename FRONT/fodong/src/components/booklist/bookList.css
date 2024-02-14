@@ -4,15 +4,24 @@
 }
 
 .booklist_name {
-  padding-top: 30px;
-  font-size: 50px;
-  display: flex;
-  justify-content: center;
+  width: 100%;
+  font-size: 70px;
+  text-align: center;
+  padding: 20px;
 }
 .booklist_container {
   display: flex;
   justify-content: end;
 }
+
+.logo_container {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  cursor: pointer;
+  z-index: 3;
+}
+
 #listView,
 #gridView {
   display: none;
@@ -33,18 +42,18 @@ label:hover {
 }
 
 .viewPaper {
-  padding: 5rem 5rem;
+  padding: 4rem 5rem;
   background-image: url("../main/image/테두리 배경1.PNG");
   border-radius: 30px;
-  margin: 3rem 8rem 5rem 8rem;
+  margin: 2rem 8rem 5rem 8rem;
   background-size: cover;
   background-repeat: no-repeat;
   justify-content: center;
 }
-@media (max-width: 830px) {
+@media (max-width: 1180px) {
   .viewPaper {
-    margin: 3rem 5rem;
-    padding: 5rem 5rem;
+    margin: 3rem 3rem;
+    padding: 5rem 2rem;
   }
 }
 
