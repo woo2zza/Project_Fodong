@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
 import CharModal from "../main/CharModal";
 import "./bookList.css";
+import Logo from "../../img/logo.png";
 import axios from "axios";
 import BookItem from "./BookItem";
+import { useNavigate } from "react-router-dom";
 
 const API_URL = process.env.REACT_APP_API_URL;
 const API_BASE_URL = `${API_URL}`;
 function App() {
+  const Mainnavi = useNavigate();
   const [viewMode, setViewMode] = useState("listView");
   const [profiles, setProfiles] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태
@@ -44,8 +47,22 @@ function App() {
     setIsModalOpen(false);
   };
 
+  const Mainbutton = () => {
+    Mainnavi("/main");
+  };
   return (
     <div className="booklist_body">
+      <div>
+        <img
+          className="logo_container"
+          src={Logo}
+          alt="logo"
+          onClick={Mainbutton}
+          style={{
+            width: "80px",
+          }}
+        />
+      </div>
       <div className="booklist_name">
         <h>BookList</h>
       </div>
