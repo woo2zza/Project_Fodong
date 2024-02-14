@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -20,6 +20,14 @@ import StoryDetail from "./components/StoryDetail";
 import Test from "./webrtc/TestRecording.jsx";
 
 function App() {
+  const setScreenSize = () => {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty("--vh", `${vh}px`);
+  }
+  useEffect(() => {
+    setScreenSize();
+  });
+
   return (
     <SocketProvider>
       <BrowserRouter basename="/fodong">
@@ -34,14 +42,9 @@ function App() {
           <Route path="/book/:id" element={<Book />} />
           <Route path="/storyready/*" element={<StroyReady />} />
           <Route path="/storyDetail" element={<StoryDetail />} />
-          {/*<Route path="/face/*" element={<Face />} />*/}{" "}
-          {/*자꾸 뻑나서 주석처리했음*/}
           <Route path="/album/" element={<Album />} />
           <Route path="/readBook/" element={<ReadBook />} />
-          {/* test용 */}
           <Route path="/test/" element={<Test />} />{" "}
-          {/*자꾸 뻑나서 주석처리했음*/}
-          {/* <Route path="/sockettest" element={<WebSocketTest />} /> */}
           <Route path="/multi/:sessionId/*" element={<MultiStory />} />
         </Routes>
       </BrowserRouter>
