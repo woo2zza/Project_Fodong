@@ -233,12 +233,13 @@ function Friends() {
             position: "fixed",
             bottom: 100,
             right: 50,
-            height: 260,
+            height: 400,
             width: 330,
             maxHeight: "80%",
             overflow: "auto",
             padding: "20px",
             zIndex: 1050,
+            boxShadow: "0px 14px 16px rgba(0, 0, 0, 0.5)",
           }}
         >
           <IconButton
@@ -275,13 +276,13 @@ function Friends() {
             onChange={handleSearch}
             fullWidth
           />
-          <Button
+          <button
             className="Friend-button"
             onClick={handleAddFriend}
             style={{ marginTop: 8 }}
           >
             추가
-          </Button>
+          </button>
           {showPopup && (
             <List
               className="friend-item"

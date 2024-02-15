@@ -374,7 +374,9 @@
 /* friends */
 
 .Paper {
-  background-color: #e4f0d0;
+  /* background-color: #69a009; */
+  background-image: url("./image/comm44.webp");
+  background-size: cover;
   border-radius: 15px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -392,11 +394,11 @@
 
 .Friend-button {
   background-color: #a3d2ca;
-  color: #ffffff;
-  border: none;
+  color: #090000;
+  border: 2px solid #406a63;
   border-radius: 20px;
   padding: 10px 20px;
-  font-size: 16px;
+  font-size: 20px;
   cursor: pointer;
   box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
   transition: background-color 0.3s ease;
@@ -418,7 +420,7 @@
   margin: 10px !important;
   width: 230px !important;
   height: 70px;
-  background-color: #e4f0d0 !important;
+  background-color: #92cdec !important;
   border-radius: 15px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }

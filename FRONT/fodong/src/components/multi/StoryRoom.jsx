@@ -254,7 +254,6 @@ const StoryRoom = ({
         <div id="join" className="storyRoomWrapper">
           <div id="join-dialog">
             <Webcam className="web-container" />
-            <h1>동화 만들기~</h1>
 
             <form
               className="form-group storyRoomForm"
