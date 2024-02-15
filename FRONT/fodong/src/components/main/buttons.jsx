@@ -19,15 +19,16 @@ const Buttons = () => {
     <div className="button_container">
       {imagePaths.map((image, index) => (
         <Link to={linkPaths[index]} key={index} className="styledLink">
-          {/* <img
+          <img
             src={require(`./image/${image}`)}
             alt={alts[index]}
             className={`imageButton ${
               activeAnimation === index ? "fireworks-animation" : ""
             }`}
+            style={{ width: "150px", height: "150px" }}
             onClick={() => handleButtonClick(index)}
-          /> */}
-          <button className="main-buttons">{alts[index]}</button>
+          />
+          {/* <button className="main-buttons">{alts[index]}</button> */}
         </Link>
       ))}
     </div>
