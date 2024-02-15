@@ -48,10 +48,11 @@ const Script = ({ scriptPage, setScriptPage, stopVideo }) => {
     // console.log(scriptLength)
     if (scriptIndex + 1 < scriptLength) {
       setScriptIndex((idx) => idx + 1);
-    } else if (page === DummyScript.length && scriptIndex === scriptLength -1) {
-  
-    }
-    else if (page < DummyScript.length) {
+    } else if (
+      page === DummyScript.length &&
+      scriptIndex === scriptLength - 1
+    ) {
+    } else if (page < DummyScript.length) {
       // console.log(scriptIndex)
       // console.log(page )
       // console.log(setPage)
@@ -62,7 +63,6 @@ const Script = ({ scriptPage, setScriptPage, stopVideo }) => {
       setScript(DummyScript[nextPage - 1][0].text);
     }
   };
-
 
   // console.log(script);
   return (
@@ -85,7 +85,6 @@ const Script = ({ scriptPage, setScriptPage, stopVideo }) => {
         {/* {isModalOpen && <StoryEndModal onClose={() => setIsModalOpen(false)} />} */}
       </div>
     </div>
-    // </div>
   );
 };
 

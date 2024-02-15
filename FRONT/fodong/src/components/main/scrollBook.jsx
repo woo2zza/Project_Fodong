@@ -65,7 +65,7 @@ const ScrollBook = () => {
   return (
     <div className="scroll_container">
       <button onClick={goToPrevBook} className="preButton">
-        <i className="fa fa-arrow-left"></i>
+        <i class="fa-solid fa-angle-left"></i>
       </button>
 
       <div className="slider-container">
@@ -90,7 +90,7 @@ const ScrollBook = () => {
         )}
       </div>
       <button onClick={goToNextBook} className="goButton">
-        <i className="fa fa-arrow-right"></i>
+        <i class="fa-solid fa-angle-right"></i>
       </button>
     </div>
   );

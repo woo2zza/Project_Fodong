@@ -120,10 +120,13 @@ const A = () => {
                 ></div>
                 <div className="script-text">{Script[index]}</div>
                 <button
-                  onClick={() => playSound(Sound[index])}
+                  onClick={(e) => {
+                    e.preventDefault(); // 버블링을 방지합니다.
+                    playSound(Sound[index]);
+                  }}
                   className="voice-button"
                 >
-                  <i class="fa-solid fa-volume-high"></i>
+                  🔊
                 </button>
               </div>
             ))}

@@ -12,7 +12,9 @@
 
     <select id="findBookById" resultType="com.adhd.fodong.domain.book.entity.Book">
         SELECT *
-        FROM BOOK_TB
+        FROM BOOK_TB A
+        LEFT JOIN CHARACTER_TB B
+        ON A.book_id = B.book_id
         WHERE book_id = #{bookId}
     </select>
 
