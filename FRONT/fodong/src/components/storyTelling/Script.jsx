@@ -66,16 +66,23 @@ const Script = ({ scriptPage, setScriptPage, stopVideo }) => {
 
   // console.log(script);
   return (
-    // <div className="main-content" >
-    <div className="script-container">
-      <div className="script-text-container">
-        <h1 className="script_text">{script}</h1>
+    <div className="main-content" >
+      <div className="script-container">
+        <div className="script-text-container">
+          <h1 className="script_text">{script}</h1>
+        </div>
+        <div className="bottom" style={{margin:'0px'}}>
+          <button className="story_button" onClick={handleNextScript}>
+            다음
+          </button>
+          {/* {isModalOpen && <StoryEndModal onClose={stopVideo} onBack={closeModal} />} */}
+        </div>
       </div>
       <div className="bottom" style={{ margin: "0px" }}>
         <button className="story_button" onClick={handleNextScript}>
           다음
         </button>
-        {/* {isModalOpen && <StoryEndModal onClose={stopVideo} onBack={closeModal} />} */}
+        {/* {isModalOpen && <StoryEndModal onClose={() => setIsModalOpen(false)} />} */}
       </div>
     </div>
   );
