@@ -8,7 +8,7 @@ import UserVideoComponent from "./UserVideoComponent";
 import "./multi.css";
 
 import { Grid, Button, Paper, Box } from "@mui/material";
-import VideoSlider from "./VideoSlider.jsx";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Story from "./Story.jsx";
 import Script from "./Script.jsx";
 import "./multi.css";
@@ -47,6 +47,19 @@ const StoryRoom = ({
     [mainStreamManager]
   );
 
+  const deleteSubscriber = useCallback((streamManager) => {
+    setSubscribers((prevSubscribers) => {
+      const index = prevSubscribers.indexOf(streamManager);
+      if (index > -1) {
+        const newSubscribers = [...prevSubscribers];
+        newSubscribers.splice(index, 1);
+        return newSubscribers;
+      } else {
+        return prevSubscribers;
+      }
+    });
+  }, []);
+
   const joinSession = useEffect(() => {
     if (isMove && isStart) {
       const mySession = OV.current.initSession();
@@ -68,11 +81,19 @@ const StoryRoom = ({
       setPlayState((prev) => true);
       // toggleState((state) => true);
     }
-  }, [isMove, isStart]);
+  }, [isMove, isStart, deleteSubscriber]);
 
   useEffect(() => {
     setPlayState(isStart);
-  }, []);
+  }, [isStart]);
+
+  const getToken = useCallback(async () => {
+    const sessionId = await createSession(mySessionId);
+    console.log("Session ID:", sessionId);
+    const token = await createToken(sessionId);
+    console.log("Token:", token);
+    return token;
+  }, [mySessionId]);
 
   useEffect(() => {
     if (session) {
@@ -121,12 +142,12 @@ const StoryRoom = ({
       });
       // setPage(1);
     }
-  }, [session]);
+  }, [session, getToken, myUserName]);
 
-  // useEffect(() => {
-  //   setNickName(myUserName);
-  //   console.log(myUserName)
-  // }, [myUserName]);
+  useEffect(() => {
+    console.log("섭스브: ");
+    console.log(subscribers);
+  }, [subscribers, setSubscribers]);
 
   const leaveSession = useCallback(() => {
     // Leave the session
@@ -142,54 +163,41 @@ const StoryRoom = ({
     setPublisher(undefined);
 
     toggleState((state) => false);
-  }, [session]);
+  }, [session, toggleState]);
 
-  const switchCamera = useCallback(async () => {
-    try {
-      const devices = await OV.current.getDevices();
-      const videoDevices = devices.filter(
-        (device) => device.kind === "videoinput"
-      );
+  // const switchCamera = useCallback(async () => {
+  //   try {
+  //     const devices = await OV.current.getDevices();
+  //     const videoDevices = devices.filter(
+  //       (device) => device.kind === "videoinput"
+  //     );
 
-      if (videoDevices && videoDevices.length > 1) {
-        const newVideoDevice = videoDevices.filter(
-          (device) => device.deviceId !== currentVideoDevice.deviceId
-        );
+  //     if (videoDevices && videoDevices.length > 1) {
+  //       const newVideoDevice = videoDevices.filter(
+  //         (device) => device.deviceId !== currentVideoDevice.deviceId
+  //       );
 
-        if (newVideoDevice.length > 0) {
-          const newPublisher = OV.current.initPublisher(undefined, {
-            videoSource: newVideoDevice[0].deviceId,
-            publishAudio: true,
-            publishVideo: true,
-            mirror: true,
-          });
+  //       if (newVideoDevice.length > 0) {
+  //         const newPublisher = OV.current.initPublisher(undefined, {
+  //           videoSource: newVideoDevice[0].deviceId,
+  //           publishAudio: true,
+  //           publishVideo: true,
+  //           mirror: true,
+  //         });
 
-          if (session) {
-            await session.unpublish(mainStreamManager);
-            await session.publish(newPublisher);
-            setCurrentVideoDevice(newVideoDevice[0]);
-            setMainStreamManager(newPublisher);
-            setPublisher(newPublisher);
-          }
-        }
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  }, [currentVideoDevice, session, mainStreamManager]);
-
-  const deleteSubscriber = useCallback((streamManager) => {
-    setSubscribers((prevSubscribers) => {
-      const index = prevSubscribers.indexOf(streamManager);
-      if (index > -1) {
-        const newSubscribers = [...prevSubscribers];
-        newSubscribers.splice(index, 1);
-        return newSubscribers;
-      } else {
-        return prevSubscribers;
-      }
-    });
-  }, []);
+  //         if (session) {
+  //           await session.unpublish(mainStreamManager);
+  //           await session.publish(newPublisher);
+  //           setCurrentVideoDevice(newVideoDevice[0]);
+  //           setMainStreamManager(newPublisher);
+  //           setPublisher(newPublisher);
+  //         }
+  //       }
+  //     }
+  //   } catch (e) {
+  //     console.error(e);
+  //   }
+  // }, [currentVideoDevice, session, mainStreamManager]);
 
   useEffect(() => {
     const handleBeforeUnload = (event) => {
@@ -206,14 +214,6 @@ const StoryRoom = ({
     event.preventDefault();
     sendStartRequest();
   };
-
-  const getToken = useCallback(async () => {
-    const sessionId = await createSession(mySessionId);
-    console.log("Session ID:", sessionId);
-    const token = await createToken(sessionId);
-    console.log("Token:", token);
-    return token;
-  }, [mySessionId]);
 
   const createSession = async (sessionId) => {
     const response = await axios.post(
@@ -238,6 +238,16 @@ const StoryRoom = ({
     return response.data; // The token
   };
 
+  // UI 관련
+  const onDragEnd = (result) => {
+    if (!result.destination) return;
+
+    const items = Array.from(subscribers);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+
+    setSubscribers(items);
+  };
   return (
     <div className="Room-container">
       {!playState ? (
@@ -267,59 +277,92 @@ const StoryRoom = ({
             id="session-header"
             sx={{ mb: 2 }}
             className="storyRoomSessionHeader"
-          >
-            {/* <h1 id="session-title">{mySessionId}</h1> */}
-            <Button variant="contained" color="error" onClick={leaveSession}>
-              Leave session
-            </Button>
-            {/* <Button variant="contained" color="primary" onClick={switchCamera}>
-              Switch Camera
-            </Button> */}
-          </Box>
-          {/* <Grid container spacing={2}> */}
-          {/* {mainStreamManager && (
-              <Grid item xs={12} sm={6}>
-                <h1>메인</h1>
-                <UserVideoComponent streamManager={mainStreamManager} />
-              </Grid>
-            )} */}
-          {/* <Grid item xs={12} sm={6}> */}
-          {/* 
-          <Routes>
-            <Route path="/:page" element={<Story page={page} />} />
-          </Routes> */}
+          ></Box>
 
-          <Story sendChangePageRequest={sendChangePageRequest} />
-          <Script sendChangePageRequest={sendChangePageRequest} />
-
-          <Grid container xs={12} sm={6} spacing={2}>
-            <VideoSlider>
+          {/* <Story sendChangePageRequest={sendChangePageRequest} />
+          <Script sendChangePageRequest={sendChangePageRequest} /> */}
+          <DragDropContext onDragEnd={onDragEnd}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                flexWrap: "wrap",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
               {publisher && (
-                <Box item>
-                  <UserVideoComponent streamManager={publisher} />
-                </Box>
-              )}
-              {subscribers.map((sub, i) => (
-                // <Grid
-                //   key={sub.id}
-                //   item
-                //   onClick={() => handleMainVideoStream(sub)}
-                // >
-                //   <Paper elevation={3}>
-                <Box key={sub.id} className="storyRoomSubscriberBox">
+                <Box
+                  sx={{
+                    flexGrow: 0,
+                    margin: "0.5rem",
+                    border: "4px solid #FFC0CB", // Pink solid border
+                    borderRadius: "20px",
+                    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", // Soft shadow for depth
+                    overflow: "hidden", // Ensures the video corners are also rounded
+                    "&:hover": {
+                      boxShadow: "0 8px 16px rgba(0, 0, 0, 0.3)", // Slightly larger shadow on hover for interactive effect
+                    },
+                  }}
+                >
                   <UserVideoComponent
-                    streamManager={sub}
-                    className="storyRoomUserVideo"
+                    streamManager={publisher}
+                    className="storyRoomPublisherVideo"
                   />
                 </Box>
-                // <span>{sub.id}</span>
-                //   </Paper>
-                // </Grid>
-              ))}
-            </VideoSlider>
-          </Grid>
-          {/* </Grid> */}
-          {/* </Grid> */}
+              )}
+              <Droppable droppableId="subscribers" direction="horizontal">
+                {(provided) => (
+                  <Box
+                    {...provided.droppableProps}
+                    ref={provided.innerRef}
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      flexWrap: "nowrap",
+                    }}
+                  >
+                    {subscribers.map((sub, i) => (
+                      // <Box
+                      //   key={sub.id}
+                      //   sx={{
+                      //     flexGrow: 0,
+                      //     margin: "0.5rem",
+                      //     border: "2px solid #87CEEB", // Pink solid border
+                      //     borderRadius: "20px",
+                      //     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", // Soft shadow for depth
+                      //     overflow: "hidden",
+                      //   }}
+                      // >
+                      <Draggable key={sub.id} draggableId={sub.id} index={i}>
+                        {(provided) => (
+                          <Box
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            sx={{
+                              margin: "0.5rem",
+                              border: "2px solid #87CEEB",
+                              borderRadius: "20px",
+                              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+                              overflow: "hidden",
+                            }}
+                          >
+                            <UserVideoComponent
+                              streamManager={sub}
+                              className="storyRoomUserVideo"
+                            />
+                            <span>{sub.id}</span>
+                          </Box>
+                        )}
+                      </Draggable>
+                    ))}
+                    {provided.placeholder}
+                  </Box>
+                )}
+              </Droppable>
+            </Box>
+          </DragDropContext>
         </Box>
       ) : null}
     </div>
@@ -327,3 +370,28 @@ const StoryRoom = ({
 };
 
 export default StoryRoom;
+
+{
+  /* <Grid container xs={12} sm={6} spacing={2}>
+  {publisher && (
+    <Box item>
+      <UserVideoComponent streamManager={publisher} />
+    </Box>
+  )}
+  {subscribers.map((sub, i) => (
+    <Grid
+      key={sub.id}
+      item
+      // onClick={() => handleMainVideoStream(sub)}
+    >
+      <Box key={sub.id} className="storyRoomSubscriberBox">
+        <UserVideoComponent
+          streamManager={sub}
+          className="storyRoomUserVideo"
+        />
+      </Box>
+      <span>{sub.id}</span>
+    </Grid>
+  ))}
+</Grid>; */
+}

@@ -184,8 +184,15 @@ function Friends() {
               toNickname: notification.toNickname,
             };
             handleOpenModal(requestInfo);
-          } else {
-            console.log("Received friend request not for me:", notification);
+          } else if (notification.action === "accepted") {
+            // console.log("Received friend request not for me:", notification);
+            if (profileId === notification.fromProfileId) {
+              setFriends((prev) => [...friends, notification.toNickname]);
+            } else if (profileId === notification.toProfileId) {
+              setFriends([...friends, notification.fromNickname]);
+            } else {
+              console.log("Received friend request not for me:", notification);
+            }
           }
         }
       );
