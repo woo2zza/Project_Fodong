@@ -32,10 +32,10 @@ const VideoSlider = ({ children }) => {
   return (
     <Box
       sx={{
-        position: "fixed",
-        bottom: 0,
-        left: 0,
-        right: 0,
+        // position: "fixed",
+        // bottom: 0,
+        // left: 0,
+        // right: 0,
         px: "5vw", // 좌우로 5vw의 패딩을 줍니다.
         mx: "auto", // 가로 중앙 정렬
         width: "auto", // 자동 너비 조정
