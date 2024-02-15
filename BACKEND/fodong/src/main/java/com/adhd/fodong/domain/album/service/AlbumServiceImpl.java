@@ -66,6 +66,6 @@ public class AlbumServiceImpl implements AlbumService{
             recordingDetails.setCover(convertedCover);
         }
 
-        return allRecordingsByProfileId;
+        return newRecordings;
     }
 }
