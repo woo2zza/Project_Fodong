@@ -304,10 +304,11 @@ const StoryRoom = ({
           id="session"
           className="storyRoomSession"
           sx={{
-            height: "100%",
+            height: "100vh",
             display: "flex",
             flexDirection: "column",
             position: "relative",
+            padding: "0",
           }} // position: "relative" 추가
         >
           {/* 나가기 버튼 */}
@@ -316,7 +317,7 @@ const StoryRoom = ({
             sx={{
               position: "fixed",
               top: 8,
-              right: 8,
+              right: 20,
               color: "red",
               zIndex: 1010, // 확실히 상단에 위치하도록 zIndex 값을 조정
             }}
