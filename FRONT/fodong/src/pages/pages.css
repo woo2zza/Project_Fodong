@@ -27,18 +27,21 @@
   top: 0;
   left: 0;
   right: 0;
-  padding: 20px;
+  padding: 5px;
   z-index: 10; /* Increase z-index if necessary */
 }
 
 .dropdownMargin {
   position: fixed;
   z-index: 2;
+  left: 2%;
+  top: 15%;
 }
 
 .content {
   position: relative;
   z-index: 1;
+  margin-top: 5%;
 }
 
 .glowButtonWrapper {

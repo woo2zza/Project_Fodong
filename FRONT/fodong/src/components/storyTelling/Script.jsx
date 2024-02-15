@@ -4,6 +4,15 @@ import "./StoryTelling.css";
 import DummyScript from "./DummyScript";
 import { useParams, useNavigate } from "react-router-dom";
 import StoryEndModal from "./StoryEndModal";
+import ant from "./img/scriptant.webp"
+import grasshopper from "./img/scriptgrasshopper.webp"
+import mike from "./img/scriptmike.webp"
+
+const characterImages = {
+  ant : ant,
+  grasshopper: grasshopper,
+  naraition: mike,
+}
 
 const Script = ({ scriptPage, setScriptPage, stopVideo }) => {
   const { page: pageParam } = useParams();
@@ -13,6 +22,7 @@ const Script = ({ scriptPage, setScriptPage, stopVideo }) => {
   // console.log(page);
   const [script, setScript] = useState(DummyScript[page - 1][scriptIndex].text);
   const navigate = useNavigate();
+  const [image, setImage] = useState(characterImages[DummyScript[page - 1][scriptIndex].person])
   // const [isModalOpen, setIsModalOpen] = useState(false);
 
   // const [prevPage, setPrevPage] = useState(page)
@@ -38,6 +48,7 @@ const Script = ({ scriptPage, setScriptPage, stopVideo }) => {
   useEffect(() => {
     if (DummyScript[page - 1] && DummyScript[page - 1][scriptIndex]) {
       setScript(DummyScript[page - 1][scriptIndex].text);
+      setImage(characterImages[DummyScript[page-1][scriptIndex].person])
     }
   }, [scriptIndex, page]);
 
@@ -66,18 +77,25 @@ const Script = ({ scriptPage, setScriptPage, stopVideo }) => {
 
   // console.log(script);
   return (
-    // <div className="main-content" >
-    <div className="script-container">
-      <div className="script-text-container">
-        <h1 className="script_text">{script}</h1>
+    <div className="main-content" >
+      <div className="script-container">
+      <img src={image} alt="character" style={{ width: "100px", height: "100px" }}></img>
+        <div className="script-text-container">
+          <h1 className="script_text">
+            {script}
+            </h1>
+        </div>
+        <div className="bottom" style={{margin:'0px'}}>
+          <button className="story_button" onClick={handleNextScript}>
+            다음
+          </button>
+          {/* {isModalOpen && <StoryEndModal onClose={stopVideo} onBack={closeModal} />} */}
+        </div>
       </div>
-      <div className="bottom" style={{ margin: "0px" }}>
-        <button className="story_button" onClick={handleNextScript}>
-          다음
-        </button>
-        {/* {isModalOpen && <StoryEndModal onClose={stopVideo} onBack={closeModal} />} */}
+  
+        {/* {isModalOpen && <StoryEndModal onClose={() => setIsModalOpen(false)} />} */}
       </div>
-    </div>
+   
   );
 };
 

@@ -1,50 +1,59 @@
 .modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    padding: 20px;
-    z-index: 100;
-    width: 80%; /* 화면 너비의 80% */
-    max-width: 600px; /* 최대 600px */
-    height: auto;
-    box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
-    border-radius: 10px; /* 모달의 모서리를 둥글게 */
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  width: auto; /* 또는 원하는 너비 */
+  padding: 5px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  background-color: #e7dfc9;
+}
+
+.modal-image {
+  max-width: 100%; /* 이미지가 모달창을 넘어서지 않도록 함 */
+  height: auto; /* 이미지의 비율을 유지 */
+  /* margin: 20px 0; 이미지와 다른 요소 사이의 여백 */
+}
+
+.modal-title {
+  font-size: 4vw;
+  font-weight: bold;
+  /* margin-top: 20px; */
+  text-align: center;
+  color: #333;
+}
+
+.modal-close-btn {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 3vw;
+  transition: background-color 0.3s ease;
+}
+
+.modal-close-btn:hover {
+  background-color: #0056b3;
   
-  .modal-title {
-    font-size: 4vw; /* 화면 너비의 4% */
-    margin-bottom: 20px;
-  }
-  
-  .modal-close-btn {
-    font-size: 2vw; /* 화면 너비의 2% */
-    padding: 10px 20px;
-    background: #f44336; /* 빨간 배경색 */
-    color: white;
-    border: none;
-    border-radius: 5px; /* 버튼의 모서리를 둥글게 */
-    cursor: pointer;
-  }
-  
-  @media (min-width: 1024) {
-    .modal {
-      width: 40%; /* 태블릿과 데스크탑에서는 화면 너비의 40% */
-    }
-  
-    .modal-title {
-      font-size: 24px; /* 글자 크기 고정 */
-    }
-  
-    .modal-close-btn {
-      font-size: 18px; /* 글자 크기 고정 */
-    }
-  }
-  
-  @media (max-width: 1024px) {
-    .modal {
-      width: 30%; /* 데스크탑에서는 화면 너비의 30% */
-    }
-  }
-  
+}
+
+/* 추가적인 스타일링 */
+.modal-close-btn:not(:last-child) {
+  margin-right: 15px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  padding: 10px 0; /* Top and bottom padding for some spacing around buttons */
+}

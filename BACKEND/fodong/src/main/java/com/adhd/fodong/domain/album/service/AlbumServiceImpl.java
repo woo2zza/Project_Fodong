@@ -6,9 +6,11 @@ import com.adhd.fodong.domain.album.entity.RecordingEntity;
 import com.adhd.fodong.domain.album.repository.AlbumRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import com.adhd.fodong.global.util.ConvertTool;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -49,6 +51,7 @@ public class AlbumServiceImpl implements AlbumService{
 
     @Override
     public List<RecordingDetails> getRecordings(int profileId) {
+        ConvertTool convertTool = new ConvertTool();
         // profileID로 profile의 모든 녹화본 조회
         if(profileId<=0){
             throw new RuntimeException("error:녹화본 조회 -> 유효하지 않은 profileID");
@@ -57,7 +60,12 @@ public class AlbumServiceImpl implements AlbumService{
         //존재하지 않는 profileId?
 
         List<RecordingDetails> allRecordingsByProfileId = albumRepository.findAllRecordingsByProfileId(profileId);
+        List<RecordingDetails> newRecordings = new ArrayList<RecordingDetails>();
+        for(RecordingDetails recordingDetails: allRecordingsByProfileId){
+            String convertedCover=convertTool.convertToJpg(recordingDetails.getCover());
+            recordingDetails.setCover(convertedCover);
+        }
 
-        return allRecordingsByProfileId;
+        return newRecordings;
     }
 }
