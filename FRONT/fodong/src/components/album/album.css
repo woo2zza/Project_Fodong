@@ -7,7 +7,7 @@
 
 .logoContainer {
   position: absolute;
-  left: 20px; /* Adjust based on desired padding */
+  left: 20px;
   top: 20px;
   cursor: pointer;
 }
@@ -27,9 +27,7 @@
 .albumContainer {
   display: flex;
   flex-wrap: wrap;
-  margin: 20px 30px;
   justify-content: center;
-  gap: 50px;
 }
 
 .albumItem {
@@ -42,7 +40,6 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   position: relative;
   border: 2px solid #f8d7e4;
-  background-image: url("albumImg.png");
   background-size: cover;
   margin: 63px;
   margin-left: 83px;

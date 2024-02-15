@@ -5,7 +5,7 @@ const DummyScript = [
       text: "뙤약볕 아래에서, 겨울을 대비하기 위해 개미들은 땀을 뻘뻘 흘리며 열심히 일하고 있습니다." 
     },
     {
-      person: "naration",
+      person: "naraition",
       text:  "그러나, 저기 베짱이는 나무 그늘에서 노래를 부르며 놀고만 있네요!"
     },
     {
@@ -31,11 +31,11 @@ const DummyScript = [
   ],
   [
     {
-      person: "narition",
+      person: "naraition",
       text:  "어느새 겨울이 찾아왔습니다. 눈이 내리고, 찬바람이 불어옵니다."
     },
     {
-      person: "narition",
+      person: "naraition",
       text:  "베짱이는 굶주리고 추위에 떨고 있네요."
     },
     {
@@ -70,5 +70,6 @@ const DummyScript = [
     },
   ],
 ];
+
 
 export default DummyScript;

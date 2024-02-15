@@ -28,7 +28,7 @@
 .button_container {
   display: flex;
   align-items: center;
-  margin-top: 30px;
+  /* margin-top: 30px; */
 }
 
 .styledLink {
@@ -43,14 +43,13 @@
   font-size: 60px;
   font-weight: bold;
   text-align: center;
-  color: #ffbb47;
+  color: #474646;
   margin: 0;
 }
 .titleLogo {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 20px;
+  padding: 10px;
 }
 
 .titleLogo img {
@@ -101,6 +100,7 @@
   border-radius: 10px;
   cursor: pointer;
   box-shadow: 2px 4px #acabab;
+  z-index: 0;
 }
 
 .modal_style button:hover {
@@ -210,6 +210,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 5%;
 }
 
 @keyframes scaleUp {
@@ -294,11 +295,12 @@
 /* 이전 다음 버튼 */
 .preButton,
 .goButton {
-  background-color: #ff9f1c;
+  background-color: #f7c86f;
+  opacity: 0.85;
   color: white;
   border: none;
-  border-radius: 50%;
-  padding: 0.5em;
+  border-radius: 20%;
+  padding: 2em 0.2em;
   font-size: 1.5em;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   cursor: pointer;
