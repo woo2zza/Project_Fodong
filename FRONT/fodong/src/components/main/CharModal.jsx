@@ -91,10 +91,10 @@ const CharModal = ({ isOpen, closeModal, book }) => {
             롤플레잉
           </div>
           <div className="enter_button" onClick={goMultiStory}>
-            오디오북
+            북놀이터
           </div>
           <div className="enter_button" onClick={goReadBook}>
-            북놀이터
+            오디오북
           </div>
         </div>
         <div className="modal_button" onClick={closeModal}>
