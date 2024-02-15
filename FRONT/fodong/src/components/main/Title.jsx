@@ -24,9 +24,7 @@ const Title = ({ nickname }) => {
         <img src={Logo} alt="logo" onClick={Mainbutton} />
       </div>
       <div className="titleStyle">
-        <div>
-          {useNickname}'s World! {useProfileId}
-        </div>{" "}
+        <div>{useNickname}님 오늘은 어떤 동화를 읽을까요?</div>{" "}
       </div>
     </div>
   );
