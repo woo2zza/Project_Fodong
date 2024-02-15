@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from "react-router-dom";
 import "./EndModal.css"
-import end from "./end.webp"
+import end from "./img/end.webp"
 
 
 const StoryEndModal = ({onClose, onBack, onRecording}) => {
