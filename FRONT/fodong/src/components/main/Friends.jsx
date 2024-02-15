@@ -291,9 +291,7 @@ function Friends() {
                 position: "absolute",
                 width: "100%",
                 zIndex: 1200,
-                backgroundColor: "white",
                 maxHeight: 200,
-                overflow: "auto",
               }}
             >
               {searchResults.map((result, index) => (
