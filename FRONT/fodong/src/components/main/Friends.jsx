@@ -185,16 +185,35 @@ function Friends() {
             };
             handleOpenModal(requestInfo);
           } else if (notification.action === "accept") {
-            // console.log("Received friend request not for me:", notification);
-            if (profileId === notification.fromProfileId) {
-              setFriends((prev) => [...prev, notification.toNickname]);
-            } else if (profileId === notification.toProfileId) {
-              setFriends((prev) => [...prev, notification.fromNickname]);
-            } else {
-              console.log("Received friend request not for me:", notification);
-            }
-            console.log(notification);
+            setFriends((prev) => {
+              // 새 친구의 닉네임을 확인합니다.
+              const newFriendNickname =
+                profileId === notification.fromProfileId
+                  ? notification.toNickname
+                  : notification.fromNickname;
+              // 이미 친구 목록에 존재하는지 확인합니다.
+              if (
+                prev.some((friend) => friend.nickname === newFriendNickname)
+              ) {
+                return prev; // 이미 존재하면 목록을 변경하지 않습니다.
+              } else {
+                // 새로운 친구를 목록에 추가합니다.
+                return [
+                  ...prev,
+                  {
+                    nickname: newFriendNickname,
+                    profileId:
+                      profileId === notification.fromProfileId
+                        ? notification.toProfileId
+                        : notification.fromProfileId,
+                  },
+                ];
+              }
+            });
+          } else {
+            console.log("Received friend request not for me:", notification);
           }
+          console.log(notification);
         }
       );
 

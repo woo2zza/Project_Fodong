@@ -156,7 +156,7 @@ const StoryRoom = ({
     if (session) {
       session.disconnect();
     }
-
+    Navi("/main");
     // Reset all states and OpenVidu object
     OV.current = new OpenVidu();
     setSession(undefined);
