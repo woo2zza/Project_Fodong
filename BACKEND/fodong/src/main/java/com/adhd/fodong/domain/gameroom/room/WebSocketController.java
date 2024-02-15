@@ -70,6 +70,7 @@ public class WebSocketController {
                     response.put("message", "친구 요청이 수락되었습니다.");
                     response.put("fromNickname", fromNickanme);
                     response.put("toNickname", toNickname);
+                    response.put("action", "accept");
                     System.out.println("친구요청 컨트롤러 accept 옴");
                     break;
                 case "reject":
