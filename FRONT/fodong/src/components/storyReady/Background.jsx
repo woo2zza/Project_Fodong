@@ -31,22 +31,22 @@ const Background = () => {
           }}
         ></div>
       </div>
-          <BackButton
-            style={{
-              position: "absolute",
-              bottom: "20px",
-              left: "20px",
-              zIndex: 4,
-            }}
-          />
-          <StartButton
-            style={{
-              position: "absolute",
-              bottom: "20px",
-              right: "20px",
-              zIndex: 1,
-            }}
-          />
+      <BackButton
+        style={{
+          position: "absolute",
+          bottom: "20px",
+          left: "20px",
+          zIndex: 4,
+        }}
+      />
+      <StartButton
+        style={{
+          position: "absolute",
+          bottom: "20px",
+          right: "20px",
+          zIndex: 1,
+        }}
+      />
       <img
         src={ant}
         style={{
@@ -78,7 +78,7 @@ const Background = () => {
       <p
         style={{
           position: "absolute",
-          top: "6%",
+          top: "10%",
           left: "50%",
           transform: "translate(-50%, -50%)",
           fontSize: "7vw",

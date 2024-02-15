@@ -4,7 +4,7 @@ import MainBook from "../components/booklist/MainBook";
 const BookList = () => {
   return (
     <>
-      <MainBook />;
+      <MainBook />
     </>
   );
 };

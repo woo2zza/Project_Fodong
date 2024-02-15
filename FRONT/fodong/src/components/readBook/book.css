@@ -68,7 +68,7 @@
   height: 20%; /* 이미지 아래 20% 높이의 텍스트 영역을 설정 */
   background-color: #e6dab6;
   padding: 30px;
-  font-size: 35px;
+  font-size: 28px;
   color: #333;
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* 상단에 그림자 효과를 주어 입체감 추가 */
 }
@@ -76,11 +76,11 @@
 .voice-button {
   position: absolute;
   right: 10px;
-  bottom: 10px;
+  bottom: 150px;
   padding: 10px 10px;
   font-size: 18px;
   color: white;
-  background-color: #526bea;
+  background-color: #c0c2c7;
   border: none;
   border-radius: 50%;
   cursor: pointer;
