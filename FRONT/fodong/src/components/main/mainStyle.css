@@ -43,13 +43,12 @@
   font-size: 60px;
   font-weight: bold;
   text-align: center;
-  color: #ffbb47;
+  color: #474646;
   margin: 0;
 }
 .titleLogo {
   display: flex;
   justify-content: space-between;
-  align-items: center;
   padding: 10px;
 }
 
