@@ -44,7 +44,7 @@ const Home = () => {
     <div className="container">
       <div className="login-container">
         <Wrapper>
-          <Title>동화 드가자잉</Title>
+          <Title>동화 입장하기</Title>
           <Form onSubmit={onClick}>
             <Inputs>
               <StyledInput
