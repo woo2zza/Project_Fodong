@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import * as faceapi from "face-api.js";
 import { useParams } from "react-router-dom"; // useParams 추가
 import "../storyTelling/StoryTelling.css";
+import { Button } from "@mui/material";
 
 function Face({ page, width, videoRef }) {
   const [videoStream, setVideoStream] = useState(null); // 비디오 스트림 상태를 관리하는 state를 선언
@@ -17,30 +18,30 @@ function Face({ page, width, videoRef }) {
       case 1:
         if (index === 1) {
           // antCharacter 스타일
-          bottom = width > 2499 ? "27%" : "35%";
-          left = width > 2499 ? "14%" : "16%";
+          bottom = width > 2499 ? "20%" : "28%";
+          left = width > 2499 ? "11%" : "16%";
         } else if (index === 2) {
           // grasshopperCharacter 스타일
-          bottom = width > 2499 ? "32%" : "44%";
-          left = width > 2499 ? "56%" : "64%";
+          bottom = width > 2499 ? "26%" : "37%";
+          left = width > 2499 ? "52%" : "64%";
         }
         break;
       case 2:
         if (index === 1) {
-          bottom =  width > 2499 ? "20%" : "32%";
+          bottom =  width > 2499 ? "15%" : "25%";
           left = width > 2499 ? "16%" : "19%";
         } else if (index === 2) {
-          bottom = width > 2499 ? "29%" : "36%";
-          left = width > 2499 ? "70%" : "73%";
+          bottom = width > 2499 ? "19%" : "29%";
+          left = width > 2499 ? "64%" : "73%";
         }
         break;
       case 3:
         if (index === 1) {
-          bottom =  width > 2499 ? "32%" : "39%";
-          left = width > 2499 ? "66%" : "68.5%";
+          bottom =  width > 2499 ? "22%" : "32%";
+          left = width > 2499 ? "60%" : "68.5%";
         } else if (index === 2) {
-          bottom = width > 2499 ? "35%" : "41%";
-          left = width > 2499 ? "23%" : "21%";
+          bottom = width > 2499 ? "25%" : "34%";
+          left = width > 2499 ? "21%" : "21%";
         }
         break;
       // 다른 페이지 번호에 대한 조건을 추가할 수 있습니다.
@@ -192,7 +193,7 @@ function Face({ page, width, videoRef }) {
           })}
       </div>
       {/* <img src={ant} alt="개미" style={{ zIndex: 4 }}></img> */}
-      <button
+      {/* <button
         onClick={stopVideo}
         style={{
           width: "100px",
@@ -204,7 +205,14 @@ function Face({ page, width, videoRef }) {
         }}
       >
         카메라 종료
-      </button>
+      </button> */}
+      {/* <Button
+        variant="contained"
+        onClick={stopVideo}
+        style={{ position: "absolute", top: "10px", left: "10px" }}
+      >
+        카메라 종료
+      </Button> */}
     </div>
   );
 }
