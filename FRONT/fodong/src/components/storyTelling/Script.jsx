@@ -48,10 +48,11 @@ const Script = ({ scriptPage, setScriptPage, stopVideo }) => {
     // console.log(scriptLength)
     if (scriptIndex + 1 < scriptLength) {
       setScriptIndex((idx) => idx + 1);
-    } else if (page === DummyScript.length && scriptIndex === scriptLength -1) {
-  
-    }
-    else if (page < DummyScript.length) {
+    } else if (
+      page === DummyScript.length &&
+      scriptIndex === scriptLength - 1
+    ) {
+    } else if (page < DummyScript.length) {
       // console.log(scriptIndex)
       // console.log(page )
       // console.log(setPage)
@@ -63,28 +64,21 @@ const Script = ({ scriptPage, setScriptPage, stopVideo }) => {
     }
   };
 
-
   // console.log(script);
   return (
     // <div className="main-content" >
-      <div className="script-container">
-        <div className="script-text-container">
-          <h1 className="script_text">{script}</h1>
-        </div>
-        <div className="bottom" style={{margin:'0px'}}>
-          <button className="story_button" onClick={handleNextScript}>
-            다음
-          </button>
-          {/* {isModalOpen && <StoryEndModal onClose={stopVideo} onBack={closeModal} />} */}
-        </div>
+    <div className="script-container">
+      <div className="script-text-container">
+        <h1 className="script_text">{script}</h1>
       </div>
       <div className="bottom" style={{ margin: "0px" }}>
         <button className="story_button" onClick={handleNextScript}>
           다음
         </button>
-        {isModalOpen && <StoryEndModal onClose={() => setIsModalOpen(false)} />}
+        {/* {isModalOpen && <StoryEndModal onClose={stopVideo} onBack={closeModal} />} */}
       </div>
     </div>
+
     // </div>
   );
 };

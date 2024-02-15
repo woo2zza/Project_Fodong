@@ -43,7 +43,7 @@ function Friends() {
   const handleToggle = () => setOpen(!open);
 
   const handleAddFriend = (event) => {
-    console.log("요청 몇번가는지 handleAddFriend")
+    console.log("요청 몇번가는지 handleAddFriend");
     event.preventDefault();
     const numbers = nickname.match(/\d+/g);
     if (numbers) {
@@ -184,8 +184,15 @@ function Friends() {
               toNickname: notification.toNickname,
             };
             handleOpenModal(requestInfo);
-          } else {
-            console.log("Received friend request not for me:", notification);
+          } else if (notification.action === "accepted") {
+            // console.log("Received friend request not for me:", notification);
+            if (profileId === notification.fromProfileId) {
+              setFriends((prev) => [...friends, notification.toNickname]);
+            } else if (profileId === notification.toProfileId) {
+              setFriends([...friends, notification.fromNickname]);
+            } else {
+              console.log("Received friend request not for me:", notification);
+            }
           }
         }
       );

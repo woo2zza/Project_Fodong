@@ -124,7 +124,7 @@ const MultiStory = () => {
     };
 
     fetchFriends();
-  }, []);
+  }, [profileId, token]);
 
   const handlePopoverOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -211,89 +211,99 @@ const MultiStory = () => {
           height: "100vh",
         }}
       >
-        <IconButton
-          sx={{ position: "fixed", top: 16, right: 16, zIndex: 1 }}
-          onClick={handlePopoverOpen}
-        >
-          <Avatar>
-            <PeopleAlt />
-          </Avatar>
-        </IconButton>
-        <Popover
-          open={open}
-          anchorEl={anchorEl}
-          onClose={handlePopoverClose}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "left",
-          }}
-        >
-          <List>
-            {friends.map((friend, index) => (
-              <ListItem key={friend.profileId}>
-                <ListItemText primary={friend.nickname} />
-                <Button
-                  onClick={() =>
-                    sendInviteRequest(
-                      sessionId,
-                      friend.profileId,
-                      profileId,
-                      token
-                    )
-                  }
-                >
-                  <ForwardToInboxIcon />
-                </Button>
-              </ListItem>
-            ))}
-            {/* 여기에 친구 초대 목록을 렌더링합니다. */}
-          </List>
-        </Popover>
         {!isStart && (
-          <Grid
-            container
-            spacing={2}
-            justifyContent="center"
-            sx={{ overflowX: "auto", mt: 3 }}
-          >
-            {characters.map((character) => (
-              <Grid item key={character.id} xs={6} sm={4} md={3} lg={2} xl={2}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    cursor: "pointer",
-                  }}
-                  onClick={() => toggleCharacterSelection(character.id)}
+          <>
+            <IconButton
+              sx={{ position: "fixed", top: 16, right: 16, zIndex: 1 }}
+              onClick={handlePopoverOpen}
+            >
+              <Avatar>
+                <PeopleAlt />
+              </Avatar>
+            </IconButton>
+            <Popover
+              open={open}
+              anchorEl={anchorEl}
+              onClose={handlePopoverClose}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
+            >
+              <List>
+                {friends.map((friend, index) => (
+                  <ListItem key={friend.profileId}>
+                    <ListItemText primary={friend.nickname} />
+                    <Button
+                      onClick={() =>
+                        sendInviteRequest(
+                          sessionId,
+                          friend.profileId,
+                          profileId,
+                          token
+                        )
+                      }
+                    >
+                      <ForwardToInboxIcon />
+                    </Button>
+                  </ListItem>
+                ))}
+                {/* 여기에 친구 초대 목록을 렌더링합니다. */}
+              </List>
+            </Popover>
+            <Grid
+              container
+              spacing={2}
+              justifyContent="center"
+              sx={{ overflowX: "auto", mt: 3 }}
+            >
+              {characters.map((character) => (
+                <Grid
+                  item
+                  key={character.id}
+                  xs={6}
+                  sm={4}
+                  md={3}
+                  lg={2}
+                  xl={2}
                 >
-                  <Avatar
-                    src={character.image}
-                    alt={character.name}
+                  <Box
                     sx={{
-                      width: 100,
-                      height: 100,
-                      mb: 1,
-                      border: selectedCharacters[character.id]
-                        ? "3px solid #4CAF50"
-                        : "none",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      cursor: "pointer",
                     }}
-                  />
-                  <Typography>{character.name}</Typography>
-                  <IconButton
                     onClick={() => toggleCharacterSelection(character.id)}
                   >
-                    {selectedCharacters[character.id] ? (
-                      <CheckCircleOutline />
-                    ) : (
-                      <AddCircleOutline />
-                    )}
-                  </IconButton>
-                  {/* 선택된 유저의 닉네임 렌더링 */}
-                </Box>
-              </Grid>
-            ))}
-          </Grid>
+                    <Avatar
+                      src={character.image}
+                      alt={character.name}
+                      sx={{
+                        width: 100,
+                        height: 100,
+                        mb: 1,
+                        border: selectedCharacters[character.id]
+                          ? "3px solid #4CAF50"
+                          : "none",
+                      }}
+                    />
+                    <Typography>{character.name}</Typography>
+                    <IconButton
+                      onClick={() => toggleCharacterSelection(character.id)}
+                    >
+                      {selectedCharacters[character.id] ? (
+                        <CheckCircleOutline />
+                      ) : (
+                        <AddCircleOutline />
+                      )}
+                    </IconButton>
+                    {/* 선택된 유저의 닉네임 렌더링 */}
+                  </Box>
+                </Grid>
+              ))}
+            </Grid>
+          </>
         )}
         <MultiStoryProvider sendChangePageRequest={sendChangePageRequest}>
           <StoryRoom
