@@ -116,8 +116,10 @@
 
 .Album_container {
   padding: 30px;
-  background-color: #f0e6f6;
+  background-image: url("../img/bg.jpg");
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
 }
-
 .MultiStory-container {
 }
