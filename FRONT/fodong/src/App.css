@@ -1,10 +1,17 @@
 * {
   margin: 0;
   padding: 0;
-  font-family: "Nanum Pen Script";
+  font-family: "KCCChassam";
   box-sizing: border-box;
 }
-@import url("https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap");
+
+@font-face {
+  font-family: "KCCChassam";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/KCCChassam.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
 
 .story_img img {
   max-width: 100%;
