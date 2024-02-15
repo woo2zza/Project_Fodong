@@ -64,8 +64,11 @@ public class AlbumServiceImpl implements AlbumService{
         for(RecordingDetails recordingDetails: allRecordingsByProfileId){
             String convertedCover=convertTool.convertToJpg(recordingDetails.getCover());
             recordingDetails.setCover(convertedCover);
+            System.out.println(recordingDetails.getCover());
         }
 
-        return newRecordings;
+        System.out.println("내껄로 들어옴");
+
+        return allRecordingsByProfileId;
     }
 }
