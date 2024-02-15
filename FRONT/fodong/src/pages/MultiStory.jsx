@@ -11,8 +11,8 @@ import {
 } from "../contexts/MultiStoryContext.js";
 import StoryRoom from "../components/multi/StoryRoom";
 import Img from "../img/storyready.png";
-import antCharacter from "../components/storyTelling/img/scriptant.webp"
-import grasshopperCharacter from "../components/storyTelling/img/scriptgrasshopper.webp"
+import antCharacter from "../components/storyTelling/img/scriptant.webp";
+import grasshopperCharacter from "../components/storyTelling/img/scriptgrasshopper.webp";
 import {
   Button,
   Avatar,
@@ -38,14 +38,12 @@ const characters = [
   {
     id: 1,
     name: "개미",
-    image:
-      antCharacter,
+    image: antCharacter,
   },
   {
     id: 2,
     name: "베짱이",
-    image:
-      grasshopperCharacter,
+    image: grasshopperCharacter,
   },
   // 추가 캐릭터...
 ];
@@ -211,6 +209,7 @@ const MultiStory = () => {
           backgroundPosition: "center",
           backgroundSize: "cover",
           height: "100vh",
+          padding: "0",
         }}
       >
         {!isStart && (

@@ -184,15 +184,16 @@ function Friends() {
               toNickname: notification.toNickname,
             };
             handleOpenModal(requestInfo);
-          } else if (notification.action === "accepted") {
+          } else if (notification.action === "accept") {
             // console.log("Received friend request not for me:", notification);
             if (profileId === notification.fromProfileId) {
-              setFriends((prev) => [...friends, notification.toNickname]);
+              setFriends((prev) => [...prev, notification.toNickname]);
             } else if (profileId === notification.toProfileId) {
-              setFriends([...friends, notification.fromNickname]);
+              setFriends((prev) => [...prev, notification.fromNickname]);
             } else {
               console.log("Received friend request not for me:", notification);
             }
+            console.log(notification);
           }
         }
       );
@@ -201,7 +202,7 @@ function Friends() {
         friendRequestSubscription.unsubscribe();
       };
     }
-  }, [stompClient, profileId]); // profileId 의존성 추가
+  }, [stompClient, profileId, friends]); // profileId 의존성 추가
 
   // 이 부분 고쳐야 해!!
   useEffect(() => {

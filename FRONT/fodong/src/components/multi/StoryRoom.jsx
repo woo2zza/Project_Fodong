@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { userStore } from "../../store/userStore.js";
 import axios from "axios";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { OpenVidu } from "openvidu-browser";
 import UserVideoComponent from "./UserVideoComponent";
 
 import "./multi.css";
 
-import { Grid, Button, Paper, Box } from "@mui/material";
+import { Grid, Button, Paper, Box, IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Story from "./Story.jsx";
 import Script from "./Script.jsx";
@@ -149,6 +150,7 @@ const StoryRoom = ({
     console.log(subscribers);
   }, [subscribers, setSubscribers]);
 
+  const Navi = useNavigate();
   const leaveSession = useCallback(() => {
     // Leave the session
     if (session) {
@@ -163,6 +165,7 @@ const StoryRoom = ({
     setPublisher(undefined);
 
     toggleState((state) => false);
+    Navi("/main");
   }, [session, toggleState]);
 
   // const switchCamera = useCallback(async () => {
@@ -248,6 +251,31 @@ const StoryRoom = ({
 
     setSubscribers(items);
   };
+
+  //
+  const sliderRef = useRef(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+
+  const startDragging = (e) => {
+    if (!sliderRef.current) return;
+    setIsDragging(true);
+    setStartX(e.pageX - sliderRef.current.offsetLeft);
+    setScrollLeft(sliderRef.current.scrollLeft);
+  };
+
+  const stopDragging = () => {
+    setIsDragging(false);
+  };
+
+  const onDrag = (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.pageX - sliderRef.current.offsetLeft;
+    const walk = (x - startX) * 2; // 드래그 속도 조절을 위한 계수
+    sliderRef.current.scrollLeft = scrollLeft - walk;
+  };
   return (
     <div className="Room-container">
       {!playState ? (
@@ -272,99 +300,112 @@ const StoryRoom = ({
         </div>
       ) : null}
       {playState ? (
-        <Box id="session" className="storyRoomSession">
-          <Box
-            id="session-header"
-            sx={{ mb: 2 }}
-            className="storyRoomSessionHeader"
-          ></Box>
+        <Box
+          id="session"
+          className="storyRoomSession"
+          sx={{
+            height: "100vh",
+            display: "flex",
+            flexDirection: "column",
+            position: "relative",
+            padding: "0",
+          }} // position: "relative" 추가
+        >
+          {/* 나가기 버튼 */}
+          <IconButton
+            onClick={leaveSession}
+            sx={{
+              position: "fixed",
+              top: 8,
+              right: 20,
+              color: "red",
+              zIndex: 1010, // 확실히 상단에 위치하도록 zIndex 값을 조정
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
 
-          {/* <Story sendChangePageRequest={sendChangePageRequest} />
-          <Script sendChangePageRequest={sendChangePageRequest} /> */}
+          {/* Story와 Script 컴포넌트 */}
+          <Box sx={{ flexGrow: 1, zIndex: 1 }}>
+            <Story sendChangePageRequest={sendChangePageRequest} />
+            <Script sendChangePageRequest={sendChangePageRequest} />
+          </Box>
+
+          {/* 비디오 목록 */}
           <DragDropContext onDragEnd={onDragEnd}>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                flexWrap: "wrap",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              {publisher && (
+            <Droppable droppableId="subscribers" direction="horizontal">
+              {(provided) => (
                 <Box
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
                   sx={{
-                    flexGrow: 0,
-                    margin: "0.5rem",
-                    border: "4px solid #FFC0CB", // Pink solid border
-                    borderRadius: "20px",
-                    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", // Soft shadow for depth
-                    overflow: "hidden", // Ensures the video corners are also rounded
-                    "&:hover": {
-                      boxShadow: "0 8px 16px rgba(0, 0, 0, 0.3)", // Slightly larger shadow on hover for interactive effect
-                    },
+                    display: "flex",
+                    flexDirection: "row",
+                    flexWrap: "nowrap",
+                    overflowX: "auto",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: "0.5rem",
+                    background: "transparent", // 배경색을 투명하게 설정
+                    position: "absolute", // 상단에 고정
+                    top: 0, // 상단부터 시작
+                    width: "100%", // 부모 컨테이너의 전체 너비
+                    zIndex: 1005, // Story와 Script 컴포넌트 위에 위치하도록 zIndex 값을 조정
                   }}
                 >
-                  <UserVideoComponent
-                    streamManager={publisher}
-                    className="storyRoomPublisherVideo"
-                  />
+                  {/* 비디오 컴포넌트 매핑 */}
+                  {publisher && (
+                    <Box
+                      sx={{
+                        flexGrow: 0,
+                        margin: "0.5rem",
+                        border: "4px solid #FFC0CB",
+                        borderRadius: "20px",
+                        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+                        overflow: "hidden",
+                        "&:hover": {
+                          boxShadow: "0 8px 16px rgba(0, 0, 0, 0.3)",
+                        },
+                      }}
+                    >
+                      <UserVideoComponent
+                        streamManager={publisher}
+                        className="storyRoomPublisherVideo"
+                      />
+                    </Box>
+                  )}
+                  {subscribers.map((sub, i) => (
+                    <Draggable key={sub.id} draggableId={sub.id} index={i}>
+                      {(provided) => (
+                        <Box
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          sx={{
+                            margin: "0.5rem",
+                            border: "2px solid #87CEEB",
+                            borderRadius: "20px",
+                            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+                            overflow: "hidden",
+                          }}
+                        >
+                          <UserVideoComponent
+                            streamManager={sub}
+                            className="storyRoomUserVideo"
+                          />
+                          <span>{sub.id}</span>
+                        </Box>
+                      )}
+                    </Draggable>
+                  ))}
+                  {provided.placeholder}
                 </Box>
               )}
-              <Droppable droppableId="subscribers" direction="horizontal">
-                {(provided) => (
-                  <Box
-                    {...provided.droppableProps}
-                    ref={provided.innerRef}
-                    sx={{
-                      display: "flex",
-                      flexDirection: "row",
-                      flexWrap: "nowrap",
-                    }}
-                  >
-                    {subscribers.map((sub, i) => (
-                      // <Box
-                      //   key={sub.id}
-                      //   sx={{
-                      //     flexGrow: 0,
-                      //     margin: "0.5rem",
-                      //     border: "2px solid #87CEEB", // Pink solid border
-                      //     borderRadius: "20px",
-                      //     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", // Soft shadow for depth
-                      //     overflow: "hidden",
-                      //   }}
-                      // >
-                      <Draggable key={sub.id} draggableId={sub.id} index={i}>
-                        {(provided) => (
-                          <Box
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                            sx={{
-                              margin: "0.5rem",
-                              border: "2px solid #87CEEB",
-                              borderRadius: "20px",
-                              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-                              overflow: "hidden",
-                            }}
-                          >
-                            <UserVideoComponent
-                              streamManager={sub}
-                              className="storyRoomUserVideo"
-                            />
-                            <span>{sub.id}</span>
-                          </Box>
-                        )}
-                      </Draggable>
-                    ))}
-                    {provided.placeholder}
-                  </Box>
-                )}
-              </Droppable>
-            </Box>
+            </Droppable>
           </DragDropContext>
         </Box>
-      ) : null}
+      ) : // </Box>
+      null}
     </div>
   );
 };
@@ -394,4 +435,59 @@ export default StoryRoom;
     </Grid>
   ))}
 </Grid>; */
+}
+
+{
+  /* <DragDropContext onDragEnd={onDragEnd}>
+<Droppable droppableId="subscribers" direction="horizontal">
+  {(provided) => (
+    <Box
+      {...provided.droppableProps}
+      ref={provided.innerRef}
+      sx={{
+        display: "flex",
+        flexDirection: "row",
+        flexWrap: "nowrap",
+      }}
+    >
+      {subscribers.map((sub, i) => (
+        // <Box
+        //   key={sub.id}
+        //   sx={{
+        //     flexGrow: 0,
+        //     margin: "0.5rem",
+        //     border: "2px solid #87CEEB", // Pink solid border
+        //     borderRadius: "20px",
+        //     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", // Soft shadow for depth
+        //     overflow: "hidden",
+        //   }}
+        // >
+        <Draggable key={sub.id} draggableId={sub.id} index={i}>
+          {(provided) => (
+            <Box
+              ref={provided.innerRef}
+              {...provided.draggableProps}
+              {...provided.dragHandleProps}
+              sx={{
+                margin: "0.5rem",
+                border: "2px solid #87CEEB",
+                borderRadius: "20px",
+                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+                overflow: "hidden",
+              }}
+            >
+              <UserVideoComponent
+                streamManager={sub}
+                className="storyRoomUserVideo"
+              />
+              <span>{sub.id}</span>
+            </Box>
+          )}
+        </Draggable>
+      ))}
+      {provided.placeholder}
+    </Box>
+  )}
+</Droppable>
+</DragDropContext> */
 }
