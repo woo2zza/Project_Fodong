@@ -17,18 +17,18 @@ function Face({ page, width, videoRef }) {
       case 1:
         if (index === 1) {
           // antCharacter 스타일
-          bottom = width > 2499 ? "30%" : "35%";
-          left = width > 2499 ? "17%" : "16%";
+          bottom = width > 2499 ? "27%" : "35%";
+          left = width > 2499 ? "14%" : "16%";
         } else if (index === 2) {
           // grasshopperCharacter 스타일
-          bottom = width > 2499 ? "36%" : "44%";
-          left = width > 2499 ? "60%" : "64%";
+          bottom = width > 2499 ? "32%" : "44%";
+          left = width > 2499 ? "56%" : "64%";
         }
         break;
       case 2:
         if (index === 1) {
-          bottom =  width > 2499 ? "25%" : "32%";
-          left = width > 2499 ? "21%" : "19%";
+          bottom =  width > 2499 ? "20%" : "32%";
+          left = width > 2499 ? "16%" : "19%";
         } else if (index === 2) {
           bottom = width > 2499 ? "29%" : "36%";
           left = width > 2499 ? "70%" : "73%";
