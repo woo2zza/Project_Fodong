@@ -21,13 +21,13 @@
 }
 
 .script_text {
-  font-size: 5vh;
+  font-size: 22px;
   display: inline-block;
   border-radius: 15px;
   width: 95%;
   height: 10vh;
   background-color: #e6dab6;
-  padding: 2vh;
+  padding: 3vh;
   margin: 1vh;
 }
 
@@ -72,12 +72,10 @@
   background-color: #ffe4c4;
 }
 
-
 .script-text-container {
   flex-grow: 1;
   text-align: center;
 }
-
 
 .story_button {
   background-color: #ff69b4;
@@ -167,4 +165,3 @@
     height: 20vh;
   }
 }
-

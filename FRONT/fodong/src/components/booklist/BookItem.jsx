@@ -1,5 +1,6 @@
 import React from "react";
 import CharModal from "../main/CharModal";
+import "./bookList.css";
 
 function BookItem({ book, viewMode, onBookSelect }) {
   const handleBookClick = () => {

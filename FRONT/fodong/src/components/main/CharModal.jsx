@@ -70,7 +70,7 @@ const CharModal = ({ isOpen, closeModal, book }) => {
   return (
     <div className="modal-overlay" onClick={closeModal}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <h2>{selectBook.title}</h2>
+        <h3>{selectBook.title}</h3>
         {/* 캐릭터들을 쉼표로 구분하여 표시 */}
         <div>{selectBook.summary || "Loading..."}</div>
         <div>
@@ -88,13 +88,13 @@ const CharModal = ({ isOpen, closeModal, book }) => {
 
         <div className="enterButtons">
           <div className="enter_button" onClick={goSingleStory}>
-            혼자하기
+            롤플레잉
           </div>
           <div className="enter_button" onClick={goMultiStory}>
-            같이하기
+            오디오북
           </div>
           <div className="enter_button" onClick={goReadBook}>
-            읽어주기
+            북놀이터
           </div>
         </div>
         <div className="modal_button" onClick={closeModal}>
