@@ -1,10 +1,46 @@
 # README.md
 
-# 1️⃣ Team Introduction
+# Service Introduction
+
+## [👉포동 UCC👈](https://youtu.be/rSUTV8cgYas)
+
+# 📖 서비스 화면
+
+#### 로그인 창 <br>
+<img src='./ReadMeImg/Login.png' width='60%'>
+
+#### 프로필 선택 창 <br>
+<img src='./ReadMeImg/Profile.png' width='60%'>
+
+#### 메인 페이지 <br>
+<img src='./ReadMeImg/Main.png' width='60%'>
+
+#### 책 리스트 <br>
+<img src='./ReadMeImg/BookIist2.png' width='60%'>
+<img src='./ReadMeImg/BookList.png' width='60%'>
+
+#### 모달 창 <br>
+<img src='./ReadMeImg/Modal.png' width='60%'>
+
+
+#### 롤 플레잉 <br>
+<img src='./ReadMeImg/SelfBook.gif' width='60%'>
+
+#### 북 놀이터 <br>
+<img src='./ReadMeImg/multi connection.gif' width='60%' height='auto'>
+
+#### 행복 서랍 <br>
+<img src='./ReadMeImg/BookShelf.png' width='60%'>
+
+
+# 📖 서비스 아키텍처
+<img src='./ReadMeImg/Service.png' width='80%'>
+
+# 📖 Team Introduction
 
 <img src="./ReadMeImg/team.png">
 
-# 2️⃣ Commit Message Structure
+# 📖 Commit Message Structure
 
 ```bash
 **[타입]: 설명**
@@ -58,7 +94,7 @@ git commit -m "[fix]: 푸시알림 허용 여부 변경 API 로직 수정
               연관되어 있는 JIRA 이슈 번호"
 ```
 
-# 3️⃣ BRANCH 전략
+# 📖 BRANCH 전략
 
 > GIT FLOW
 > 
@@ -83,23 +119,27 @@ git commit -m "[fix]: 푸시알림 허용 여부 변경 API 로직 수정
     - 기능 구현이 완료될 때까지 `코드수정`/`commit`/`push` 반복
 5. MERGE into `develop`
 
-# 4️⃣ 주요 기능
+# 📖 주요 기능
 1. face-api.js를 통한 롤플레잉
 2. tts를 통한 오디오북
 3. webRTC를 통한 북놀이터
 
-# 5️⃣ 팀원 역할
+# 📖 팀원 역할
+
+
 #### 김지현
 
--openCV를 이용한 face detection 구현
--openCV 를 이용한 face-landmark detection 구현
--openCV를 이용한 face-extraction 구현
--openCV를 이용한 image-processing 구현
--openCV -> face-api.js migration
--Spring Boot를 사용해 백엔드 앨범 관리 API 구현 ( 녹화본 저장, 녹화본 조회)
--녹화본 DB 관리
--nginx proxy pass 로컬-서버 연결
--linux - window 간 파일 전송
+팀장
+
+- openCV를 이용한 face detection 구현
+- openCV 를 이용한 face-landmark detection 구현
+- openCV를 이용한 face-extraction 구현
+- openCV를 이용한 image-processing 구현
+- openCV -> face-api.js migration
+- Spring Boot를 사용해 백엔드 앨범 관리 API 구현 ( 녹화본 저장, 녹화본 조회)
+- 녹화본 DB 관리
+- nginx proxy pass 로컬-서버 연결
+- linux - window 간 파일 전송
 
 
 #### 김진명
@@ -192,33 +232,39 @@ PWA
 - 녹화된 영상 앨범 페이지에 출력 후 UI
 - 실시간 추가 된 친구 Modal 생성 및 UI
 
-# 6️⃣ 기능 명세서
+# 📖 기능 명세서
 <img src='./ReadMeImg/기능명세서.PNG'>
 
-# 7️⃣ 서비스 화면
-
-#### 로그인 창 <br>
-<img src='./ReadMeImg/Login.png' width='60%'>
-
-#### 프로필 선택 창 <br>
-<img src='./ReadMeImg/Profile.png' width='60%'>
-
-#### 메인 페이지 <br>
-<img src='./ReadMeImg/Main.png' width='60%'>
-
-#### 책 리스트 <br>
-<img src='./ReadMeImg/BookIist2.png' width='60%'>
-<img src='./ReadMeImg/BookList.png' width='60%'>
-
-#### 모달 창 <br>
-<img src='./ReadMeImg/Modal.png' width='60%'>
 
 
-#### 롤 플레잉 <br>
-<img src='./ReadMeImg/SelfBook.gif' width='60%'>
+# 📖 개발 환경
 
-#### 북 놀이터 <br>
-<img src='./ReadMeImg/multi connection.gif' width='60%' height='auto'>
+💾 [BackEnd]
+- JAVA
+- Spring boot
+- Mybatis
+- Spring Security
+- JWT
+- MySQL
+- Nginx
 
-#### 행복 서랍 <br>
-<img src='./ReadMeImg/BookShelf.png' width='60%'>
+💾 [FrontEnd]
+- Java-script
+- React
+- node.js
+- zustand
+- styled-components
+- Material-UI
+- PWA
+
+💾 [webRTC]
+- openvidu
+
+💾 [CI/CD]
+- aws ec2
+- docker
+
+💾 [ENV]
+- SockJs
+- STOMP
+
