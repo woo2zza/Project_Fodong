@@ -197,27 +197,28 @@ PWA
 
 # 7️⃣ 서비스 화면
 
-로그인 창
-<img src='./ReadMeImg/Login.png'>
+#### 로그인 창 <br>
+<img src='./ReadMeImg/Login.png' width='60%'>
 
-프로필 선택 창
-<img src='./ReadMeImg/Profile.png'>
+#### 프로필 선택 창 <br>
+<img src='./ReadMeImg/Profile.png' width='60%'>
 
-메인 페이지
-<img src='./ReadMeImg/Main.png'>
+#### 메인 페이지 <br>
+<img src='./ReadMeImg/Main.png' width='60%'>
 
-책 리스트
-<img src='./ReadMeImg/BookIist2.png'>
-<img src='./ReadMeImg/BookList.png'>
+#### 책 리스트 <br>
+<img src='./ReadMeImg/BookIist2.png' width='60%'>
+<img src='./ReadMeImg/BookList.png' width='60%'>
 
-모달 창
-<img src='./ReadMeImg/Modal.png'>
+#### 모달 창 <br>
+<img src='./ReadMeImg/Modal.png' width='60%'>
 
-행복 서랍
-<img src='./ReadMeImg/BookShelf.png'>
 
-롤 플레잉
-<img src='./ReadMeImg/SelfBook.gif'>
+#### 롤 플레잉 <br>
+<img src='./ReadMeImg/SelfBook.gif' width='60%'>
 
-북 놀이터
-<img src='./ReadMeImg/MultiBook.gif'>
+#### 북 놀이터 <br>
+<img src='./ReadMeImg/multi connection.gif' width='60%' height='auto'>
+
+#### 행복 서랍 <br>
+<img src='./ReadMeImg/BookShelf.png' width='60%'>
