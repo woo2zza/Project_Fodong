@@ -82,3 +82,8 @@ git commit -m "[fix]: 푸시알림 허용 여부 변경 API 로직 수정
 4. REVIEW
     - 기능 구현이 완료될 때까지 `코드수정`/`commit`/`push` 반복
 5. MERGE into `develop`
+
+# 4️⃣ 주요 기능
+1. face-api.js를 통한 롤플레잉
+2. tts를 통한 오디오북
+3. webRTC를 통한 북놀이터
