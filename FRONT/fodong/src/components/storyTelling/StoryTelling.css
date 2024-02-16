@@ -1,0 +1,167 @@
+.main-content {
+  background-color: #ffe4c4;
+}
+
+.script-container {
+  background-color: #add8e6;
+  padding: 5px;
+  border-radius: 0px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #333;
+  max-height: 100vh;
+  /* overflow-y: auto; */
+  height: 15vh;
+}
+
+.script-text-container {
+  flex-grow: 1;
+  text-align: center;
+}
+
+.script_text {
+  font-size: 22px;
+  display: inline-block;
+  border-radius: 15px;
+  width: 95%;
+  height: 10vh;
+  background-color: #e6dab6;
+  padding: 3vh;
+  margin: 1vh;
+}
+
+.webcams {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.webcam-feed-placeholder {
+  max-width: calc(50% - 6px);
+  height: 200px;
+  width: 300px;
+  background-color: #969393;
+  border-radius: 8px;
+}
+
+.backgroundStyle {
+  /* 기존 스타일 유지 */
+  background-size: cover; /* 화면을 꽉 채우도록 설정 */
+}
+
+.antCharacter,
+.grasshopperCharacter {
+  /* 기존 스타일 유지 */
+  width: 35vw; /* 뷰포트 너비에 비례하여 크기 조정 */
+  height: auto; /* 이미지의 비율을 유지 */
+  object-fit: contain; /* 이미지가 컨테이너에 맞게 조정되도록 설정 */
+}
+
+.characters-container {
+  display: flex;
+  justify-content: space-around; /* 캐릭터들 사이에 공간을 균등하게 배분 */
+  align-items: flex-end; /* 캐릭터들을 하단에 맞춤 */
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* height: calc(100vh - 다른 요소의 높이만큼 뺀 값); */
+}
+
+.main-content {
+  background-color: #ffe4c4;
+}
+
+.script-text-container {
+  flex-grow: 1;
+  text-align: center;
+}
+
+.story_button {
+  background-color: #ff69b4;
+  color: #fff;
+  font-size: 3vh;
+  padding: 10px;
+  margin: 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 8vw;
+}
+
+.story_button:hover {
+  background-color: #ff1493;
+}
+.webcams {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.webcam-feed-placeholder {
+  max-width: calc(50% - 6px);
+  height: 200px;
+  width: 300px;
+  background-color: #969393;
+  border-radius: 8px;
+}
+
+.backgroundStyle {
+  /* 기존 스타일 유지 */
+  background-size: cover; /* 화면을 꽉 채우도록 설정 */
+}
+
+.antCharacter,
+.grasshopperCharacter {
+  /* 기존 스타일 유지 */
+  width: 35vw; /* 뷰포트 너비에 비례하여 크기 조정 */
+  height: auto; /* 이미지의 비율을 유지 */
+  object-fit: contain; /* 이미지가 컨테이너에 맞게 조정되도록 설정 */
+}
+
+.characters-container {
+  display: flex;
+  justify-content: space-around; /* 캐릭터들 사이에 공간을 균등하게 배분 */
+  align-items: flex-end; /* 캐릭터들을 하단에 맞춤 */
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+@media (min-width: 2500px) {
+  .antCharacter,
+  .grasshopperCharacter {
+    width: 40vw;
+  }
+  .faceImage {
+    width: 330px;
+    /* height: 20vh; */
+    height: 330px;
+  }
+}
+
+@media (max-width: 2499px) {
+  .characters-container {
+    flex-direction: column; /* 화면이 작을 때는 캐릭터들을 세로로 쌓음 */
+    align-items: center; /* 중앙에 배치 */
+  }
+  .antCharacter,
+  .grasshopperCharacter {
+    width: 35vw; /* 태블릿에서는 이미지 크기를 더 크게 조정 */
+  }
+  .faceImage {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .antCharacter,
+  .grasshopperCharacter {
+    width: 45vw; /* 모바일에서는 이미지 크기를 더 크게 조정 */
+  }
+  .faceImage {
+    width: 20vw;
+    height: 20vh;
+  }
+}

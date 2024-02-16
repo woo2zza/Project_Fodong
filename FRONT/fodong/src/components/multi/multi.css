@@ -1,0 +1,66 @@
+.Room-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#join {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30%;
+  width: 60%;
+  padding: 30px;
+}
+
+#join-dialog {
+  text-align: center;
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+#join-dialog h1 {
+  color: #333366;
+  margin-bottom: 20px;
+}
+
+.form-group input[type="submit"] {
+  background-color: #4caf50;
+  color: white;
+  margin-top: 5px;
+  padding: 14px 120px;
+  border: none;
+  border-radius: 23px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.storyRoomWrapper {
+  background: #ffffffcc;
+  border-radius: 20px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.characterIcon {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 2px solid #4caf50;
+}
+
+.startButton {
+  font-size: 1.5rem;
+  padding: 15px 30px;
+  border-radius: 30px;
+  background-color: #4caf50;
+  color: white;
+  text-align: center;
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.startButton:hover {
+  transform: scale(1.1);
+}

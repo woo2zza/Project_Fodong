@@ -1,0 +1,103 @@
+.A-con {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url("bgimg.jpg");
+}
+
+.mainButton {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+.page-cover,
+.page-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+}
+.page-content {
+  justify-content: flex-start;
+  text-align: center;
+}
+.page-cover h2 {
+  font-size: 100px;
+  color: #876203;
+  margin-top: 260px;
+  justify-content: center;
+}
+.page-content h2 {
+  font-size: 40px;
+  color: #333;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+}
+.page-image {
+  width: 100%;
+  height: 70%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  background-size: cover;
+  background-position: center;
+}
+
+.page-content h2 {
+  font-size: 18px; /* 페이지 번호 크기 조정 */
+  color: #666; /* 페이지 번호 색상 조정 */
+  margin-bottom: 10px; /* 이미지와의 거리 설정 */
+}
+
+.book-container {
+  background-image: url("cover.jpg");
+  background-size: fill;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+}
+
+.script-text {
+  border-radius: 15px;
+  width: 100%;
+  height: 20%; /* 이미지 아래 20% 높이의 텍스트 영역을 설정 */
+  background-color: #e6dab6;
+  padding: 30px;
+  font-size: 28px;
+  color: #333;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* 상단에 그림자 효과를 주어 입체감 추가 */
+}
+
+.voice-button {
+  position: absolute;
+  right: 10px;
+  bottom: 150px;
+  padding: 10px 10px;
+  font-size: 18px;
+  color: white;
+  background-color: #c0c2c7;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s;
+  z-index: 1;
+}
+
+.voice-button:hover {
+  background-color: #45a049;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.page-content {
+  pointer-events: none;
+}
+
+.voice-button {
+  pointer-events: auto;
+}

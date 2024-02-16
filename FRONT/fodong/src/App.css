@@ -1,0 +1,116 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "KCCChassam";
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: "KCCChassam";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/KCCChassam.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.story_img img {
+  max-width: 100%;
+  border: solid;
+  border-radius: 18px;
+  margin: 2%;
+}
+
+.script-container {
+  flex: 1;
+  background-color: #f2f2f2;
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: black;
+}
+
+.bottom {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.story_button {
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.story_button:hover {
+  background-color: #424343;
+}
+
+.container {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-size: cover;
+  background-image: url("img/logImg.png");
+}
+
+.login-container {
+  margin: 20% auto;
+  padding: 1%;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 20px;
+  background-size: cover;
+  width: 30%;
+}
+
+.input-group-text {
+  font-weight: bold;
+  width: 70%;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+}
+.input-group-text:hover {
+  background-color: rgb(82, 83, 82);
+}
+
+.form-control {
+  padding: 10px;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+.btn {
+  color: white;
+  width: 100%;
+  padding: 10px;
+  background-color: rgb(92, 18, 210);
+  border: none;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: rgb(56, 8, 124);
+}
+
+.form-control {
+  padding: 10px;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  height: 100%;
+}
+
+:root {
+  --vh: 100%;
+}

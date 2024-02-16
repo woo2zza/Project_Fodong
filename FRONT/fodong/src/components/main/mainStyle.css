@@ -1,0 +1,431 @@
+.mainBookStyle {
+  text-align: center;
+  margin: 20px 0;
+}
+/* button */
+
+.imageButton {
+  margin: 0 30px;
+}
+
+.main-buttons {
+  background-color: #f8cb77;
+  color: rgb(255, 255, 255);
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.5s;
+  margin: 0 40px 0 40px;
+}
+
+.main-buttons:hover {
+  transform: scale(1.2);
+}
+
+.button_container {
+  display: flex;
+  align-items: center;
+  /* margin-top: 30px; */
+}
+
+.styledLink {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+/* title */
+.titleStyle {
+  flex-grow: 1;
+  font-size: 40px;
+  font-weight: bold;
+  text-align: center;
+  color: #474646;
+  margin-top: 10px;
+}
+.titleLogo {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.titleLogo img {
+  width: 80px;
+  height: auto;
+}
+
+/* profile button */
+.toggle-button,
+.cute-button {
+  background-color: #ffb6c1;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: transform 0.5s;
+  margin: 10px;
+}
+
+.toggle-button:hover,
+.cute-button:hover {
+  transform: scale(1.2);
+}
+
+.additional-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+}
+
+.modal_style {
+  position: absolute;
+  color: rgb(2, 2, 2);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  background-color: #e8a87c;
+  padding: 5%;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 2px 4px #acabab;
+  z-index: 0;
+}
+
+.modal_style button:hover {
+  background-color: #f76c6c;
+}
+
+.cardItem {
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+/* 리스트 뷰 스타일 */
+.listView .cardItem {
+  display: block;
+  height: 100px;
+  font-size: large;
+}
+
+/* 그리드 뷰 스타일 */
+.gridView {
+  grid-template-columns: repeat(auto-fit, minmax(150px, 0.5fr));
+  gap: 10px;
+}
+
+.gridView .cardItem {
+  margin-bottom: 0;
+}
+
+/* scorllBook.jsx */
+
+.scroll_container {
+  margin: 20px 100px 50px 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slider-container {
+  height: 400px;
+  width: 600px;
+  overflow: hidden;
+  position: relative;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.slide {
+  width: 100%;
+  height: 400px;
+  background-size: cover;
+  background-position: center;
+  position: absolute;
+  transition: opacity 0.5s ease-in-out;
+  opacity: 0;
+}
+
+.slide.active {
+  position: relative;
+}
+
+.book-info {
+  background-color: rgba(255, 255, 255, 0.8);
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+}
+
+.book-info h3 {
+  margin: 0;
+  color: #333;
+  font-size: 24px;
+}
+
+.book-info p {
+  margin: 5px 0 0;
+  color: #666;
+}
+
+/* CharModal */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: linear-gradient(145deg, #f1ecf2, #dacf96);
+  padding: 10px;
+  border-radius: 20px;
+  width: 80%;
+  max-width: 700px;
+  height: auto;
+  position: relative;
+  animation: scaleUp 0.5s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5%;
+}
+
+@keyframes scaleUp {
+  from {
+    transform: scale(1.8);
+    opacity: 1;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.modal-content h3 {
+  font-weight: bold;
+  color: #e6ac1a;
+  text-align: center;
+  margin: 30px 0 10px 0;
+  margin-top: 1rem;
+  font-size: 45px;
+}
+
+.modal-content div {
+  color: #333;
+  font-size: 25px;
+}
+
+.modal_button {
+  width: auto;
+  height: auto;
+  background-color: #f76c6c;
+  border-radius: 50%;
+  margin-top: auto;
+  display: flex;
+  padding: 5px;
+  justify-content: center;
+  align-items: center;
+  align-self: end;
+}
+
+.char-select {
+  display: flex;
+  flex-direction: column;
+  font-size: 30px;
+  justify-content: center;
+  margin: 30px;
+  gap: 50px;
+}
+.modal_button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+}
+
+.web-container {
+  transform: scaleX(-1);
+  object-fit: cover;
+  border-radius: 25px;
+  width: 100%;
+  height: 300px;
+}
+
+.enter_button {
+  background-color: #eac34b;
+  border: none;
+  border-radius: 30px;
+  padding: 10px 50px;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 15px;
+  transition: transform 0.3s ease;
+}
+
+.enter_button:hover {
+  background-color: #ebad2f;
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+.enterButtons {
+  display: flex;
+}
+/* 이전 다음 버튼 */
+.preButton,
+.goButton {
+  background-color: #8fbfe4;
+  opacity: 0.85;
+  color: rgb(255, 251, 251);
+  border: none;
+  border-radius: 20%;
+  padding: 2em 0.2em;
+  font-size: 1.5em;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin: 10px;
+}
+
+.preButton:hover,
+.goButton:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+}
+
+.preButton:active,
+.goButton:active {
+  transform: scale(0.9);
+}
+
+.slide.active {
+  opacity: 1;
+}
+
+.modal_style {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 400px;
+  background-color: #ffeb3b;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  color: #333;
+  z-index: 1050;
+}
+
+.modal_style h2 {
+  color: #5e35b1;
+  margin-bottom: 20px;
+  font-size: 2em;
+}
+
+.modal_style p {
+  margin-bottom: 30px;
+  font-size: 1.2em;
+}
+
+.modal_style button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 15px;
+  padding: 10px 20px;
+  margin: 0 10px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.modal_style button:hover {
+  background-color: #d32f2f;
+  transform: scale(1.05);
+}
+
+.modal_style button:active {
+  transform: scale(0.95);
+}
+
+/* friends */
+
+.Paper {
+  /* background-color: #69a009; */
+  background-image: url("./image/comm44.webp");
+  background-size: cover;
+  border-radius: 15px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.ListItem {
+  border-radius: 10px;
+  margin: 5px 0;
+  box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.3s ease;
+}
+
+.ListItem:hover {
+  background-color: #f0e6ef;
+}
+
+.Friend-button {
+  background-color: #a3d2ca;
+  color: #090000;
+  border: 2px solid #406a63;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+.Button:hover {
+  background-color: #81b29a;
+}
+
+.TextField:focus {
+  border-color: #81b29a;
+}
+
+.Dialog {
+  border-radius: 20px;
+}
+
+.friend-item {
+  /* margin: 10px !important; */
+  /* width: 230px !important; */
+  /* height: 70px; */
+  margin: 5px 0;
+  background: transparent !important;
+  border-radius: 15px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}

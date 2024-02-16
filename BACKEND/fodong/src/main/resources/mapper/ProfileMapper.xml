@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adhd.fodong.domain.user.profile.repository.ProfileRepository">
+
+    <insert id="save" parameterType="com.adhd.fodong.domain.user.profile.entity.ProfileEntity">
+        INSERT INTO Profile (account_id, nickname)
+        VALUES (#{accountId}, #{nickname})
+    </insert>
+
+
+    <select id="findById" parameterType="int" resultType="com.adhd.fodong.domain.user.profile.entity.ProfileEntity">
+        SELECT * FROM Profile WHERE profile_id = #{profileId}
+    </select>
+
+    <select id="findAllProfileByAccountId" parameterType="int" resultType="com.adhd.fodong.domain.user.profile.entity.ProfileEntity">
+        SELECT * FROM Profile WHERE account_id = #{accountId}
+    </select>
+
+    <update id="updateNicknameByProfileId">
+        UPDATE Profile
+        SET nickname = #{nickname}
+        WHERE profile_id = #{profileId}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM Profile WHERE profile_id = #{profileId}
+    </delete>
+
+</mapper>

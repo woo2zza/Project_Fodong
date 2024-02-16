@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.adhd.fodong.domain.book.repository.BookRepository">
+
+    <!-- 존재하는 모든 책의 정보 조회 -->
+    <select id="findAllBook" resultType="com.adhd.fodong.domain.book.entity.Book">
+        SELECT *  <!-- 필요한 컬럼 목록 -->
+        FROM BOOK_TB<!-- 책 정보를 저장하는 테이블 이름 -->
+    </select>
+
+    <select id="findBookById" resultType="com.adhd.fodong.domain.book.entity.Book">
+        SELECT *
+        FROM BOOK_TB
+        WHERE book_id = #{bookId}
+    </select>
+
+    <select id="countPagesByBookId" resultType="int">
+        SELECT COUNT(*)
+        FROM BOOK_PAGE_TB
+        WHERE book_id = #{bookId}
+    </select>
+
+    <select id="getAllCharactersByBookId" resultType="com.adhd.fodong.domain.book.entity.Character">
+        SELECT *
+        FROM CHARACTER_TB
+        WHERE book_id = #{bookId};
+    </select>
+
+    <select id="getAllBackImgByBookId" resultType="com.adhd.fodong.domain.book.entity.BookPage">
+        SELECT *
+        FROM BOOK_PAGE_TB
+        WHERE book_id = #{bookId};
+    </select>
+
+    <insert id="saveBook" parameterType="com.adhd.fodong.domain.book.entity.Book">
+        INSERT INTO BOOK_TB (title, summary, play_cnt, cover)
+        VALUES (#{title}, #{summary}, #{playCnt}, #{cover})
+    </insert>
+
+    <select id="getBackgroundByBookIdAndPageNo" resultType="com.adhd.fodong.domain.book.entity.BookPage">
+        SELECT *
+        FROM BOOK_PAGE_TB
+        WHERE book_id = #{bookId}
+          AND page_no = #{pageNo}
+    </select>
+
+    <select id="getCharactersByBookIdAndPageNo" resultType="com.adhd.fodong.domain.book.entity.Character">
+        SELECT *
+        FROM CHARACTER_TB
+        WHERE book_id = #{bookId}
+          AND page_no = #{pageNo}
+    </select>
+
+    <select id="getScriptsByBookIdAndPageNo" resultType="com.adhd.fodong.domain.book.entity.Script">
+        SELECT *
+        FROM SCRIPT_TB
+        WHERE book_id = #{bookId}
+          AND page_no = #{pageNo}
+    </select>
+
+    <select id="getAllImgDataByBookId" resultType="com.adhd.fodong.domain.book.dto.BookAllImgData">
+        SELECT
+            BP.book_id,
+            BP.page_no,
+            BP.back_img,
+            C.character_id,
+            C.character_name,
+            C.character_img,
+            S.script_no,
+            S.person,
+            S.context
+        FROM
+            BOOK_PAGE_TB AS BP
+                JOIN
+            CHARACTER_TB AS C ON BP.book_id = C.book_id
+                JOIN
+            SCRIPT_TB AS S ON BP.book_id = S.book_id
+        WHERE
+            BP.book_id = #{bookId};
+    </select>
+
+
+    <select id="getDataAtPageByBookIdAndPageNo" resultType="com.adhd.fodong.domain.book.dto.BookPageDetail">
+        SELECT
+            BP.book_id,
+            BP.page_no,
+            BP.back_img,
+            C.character_id,
+            C.character_name,
+            C.character_img,
+            S.script_no,
+            S.person,
+            S.context
+        FROM
+            BOOK_PAGE_TB AS BP
+                JOIN
+            CHARACTER_TB AS C ON BP.book_id = C.book_id AND BP.page_no = C.page_no
+                JOIN
+            SCRIPT_TB AS S ON BP.book_id = S.book_id AND BP.page_no = S.page_no
+        WHERE
+            BP.book_id = #{bookId} AND BP.page_no = #{pageNo};
+    </select>
+
+</mapper>

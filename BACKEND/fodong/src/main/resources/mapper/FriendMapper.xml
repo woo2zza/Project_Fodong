@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adhd.fodong.domain.friend.repository.FriendRepository">
+
+
+
+    <insert id="sendFriendRequest" parameterType="com.adhd.fodong.domain.friend.entity.Friendship">
+        INSERT INTO FRIENDSHIP_TB (from_profile_id, to_profile_id, status)
+        VALUES (#{fromProfileId}, #{toProfileId}, #{status}), (#{toProfileId}, #{fromProfileId}, #{status})
+    </insert>
+
+<!--    <insert id="sendFriendRequest" parameterType="com.adhd.fodong.domain.friend.entity.Friendship">-->
+<!--        INSERT INTO FRIENDSHIP_TB (from_profile_id, to_profile_id, status)-->
+<!--        SELECT #{fromProfileId}, #{toProfileId}, #{status}-->
+<!--            WHERE NOT EXISTS (-->
+<!--        SELECT 1 FROM FRIENDSHIP_TB-->
+<!--        WHERE (from_profile_id = #{fromProfileId} AND to_profile_id = #{toProfileId})-->
+<!--                OR (from_profile_id = #{toProfileId} AND to_profile_id = #{fromProfileId})-->
+<!--                )-->
+<!--    </insert>-->
+
+    <select id="findFriendshipIdByFromIdWithToId" resultType="Integer">
+        SELECT friendship_id FROM FRIENDSHIP_TB
+        WHERE (from_profile_id = #{fromProfileId} AND to_profile_id = #{toProfileId})
+    </select>
+
+    <select id="ReverseFindFriendshipIdByFromIdWithToId" resultType="Integer">
+        SELECT friendship_id FROM FRIENDSHIP_TB
+        WHERE (from_profile_id = #{toProfileId} AND to_profile_id = #{fromProfileId})
+    </select>
+
+    <update id="updateStatus">
+        UPDATE FRIENDSHIP_TB
+        SET status = #{status}
+        WHERE (from_profile_id = #{fromProfileId} AND to_profile_id = #{toProfileId})
+           OR (from_profile_id = #{toProfileId} AND to_profile_id = #{fromProfileId})
+    </update>
+
+    <select id="getFriendsByProfileId" resultType="com.adhd.fodong.domain.user.profile.entity.ProfileEntity">
+        SELECT *
+        FROM FRIENDSHIP_TB
+        JOIN Profile ON FRIENDSHIP_TB.to_profile_id = Profile.profile_id
+        WHERE from_profile_id = #{profileId}
+        AND FRIENDSHIP_TB.status != 'blocked'
+    </select>
+
+    <select id="findProfilesByNickname" resultType="com.adhd.fodong.domain.user.profile.entity.ProfileEntity">
+        SELECT *
+        FROM Profile
+        WHERE nickname LIKE CONCAT(#{nickname}, '%')
+    </select>
+
+    <select id="getStatusByFriendshipId" resultType="String">
+        SELECT status FROM FRIENDSHIP_TB
+        WHERE friendship_id = #{friendshipId}
+    </select>
+
+
+    <delete id="deleteRelation">
+        DELETE FROM FRIENDSHIP_TB
+        WHERE friendship_id = #{friendshipId}
+    </delete>
+
+    <delete id="deleteDuplicate" parameterType="com.adhd.fodong.domain.friend.entity.Friendship">
+        DELETE FROM FRIENDSHIP_TB
+        WHERE from_profile_id = #{fromProfileId} AND to_profile_id = #{toProfileId}
+    </delete>
+
+
+</mapper>

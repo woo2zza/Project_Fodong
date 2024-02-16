@@ -1,0 +1,132 @@
+.main_container {
+  position: relative;
+  padding: 150px 50px;
+  background-image: url("../img/45240.png");
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.main_container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(255, 255, 255, 0.5);
+  z-index: 1;
+}
+
+.fixedTop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 5px;
+  z-index: 10; /* Increase z-index if necessary */
+}
+
+.dropdownMargin {
+  position: fixed;
+  z-index: 2;
+  left: 2%;
+  top: 15%;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  margin-top: 5%;
+}
+
+.glowButtonWrapper {
+  position: relative;
+  margin: 1.25em auto;
+  padding: 0;
+  display: table;
+  transition: all 150ms linear;
+}
+
+.glowButtonWrapper:hover {
+  transform: scale(1.15);
+}
+
+.glowButtonWrapper:active {
+  transform: scale(0.95);
+}
+
+.glowButtonWrapper .glowButton {
+  --angle: 0deg;
+  --buttonBorder: 4px;
+  --buttonBorderRadius: 2.25em;
+  --buttonBorderRadiusBefore: 3em;
+
+  position: relative;
+  display: flex;
+  padding: 0.875em 2.1em;
+  gap: 0.875em;
+  font-size: 1em;
+  align-items: center;
+  border-radius: var(--buttonBorderRadius);
+  font-weight: 160;
+  border: 0;
+  color: hsl(0, 0%, 98%);
+  background: hsl(0 0% 0% / 0%);
+  box-shadow: 0 0 3px hsl(0 0% 0% / 20%), 0 1px 6px hsl(0 0% 0% / 15%),
+    0 4px 8px hsl(0 0% 0% / 13%);
+  z-index: 1;
+}
+
+.glowButtonWrapper:hover .glowButton {
+  background: conic-gradient(
+      in hsl longer hue from var(--angle),
+      hsl(0, 100%, 80%) 0 0
+    )
+    border-box;
+
+  box-shadow: 0 0 3px hsl(0 35% 80% / 65%), 0 1px 6px hsl(60 15% 80% / 50%),
+    0 4px 8px hsl(120 48% 80% / 30%), 0 5px 11px hsl(5 20% 80% / 20%);
+}
+
+.glowButtonWrapper .glowButton:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%);
+  margin: 0 auto;
+  padding: 0;
+
+  background: linear-gradient(
+      to bottom,
+      hsl(228 5% 20% / 1),
+      hsl(228 4% 25% / 1)
+    )
+    padding-box;
+  border: 1px solid hsl(210 14% 9% / 60%);
+
+  border-radius: var(--buttonBorderRadiusBefore);
+  z-index: -1;
+}
+
+.glowButtonWrapper:hover .glowButton:before {
+  width: calc(100% - 7.2px);
+  height: calc(100% - 7.2px);
+}
+
+.Album_container {
+  padding: 30px;
+  background-image: url("../img/bg.jpg");
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+}
+.MultiStory-container {
+}

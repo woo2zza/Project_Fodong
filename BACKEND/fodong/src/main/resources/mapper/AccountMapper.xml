@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adhd.fodong.domain.user.account.repository.AccountRepository">
+
+    <!-- Account 저장 -->
+    <insert id="save" parameterType="com.adhd.fodong.domain.user.account.entity.AccountEntity">
+        INSERT INTO Account (account_id, account_email, account_pwd)
+        VALUES (#{accountId}, #{accountEmail}, #{accountPwd})
+    </insert>
+
+    <!-- Account Id로 단일 객체 조회 -->
+    <select id="findById" parameterType="int" resultType="com.adhd.fodong.domain.user.account.entity.AccountEntity">
+        SELECT * FROM Account WHERE account_id = #{accountId}
+    </select>
+
+    <!-- Account Email로 단일 객체 조회    -->
+    <select id="findByEmail" parameterType="String" resultType="com.adhd.fodong.domain.user.account.entity.AccountEntity">
+        SELECT * FROM Account WHERE account_email = #{accountEmail}
+    </select>
+
+    <!-- Account 업데이트 -->
+    <update id="update" parameterType="com.adhd.fodong.domain.user.account.entity.AccountEntity">
+        UPDATE Account
+        SET account_email = #{accountEmail}, account_pwd = #{accountPwd}
+        WHERE account_id = #{accountId}
+    </update>
+
+    <!-- Account 삭제 -->
+    <delete id="delete" parameterType="int">
+        DELETE FROM Account WHERE account_id = #{accountId}
+    </delete>
+
+    <select id="existsByEmail" parameterType="String" resultType="boolean">
+        SELECT CASE
+                   WHEN COUNT(*) > 0
+                       THEN true
+                   ELSE false
+                   END
+        FROM Account
+        WHERE account_email = #{accountEmail}
+    </select>
+
+    <select id="existsByAccountId" parameterType="int" resultType="boolean">
+        SELECT CASE
+                   WHEN COUNT(*) > 0
+                       THEN true
+                   ELSE false
+                   END
+        FROM Account
+        WHERE account_id = #{accountId}
+    </select>
+
+</mapper>

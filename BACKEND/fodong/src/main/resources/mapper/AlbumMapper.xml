@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adhd.fodong.domain.album.repository.AlbumRepository">
+
+    <!-- 녹화본 저장 -->
+    <insert id="save" parameterType="com.adhd.fodong.domain.album.entity.RecordingEntity">
+        INSERT INTO Recordings (recording_url,profile_id,book_id)
+        VALUES (#{recordingUrl}, #{profileId}, #{bookId})
+    </insert>
+
+    <!-- 녹화본 조회 -->
+    <select id="findAllRecordingsByProfileId" parameterType="int" resultType="com.adhd.fodong.domain.album.dto.RecordingDetails">
+        SELECT a.recording_id, a.recording_url, a.profile_id, a.book_id, b.title, b.cover FROM Recordings a left join BOOK_TB b on a.book_id=b.book_id WHERE profile_id = #{profileId}
+    </select>
+
+</mapper>
