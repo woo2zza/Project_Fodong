@@ -2,7 +2,7 @@
 
 # 1️⃣ Team Introduction
 
-<img src="./team.png">
+<img src="./ReadMeImg/team.png">
 
 # 2️⃣ Commit Message Structure
 
@@ -193,4 +193,31 @@ PWA
 - 실시간 추가 된 친구 Modal 생성 및 UI
 
 # 6️⃣ 기능 명세서
-<img src='./기능명세서.PNG'>
+<img src='./ReadMeImg/기능명세서.PNG'>
+
+# 7️⃣ 서비스 화면
+
+로그인 창
+<img src='./ReadMeImg/Login.png'>
+
+프로필 선택 창
+<img src='./ReadMeImg/Profile.png'>
+
+메인 페이지
+<img src='./ReadMeImg/Main.png'>
+
+책 리스트
+<img src='./ReadMeImg/BookIist2.png'>
+<img src='./ReadMeImg/BookList.png'>
+
+모달 창
+<img src='./ReadMeImg/Modal.png'>
+
+행복 서랍
+<img src='./ReadMeImg/BookShelf.png'>
+
+롤 플레잉
+<img src='./ReadMeImg/SelfBook.gif'>
+
+북 놀이터
+<img src='./ReadMeImg/MultiBook.gif'>
