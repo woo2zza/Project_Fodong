@@ -53,3 +53,17 @@ $ sudo systemctl restart nginx 명령어를 실행해야 원활한 서비스 사
 "workbox-streams": "^6.6.0",
 "zustand": "^4.5.0"
 "jdk": "17.0.9"
+"OS inforrmation": "Ubuntu 20.04.4 LTS"
+"python": "3.7.12"
+"PyTorch": "1.6.0"
+"Cython": "^0.29.21
+"librosa": "^0.8.0"
+"matplotlib": "^3.3.1"
+"numpy": "^1.18.5"
+"phonemizer": "^2.2.1"
+"protobuf": "^3.20"
+"scipy": "^1.5.2"
+"tensorboard": "^2.3.0"
+"torch": "^1.6.0"
+"torchvision": "^0.7.0"
+"Unidecode": "^1.1.1"
